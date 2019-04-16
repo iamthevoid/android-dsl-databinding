@@ -2,10 +2,10 @@ apply plugin: 'com.android.library'
 
 apply plugin: 'kotlin-android'
 
+apply plugin: 'com.novoda.bintray-release'
+
 android {
     compileSdkVersion 28
-
-
 
     defaultConfig {
         minSdkVersion 15
@@ -23,6 +23,17 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+}
+
+publish {
+    groupId = 'thevoid.iam.components'
+    artifactId = 'anko-observable-components'
+    publishVersion = '0.1'
+    desc = 'observable setters for anko views'
+    licences = ['Apache-2.0']
+    uploadName = 'AnkoObservableConponents'
+    userOrg = 'iamthevoid'
+    website = 'https://github.com/iamthevoid/android-anko-observable-components.git'
 }
 
 dependencies {
