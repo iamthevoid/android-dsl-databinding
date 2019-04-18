@@ -4,6 +4,10 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'com.novoda.bintray-release'
 
+repositories {
+
+}
+
 android {
     compileSdkVersion 28
 
@@ -28,7 +32,7 @@ android {
 publish {
     groupId = 'thevoid.iam.components'
     artifactId = 'anko-observable-components'
-    publishVersion = '0.1'
+    publishVersion = '0.1.1'
     desc = 'observable setters for anko views'
     licences = ['Apache-2.0']
     uploadName = 'AnkoObservableConponents'
@@ -45,6 +49,8 @@ dependencies {
 
     implementation "io.reactivex.rxjava2:rxjava:$rxjava"
     implementation "io.reactivex.rxjava2:rxandroid:$rxandroid"
+
+    implementation 'iam.thevoid.ae:android-extensions:0.1.3'
 
     implementation "org.jetbrains.anko:anko-sdk25:$anko" // sdk15, sdk19, sdk21, sdk23 are also available
     implementation "org.jetbrains.anko:anko-appcompat-v7:$anko"

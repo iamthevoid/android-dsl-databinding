@@ -1,4 +1,4 @@
-package thevoid.iam.components
+package thevoid.iam.components.rx
 
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Observable

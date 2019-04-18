@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import thevoid.iam.components.setText
 import thevoid.iam.components.setTextColor
-import thevoid.iam.components.toFlowableLatest
+import thevoid.iam.components.rx.toFlowableLatest
 import org.jetbrains.anko.*
 
 class PageFragment : Fragment(), AnkoComponent<PageFragment> {
