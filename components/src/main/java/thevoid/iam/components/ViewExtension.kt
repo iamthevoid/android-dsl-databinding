@@ -5,7 +5,7 @@ import iam.thevoid.ae.hide
 import io.reactivex.Flowable
 import thevoid.iam.components.rx.RxFlowableLoading
 
-fun <T : Any, V : View> V.addSetter(flowable : Flowable<T>,  setter:V.(T) -> Unit) {
+fun <T : Any, V : View> V.addSetter(flowable: Flowable<T>, setter: V.(T) -> Unit) {
     observeListener.apply {
         subscribeSetter(key(), object : Setter<V, T>(this@addSetter, flowable) {
             override fun set(view: V?, component: T) {
@@ -22,8 +22,8 @@ private val View.observeListener: ObserveListener
             addOnAttachStateChangeListener(it)
         })
 
-private fun View.hideUntilLoaded(loading : RxFlowableLoading<*>) =
+fun View.hideUntilLoaded(loading: RxFlowableLoading<*>) =
     addSetter(loading.flowable) { hide(it) }
 
-private fun View.showUntilLoaded(loading : RxFlowableLoading<*>) =
+fun View.showUntilLoaded(loading: RxFlowableLoading<*>) =
     addSetter(loading.flowable) { hide(!it) }
