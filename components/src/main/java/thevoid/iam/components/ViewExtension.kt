@@ -4,6 +4,7 @@ import android.view.View
 import iam.thevoid.ae.hide
 import io.reactivex.Flowable
 import thevoid.iam.components.rx.RxFlowableLoading
+import thevoid.iam.components.rx.RxLoading
 
 fun <T : Any, V : View> V.addSetter(flowable: Flowable<T>, setter: V.(T) -> Unit) {
     observeListener.apply {
@@ -22,8 +23,8 @@ private val View.observeListener: ObserveListener
             addOnAttachStateChangeListener(it)
         })
 
-fun View.hideUntilLoaded(loading: RxFlowableLoading<*>) =
+fun View.hideUntilLoaded(loading: RxLoading) =
     addSetter(loading.flowable) { hide(it) }
 
-fun View.showUntilLoaded(loading: RxFlowableLoading<*>) =
+fun View.showUntilLoaded(loading: RxLoading) =
     addSetter(loading.flowable) { hide(!it) }
