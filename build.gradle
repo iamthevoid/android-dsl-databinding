@@ -20,7 +20,7 @@ ext {
     anko = "0.10.8"
 
     // x
-    appcompat = "1.1.0-alpha04"
+    appcompat = "1.1.0-alpha05"
 
     // rx
     rxjava = "2.2.7"
