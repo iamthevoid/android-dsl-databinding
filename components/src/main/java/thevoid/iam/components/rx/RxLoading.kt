@@ -6,7 +6,7 @@ import io.reactivex.subjects.BehaviorSubject
 
 abstract class RxLoading {
 
-    private val subject: BehaviorSubject<Boolean> by lazy { BehaviorSubject.createDefault(false) }
+    protected val subject: BehaviorSubject<Boolean> by lazy { BehaviorSubject.createDefault(false) }
 
     val flowable : Flowable<Boolean>
         get() = subject.toFlowableLatest()
