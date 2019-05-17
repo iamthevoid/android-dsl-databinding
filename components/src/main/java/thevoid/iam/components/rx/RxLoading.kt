@@ -1,12 +1,16 @@
 package thevoid.iam.components.rx
 
+import iam.thevoid.ae.safe
+import io.reactivex.Flowable
 import io.reactivex.subjects.BehaviorSubject
-import io.reactivex.subjects.Subject
 
 abstract class RxLoading {
 
-    protected val subject: Subject<Boolean> by lazy { BehaviorSubject.createDefault(false) }
+    private val subject: BehaviorSubject<Boolean> by lazy { BehaviorSubject.createDefault(false) }
 
-    val flowable
+    val flowable : Flowable<Boolean>
         get() = subject.toFlowableLatest()
+
+    val now : Boolean
+        get() = subject.value.safe
 }
