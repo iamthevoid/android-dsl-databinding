@@ -1,6 +1,6 @@
 package thevoid.iam.components.rx
 
-import iam.thevoid.ae.safe
+import iam.thevoid.e.safe
 import io.reactivex.Flowable
 import io.reactivex.subjects.BehaviorSubject
 

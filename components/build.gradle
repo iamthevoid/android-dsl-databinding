@@ -27,12 +27,16 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility = '1.8'
+        targetCompatibility = '1.8'
+    }
 }
 
 publish {
     groupId = 'thevoid.iam.components'
     artifactId = 'anko-observable-components'
-    publishVersion = '0.1.9'
+    publishVersion = '0.1.10'
     desc = 'observable setters for anko views'
     licences = ['Apache-2.0']
     uploadName = 'AnkoObservableConponents'
@@ -50,7 +54,9 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxjava:$rxjava"
     implementation "io.reactivex.rxjava2:rxandroid:$rxandroid"
 
-    implementation 'iam.thevoid.ae:android-extensions:0.1.9'
+    implementation "iam.thevoid.ae:android-extensions:$e"
+    implementation "iam.thevoid.e:extensions:$e"
+    implementation "iam.thevoid.rxe:rx-extensions:$e"
 
     implementation "org.jetbrains.anko:anko-sdk25:$anko" // sdk15, sdk19, sdk21, sdk23 are also available
     implementation "org.jetbrains.anko:anko-appcompat-v7:$anko"
