@@ -5,6 +5,7 @@ import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.Subject
 import org.reactivestreams.Publisher
 
+@Deprecated("Use \"completeable()\" fun instead, will be removed in version above 0.1.11")
 class RxCompletableLoading : RxLoading(), CompletableTransformer {
 
     override fun apply(upstream: Completable): CompletableSource =

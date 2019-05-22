@@ -2,18 +2,22 @@ package thevoid.iam.ankoobservablecomponents
 
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
+import thevoid.iam.components.rx.RxObservableLoading
 import java.util.*
 import java.util.concurrent.TimeUnit
 
 object ObservableObject {
 
+
     val text = Observable.interval(1, TimeUnit.SECONDS)
         .subscribeOn(Schedulers.io())
+        .compose(RxObservableLoading())
         .map { randomString() }
 
     val number = Observable.interval(300, TimeUnit.MILLISECONDS)
         .subscribeOn(Schedulers.io())
         .map { randomNumber() }
+        .compose(RxObservableLoading())
 
     private fun randomString(): String = buildString {
         val random = Random()

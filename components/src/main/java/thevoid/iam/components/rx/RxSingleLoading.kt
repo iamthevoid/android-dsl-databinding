@@ -5,6 +5,7 @@ import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.Subject
 import org.reactivestreams.Publisher
 
+@Deprecated("Use \"single()\" fun instead, will be removed in version above 0.1.11")
 class RxSingleLoading<T> : RxLoading(), SingleTransformer<T, T> {
     override fun apply(upstream: Single<T>): SingleSource<T> =
         upstream

@@ -7,8 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import thevoid.iam.components.setText
-import thevoid.iam.components.setTextColor
+import thevoid.iam.components.ext.setText
+import thevoid.iam.components.ext.setTextColor
 import thevoid.iam.components.rx.toFlowableLatest
 import org.jetbrains.anko.*
 
