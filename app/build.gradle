@@ -37,6 +37,10 @@ dependencies {
     implementation "org.jetbrains.anko:anko-appcompat-v7:$anko"
     implementation "org.jetbrains.anko:anko-constraint-layout:$anko"
 
+    implementation "iam.thevoid.ae:android-extensions:$e"
+    implementation "iam.thevoid.e:extensions:$e"
+    implementation "iam.thevoid.rxe:rx-extensions:$e"
+
     implementation "io.reactivex.rxjava2:rxjava:$rxjava"
     implementation "io.reactivex.rxjava2:rxandroid:$rxandroid"
 

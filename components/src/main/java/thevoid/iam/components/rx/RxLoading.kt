@@ -1,6 +1,7 @@
 package thevoid.iam.components.rx
 
 import iam.thevoid.e.safe
+import iam.thevoid.rxe.toFlowableLatest
 import io.reactivex.*
 import io.reactivex.subjects.BehaviorSubject
 

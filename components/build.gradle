@@ -36,7 +36,7 @@ android {
 publish {
     groupId = 'thevoid.iam.components'
     artifactId = 'anko-observable-components'
-    publishVersion = '0.1.12'
+    publishVersion = '0.2.0'
     desc = 'observable setters for anko views'
     licences = ['Apache-2.0']
     uploadName = 'AnkoObservableConponents'
@@ -57,6 +57,7 @@ dependencies {
     implementation "iam.thevoid.ae:android-extensions:$e"
     implementation "iam.thevoid.e:extensions:$e"
     implementation "iam.thevoid.rxe:rx-extensions:$e"
+    implementation "iam.thevoid.util:util:$e"
 
     implementation "org.jetbrains.anko:anko-sdk25:$anko" // sdk15, sdk19, sdk21, sdk23 are also available
     implementation "org.jetbrains.anko:anko-appcompat-v7:$anko"

@@ -3,7 +3,6 @@ package thevoid.iam.ankoobservablecomponents
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
 import thevoid.iam.components.rx.RxLoading
-import thevoid.iam.components.rx.RxObservableLoading
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -21,7 +20,7 @@ object ObservableObject {
         .map { randomNumber() }
         .compose(loading.observable())
 
-    private fun randomString(): String = buildString {
+    fun randomString(): String = buildString {
         val random = Random()
         for (i in 0..7) {
             val upper = (random.nextInt(26) + 65).toChar()
