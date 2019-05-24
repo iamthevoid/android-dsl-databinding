@@ -36,10 +36,10 @@ android {
 publish {
     groupId = 'thevoid.iam.components'
     artifactId = 'anko-observable-components'
-    publishVersion = '0.2.0'
+    publishVersion = '0.2.1'
     desc = 'observable setters for anko views'
     licences = ['Apache-2.0']
-    uploadName = 'AnkoObservableConponents'
+    uploadName = 'android-anko-mvvm'
     userOrg = 'iamthevoid'
     website = 'https://github.com/iamthevoid/android-anko-observable-components.git'
 }

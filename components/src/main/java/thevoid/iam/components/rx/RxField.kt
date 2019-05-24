@@ -18,4 +18,6 @@ class RxField<T>(initial : T? = null) {
     fun get() : T? = subject.value?.elem
 
     fun observe() : Flowable<Optional<T>> = subject.toFlowableLatest()
+
+    fun <O> observe(mapper : ((Optional<T>) -> O)) = observe().map { mapper(it) }
 }

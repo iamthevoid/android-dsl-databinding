@@ -6,14 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import iam.thevoid.e.safe
 import org.jetbrains.anko.*
 import thevoid.iam.components.ext.setText
-import thevoid.iam.components.rx.RxDouble
-import java.util.*
+import thevoid.iam.components.rx.RxField
 
 class PageFragment : Fragment(), AnkoComponent<PageFragment> {
 
-    val double = RxDouble()
+    val obj = RxField<Something>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
         context?.let { createView(AnkoContext.create(it, this)) }
@@ -23,7 +23,7 @@ class PageFragment : Fragment(), AnkoComponent<PageFragment> {
 
             button {
                 text = "Random Double"
-                setOnClickListener { double.set(Random().nextDouble()) }
+                setOnClickListener { obj.set(Something(ObservableObject.randomString())) }
             }.lparams(wrapContent, wrapContent) {
                 gravity = Gravity.CENTER_HORIZONTAL
                 topMargin = dip(16)
@@ -32,9 +32,11 @@ class PageFragment : Fragment(), AnkoComponent<PageFragment> {
             textView {
                 id = R.id.text
                 textSize = dip(16).toFloat()
-                setText(double, 3)
+                setText(obj.observe { it.elem?.data.safe })
             }.lparams {
                 gravity = Gravity.CENTER
             }
         }
 }
+
+class Something(val data: String)
