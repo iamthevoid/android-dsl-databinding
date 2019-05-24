@@ -1,4 +1,4 @@
-package thevoid.iam.components.rx
+package thevoid.iam.components.rx.fields
 
 import iam.thevoid.e.safe
 import iam.thevoid.rxe.canPublish

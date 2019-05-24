@@ -1,4 +1,4 @@
-package thevoid.iam.components.ext
+package thevoid.iam.components.widget.ext
 
 import android.widget.TextView
 import iam.thevoid.e.format
@@ -6,7 +6,7 @@ import io.reactivex.Flowable
 import org.jetbrains.anko.textColor
 import org.jetbrains.anko.textColorResource
 import org.jetbrains.anko.textResource
-import thevoid.iam.components.rx.*
+import thevoid.iam.components.rx.fields.*
 
 fun <T : CharSequence> TextView.setText(rxString: RxCharSequence<T>) =
     addSetter(rxString.observe()) { text = it }

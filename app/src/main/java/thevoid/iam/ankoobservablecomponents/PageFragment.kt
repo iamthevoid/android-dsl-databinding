@@ -8,8 +8,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import iam.thevoid.e.safe
 import org.jetbrains.anko.*
-import thevoid.iam.components.ext.setText
-import thevoid.iam.components.rx.RxField
+import thevoid.iam.components.widget.ext.setText
+import thevoid.iam.components.rx.fields.RxField
 
 class PageFragment : Fragment(), AnkoComponent<PageFragment> {
 

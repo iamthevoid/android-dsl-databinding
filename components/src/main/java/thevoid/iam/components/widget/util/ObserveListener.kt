@@ -1,6 +1,7 @@
-package thevoid.iam.components
+package thevoid.iam.components.widget.util
 
 import android.view.View
+import thevoid.iam.components.widget.Setter
 
 class ObserveListener : View.OnAttachStateChangeListener {
 

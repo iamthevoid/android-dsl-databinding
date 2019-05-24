@@ -1,4 +1,4 @@
-package thevoid.iam.components.rx
+package thevoid.iam.components.rx.fields
 
 import iam.thevoid.e.safe
 import iam.thevoid.rxe.canPublish
@@ -7,16 +7,16 @@ import iam.thevoid.util.Optional
 import io.reactivex.Flowable
 import io.reactivex.subjects.BehaviorSubject
 
-class RxBoolean(initial : Boolean = false) {
+class RxFloat(initial : Float = 0f) {
 
     private val subject = BehaviorSubject.createDefault(initial)
 
-    fun set(elem: Boolean) {
+    fun set(elem: Float) {
         if (subject.canPublish())
             subject.onNext(elem)
     }
 
-    fun get() : Boolean = subject.value.safe
+    fun get() : Float = subject.value.safe
 
-    fun observe() : Flowable<Boolean> = subject.toFlowableLatest()
+    fun observe() : Flowable<Float> = subject.toFlowableLatest()
 }

@@ -1,4 +1,4 @@
-package thevoid.iam.components.constraint
+package thevoid.iam.components.widget.constraint
 
 import android.content.Context
 import android.view.View

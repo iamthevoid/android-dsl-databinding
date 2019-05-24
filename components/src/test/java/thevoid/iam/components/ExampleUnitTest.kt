@@ -3,6 +3,7 @@ package thevoid.iam.components
 import org.junit.Test
 
 import org.junit.Assert.*
+import thevoid.iam.components.widget.util.key
 
 /**
  * Example local unit test, which will execute on the development machine (host).

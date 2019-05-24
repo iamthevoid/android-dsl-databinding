@@ -1,4 +1,4 @@
-package thevoid.iam.components
+package thevoid.iam.components.widget.util
 
 const val DEPTH = 4
 

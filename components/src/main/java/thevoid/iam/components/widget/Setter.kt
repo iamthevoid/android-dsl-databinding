@@ -1,6 +1,7 @@
-package thevoid.iam.components
+package thevoid.iam.components.widget
 
 import android.view.View
+import iam.thevoid.rxe.subscribeSafe
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -19,7 +20,7 @@ abstract class Setter<V : View, C>(view: V, private val observable: Flowable<C>)
         disposable = null
         disposable = observable
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ set(viewRef.get(), it) }, { it.printStackTrace() })
+            .subscribeSafe { set(viewRef.get(), it) }
     }
 
     fun unsubscribeChanges() {

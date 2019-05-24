@@ -1,4 +1,4 @@
-package thevoid.iam.components.ext
+package thevoid.iam.components.widget.ext
 
 import android.webkit.WebView
 import io.reactivex.Flowable

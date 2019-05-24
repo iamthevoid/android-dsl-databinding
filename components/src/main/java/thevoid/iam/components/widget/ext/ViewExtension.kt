@@ -1,13 +1,13 @@
-package thevoid.iam.components.ext
+package thevoid.iam.components.widget.ext
 
 import android.view.View
 import iam.thevoid.ae.gone
 import iam.thevoid.ae.hide
 import io.reactivex.Flowable
-import thevoid.iam.components.ObserveListener
+import thevoid.iam.components.widget.util.ObserveListener
 import thevoid.iam.components.R
-import thevoid.iam.components.Setter
-import thevoid.iam.components.key
+import thevoid.iam.components.widget.Setter
+import thevoid.iam.components.widget.util.key
 import thevoid.iam.components.rx.RxLoading
 
 fun <T : Any, V : View> V.addSetter(flowable: Flowable<T>, setter: V.(T) -> Unit) {

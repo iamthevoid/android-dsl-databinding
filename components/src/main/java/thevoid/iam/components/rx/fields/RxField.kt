@@ -1,4 +1,4 @@
-package thevoid.iam.components.rx
+package thevoid.iam.components.rx.fields
 
 import iam.thevoid.rxe.canPublish
 import iam.thevoid.rxe.toFlowableLatest

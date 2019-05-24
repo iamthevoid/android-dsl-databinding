@@ -1,22 +1,21 @@
-package thevoid.iam.components.rx
+package thevoid.iam.components.rx.fields
 
 import iam.thevoid.e.safe
 import iam.thevoid.rxe.canPublish
 import iam.thevoid.rxe.toFlowableLatest
-import iam.thevoid.util.Optional
 import io.reactivex.Flowable
 import io.reactivex.subjects.BehaviorSubject
 
-class RxInt(initial : Int = 0) {
+class RxCharSequence<T : CharSequence>(initial : T = "" as T) {
 
     private val subject = BehaviorSubject.createDefault(initial)
 
-    fun set(elem: Int) {
+    fun set(string: T) {
         if (subject.canPublish())
-            subject.onNext(elem)
+            subject.onNext(string)
     }
 
-    fun get() : Int = subject.value.safe
+    fun get() : T = subject.value.safe
 
-    fun observe() : Flowable<Int> = subject.toFlowableLatest()
+    fun observe() : Flowable<T> = subject.toFlowableLatest()
 }
