@@ -1,4 +1,4 @@
-package thevoid.iam.components.viewmodel
+package thevoid.iam.components.mvvm.viewmodel
 
 import androidx.lifecycle.*
 

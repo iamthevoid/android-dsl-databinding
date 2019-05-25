@@ -1,4 +1,4 @@
-package thevoid.iam.components.viewmodel
+package thevoid.iam.components.mvvm.view
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -6,9 +6,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProviders
 import org.jetbrains.anko.AnkoComponent
 import org.jetbrains.anko.AnkoContext
+import thevoid.iam.components.mvvm.viewmodel.LifecycleTrackingViewModel
+import thevoid.iam.components.mvvm.ViewModelBundleProvider
 
 
-abstract class ViewModelActivity : AppCompatActivity(), AnkoComponent<ViewModelActivity> {
+abstract class MvvmActivity : AppCompatActivity(), AnkoComponent<MvvmActivity> {
 
     lateinit var viewModels: Map<Class<out ViewModel>, ViewModel>
         private set
@@ -20,14 +22,14 @@ abstract class ViewModelActivity : AppCompatActivity(), AnkoComponent<ViewModelA
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModels = provideVMBundle().bundles.let { bundles ->
+        viewModels = provideViewModel().bundles.let { bundles ->
             bundles.associate { bundle ->
                 bundle.cls to with(bundle) {
-                    factory?.let { ViewModelProviders.of(this@ViewModelActivity, bundle) }
-                        ?: ViewModelProviders.of(this@ViewModelActivity)
+                    factory?.let { ViewModelProviders.of(this@MvvmActivity, bundle) }
+                        ?: ViewModelProviders.of(this@MvvmActivity)
                 }[bundle.cls].also {
                     (it as? LifecycleTrackingViewModel)?.registerLifecycle(this)
-                    prepare(it)
+                    onConfigureViewModel(it)
                 }
             }
         }
@@ -35,7 +37,7 @@ abstract class ViewModelActivity : AppCompatActivity(), AnkoComponent<ViewModelA
         setContentView(createView(AnkoContext.create(this, this)))
     }
 
-    open fun prepare(viewModel: ViewModel) = Unit
+    open fun onConfigureViewModel(viewModel: ViewModel) = Unit
 
-    abstract fun provideVMBundle(): ViewModelBundleProvider
+    abstract fun provideViewModel(): ViewModelBundleProvider
 }

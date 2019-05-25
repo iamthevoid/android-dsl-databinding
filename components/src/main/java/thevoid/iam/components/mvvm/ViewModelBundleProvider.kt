@@ -1,4 +1,4 @@
-package thevoid.iam.components.viewmodel
+package thevoid.iam.components.mvvm
 
 interface ViewModelBundleProvider {
     val bundles: List<ViewModelBundle>

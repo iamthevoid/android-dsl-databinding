@@ -1,4 +1,4 @@
-package thevoid.iam.components.viewmodel
+package thevoid.iam.components.mvvm
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

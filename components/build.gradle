@@ -36,7 +36,7 @@ android {
 publish {
     groupId = 'thevoid.iam.components'
     artifactId = 'anko-observable-components'
-    publishVersion = '0.3.1'
+    publishVersion = '0.4.0'
     desc = 'observable setters for anko views'
     licences = ['Apache-2.0']
     uploadName = 'android-anko-mvvm'

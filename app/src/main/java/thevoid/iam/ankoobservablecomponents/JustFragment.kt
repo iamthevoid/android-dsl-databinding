@@ -4,24 +4,24 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import org.jetbrains.anko.AnkoComponent
-import org.jetbrains.anko.AnkoContext
-import org.jetbrains.anko.backgroundColor
-import org.jetbrains.anko.frameLayout
-import java.util.*
+import org.jetbrains.anko.*
+import thevoid.iam.components.mvvm.ViewModelBundleProvider
+import thevoid.iam.components.mvvm.view.MvvmFragment
+import thevoid.iam.components.mvvm.createBundle
+import thevoid.iam.components.widget.ext.setBackgroundColor
 
-class JustFragment : Fragment(), AnkoComponent<JustFragment> {
+class JustFragment : MvvmFragment() {
+
+    override fun provideViewModel(): ViewModelBundleProvider = createBundle(JustViewModel::class)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
         context?.let { createView(AnkoContext.create(it, this)) }
 
-    override fun createView(ui: AnkoContext<JustFragment>): View =
+    override fun createView(ui: AnkoContext<MvvmFragment>): View =
         ui.frameLayout {
-            val alpha : Int = 0xFF000000.toInt()
-            backgroundColor = alpha +
-                Random().nextInt(0x100) * 0x10000 +
-                        Random().nextInt(0x100) * 0x100 +
-                        Random().nextInt(0x100)
+            padding = dip(3)
+            frameLayout {
+                setBackgroundColor(viewModel<JustViewModel>().color)
+            }
         }
 }

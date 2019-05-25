@@ -1,4 +1,4 @@
-package thevoid.iam.components.viewmodel
+package thevoid.iam.components.mvvm.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,9 +9,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProviders
 import org.jetbrains.anko.AnkoComponent
 import org.jetbrains.anko.AnkoContext
+import thevoid.iam.components.mvvm.viewmodel.LifecycleTrackingViewModel
+import thevoid.iam.components.mvvm.ViewModelBundleProvider
 
 
-abstract class ViewModelFragment : Fragment(), AnkoComponent<ViewModelFragment> {
+abstract class MvvmFragment : Fragment(), AnkoComponent<MvvmFragment> {
 
     lateinit var viewModels: Map<Class<out ViewModel>, ViewModel>
         private set
@@ -22,23 +24,30 @@ abstract class ViewModelFragment : Fragment(), AnkoComponent<ViewModelFragment> 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModels = provideVMBundle().bundles.let { bundles ->
+        viewModels = provideViewModel().bundles.let { bundles ->
             bundles.associate { bundle ->
                 bundle.cls to with(bundle) {
-                    factory?.let { ViewModelProviders.of(this@ViewModelFragment, bundle) }
-                            ?: ViewModelProviders.of(this@ViewModelFragment)
+
+                    activity?.let { activity ->
+                        factory?.let { ViewModelProviders.of(activity, bundle) } ?: ViewModelProviders.of(activity) }
+
+                        ?:
+
+                    this@MvvmFragment.let { fragment ->
+                        factory?.let { ViewModelProviders.of(fragment, bundle) } ?: ViewModelProviders.of(fragment) }
+
                 }[bundle.cls].also {
                     (it as? LifecycleTrackingViewModel)?.registerLifecycle(this)
-                    prepare(it)
+                    onConfigureViewModel(it)
                 }
             }
         }
     }
 
-    open fun prepare(viewModel: ViewModel) = Unit
+    open fun onConfigureViewModel(viewModel: ViewModel) = Unit
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
             context?.let { createView(AnkoContext.create(it, this, false)) }
 
-    abstract fun provideVMBundle(): ViewModelBundleProvider
+    abstract fun provideViewModel(): ViewModelBundleProvider
 }
