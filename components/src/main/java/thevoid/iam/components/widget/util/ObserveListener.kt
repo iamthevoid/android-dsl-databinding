@@ -9,7 +9,7 @@ class ObserveListener : View.OnAttachStateChangeListener {
 
     private val observableSetters = mutableMapOf<String, Setter<out View, out Any>>()
 
-    fun subscribeSetter(tag : String, setter: Setter<out View, out Any>) {
+    fun subscribeSetter(setter: Setter<out View, out Any>, tag : String = key()) {
         val alreadyObservable = observableSetters[tag]
         if (alreadyObservable?.theSameAs(setter) != true) {
             observableSetters[tag] = setter

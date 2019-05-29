@@ -1,30 +1,26 @@
 package thevoid.iam.ankoobservablecomponents
 
-import android.os.Bundle
 import android.view.Gravity
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import iam.thevoid.e.safe
 import org.jetbrains.anko.*
+import thevoid.iam.components.mvvm.ViewModelBundleProvider
+import thevoid.iam.components.mvvm.createBundle
+import thevoid.iam.components.mvvm.view.MvvmFragment
+import thevoid.iam.components.widget.ext.afterTextChanges
+import thevoid.iam.components.widget.ext.onTextChanges
 import thevoid.iam.components.widget.ext.setText
-import thevoid.iam.components.rx.fields.RxField
+import thevoid.iam.components.widget.ext.setTextSilent
 
-class PageFragment : Fragment(), AnkoComponent<PageFragment> {
+class PageFragment : MvvmFragment() {
 
-    val obj = RxField<Something>()
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-        context?.let { createView(AnkoContext.create(it, this)) }
-
-    override fun createView(ui: AnkoContext<PageFragment>): View =
+    override fun createView(ui: AnkoContext<MvvmFragment>): View =
         ui.frameLayout {
 
-            button {
-                text = "Random Double"
-                setOnClickListener { obj.set(Something(ObservableObject.randomString())) }
-            }.lparams(wrapContent, wrapContent) {
+            editText {
+                hint = "Enter something"
+                onTextChanges(viewModel<PageViewModel>().changes)
+            }.lparams(matchParent, wrapContent) {
                 gravity = Gravity.CENTER_HORIZONTAL
                 topMargin = dip(16)
             }
@@ -32,11 +28,13 @@ class PageFragment : Fragment(), AnkoComponent<PageFragment> {
             textView {
                 id = R.id.text
                 textSize = dip(16).toFloat()
-                setText(obj.observe { it.elem?.data.safe })
+                setText(viewModel<PageViewModel>().changes.observe { it.elem?.s?.toString().safe })
             }.lparams {
                 gravity = Gravity.CENTER
             }
         }
-}
 
-class Something(val data: String)
+
+    override fun provideViewModel(): ViewModelBundleProvider = createBundle(PageViewModel::class.java)
+
+}

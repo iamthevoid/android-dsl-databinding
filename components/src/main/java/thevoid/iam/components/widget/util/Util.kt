@@ -1,20 +1,27 @@
 package thevoid.iam.components.widget.util
 
-const val DEPTH = 4
+import iam.thevoid.e.safe
+import java.lang.reflect.ParameterizedType
+import java.lang.reflect.TypeVariable
+
+const val DEPTH = 5
 
 fun key(): String = with(Thread.currentThread().stackTrace) {
-    if (size < DEPTH + 1) "" else with(get(DEPTH)) {
-        Class.forName(className).methods.find {
-            it.name == methodName
-        }
-    }?.let { method ->
-        """${method.name}_${method.typeParameters.let { typeParameters ->
-            if (typeParameters.isNullOrEmpty())
-                ""
-            else
-                method.typeParameters[0]?.bounds.let {
-                    if (it.isNullOrEmpty()) "" else (it[0] as? Class<*>)?.simpleName ?: ""
-                }
-        }}"""
-    } ?: ""
+    if (size < DEPTH + 1) "" else with(get(DEPTH)) { Class.forName(className).methods.find { it.name == methodName } }
+        ?.let {
+            if (it.genericParameterTypes.size > 1) {
+                "${it.name}_${(it.genericParameterTypes.component2() as? ParameterizedType)?.actualTypeArguments?.let { types ->
+                    if (types.isNotEmpty()) types.component1().let { type ->
+                        (type as? TypeVariable<*>)?.bounds.let { types ->
+                            (types?.firstOrNull() as? Class<*>)?.name
+                        } ?: type.toString()
+                    } else ""
+                }}"
+            } else
+                "${it.name}_${it.typeParameters.let { typeParameters ->
+                    typeParameters.firstOrNull()?.bounds.let { types ->
+                        (types?.firstOrNull() as? Class<*>)?.name
+                    }.safe
+                }}"
+        }.safe
 }

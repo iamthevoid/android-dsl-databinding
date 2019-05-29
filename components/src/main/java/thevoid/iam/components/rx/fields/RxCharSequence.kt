@@ -6,7 +6,7 @@ import iam.thevoid.rxe.toFlowableLatest
 import io.reactivex.Flowable
 import io.reactivex.subjects.BehaviorSubject
 
-class RxCharSequence<T : CharSequence>(initial : T = "" as T) {
+open class RxCharSequence<T : CharSequence>(initial : T = "" as T) {
 
     private val subject = BehaviorSubject.createDefault(initial)
 

@@ -7,7 +7,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import java.lang.ref.WeakReference
 
-abstract class Setter<V : View, C>(view: V, private val observable: Flowable<C>) {
+abstract class Setter<V : View, C>(view: V, private val flowable: Flowable<C>) {
 
     private val viewRef: WeakReference<V> = WeakReference(view)
 
@@ -18,7 +18,7 @@ abstract class Setter<V : View, C>(view: V, private val observable: Flowable<C>)
     fun subscribeChanges() {
         disposable?.dispose()
         disposable = null
-        disposable = observable
+        disposable = flowable
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeSafe { set(viewRef.get(), it) }
     }
@@ -28,5 +28,5 @@ abstract class Setter<V : View, C>(view: V, private val observable: Flowable<C>)
     }
 
     fun theSameAs(setter: Setter<*, *>): Boolean =
-        setter.observable === observable
+        setter.flowable === flowable
 }
