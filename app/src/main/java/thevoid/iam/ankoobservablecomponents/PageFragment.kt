@@ -7,10 +7,8 @@ import org.jetbrains.anko.*
 import thevoid.iam.components.mvvm.ViewModelBundleProvider
 import thevoid.iam.components.mvvm.createBundle
 import thevoid.iam.components.mvvm.view.MvvmFragment
-import thevoid.iam.components.widget.ext.afterTextChanges
 import thevoid.iam.components.widget.ext.onTextChanges
 import thevoid.iam.components.widget.ext.setText
-import thevoid.iam.components.widget.ext.setTextSilent
 
 class PageFragment : MvvmFragment() {
 
