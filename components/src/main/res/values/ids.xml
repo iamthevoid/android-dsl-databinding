@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <item name="listener" type="id"/>
+
     <item name="afterChangedWatcher" type="id"/>
     <item name="beforeChangedWatcher" type="id"/>
     <item name="onChangedWatcher" type="id"/>
+
+    <item name="gestureDetector" type="id"/>
+    <item name="gestureDetectorCallback" type="id"/>
 </resources>
