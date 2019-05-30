@@ -11,48 +11,69 @@ import org.jetbrains.anko.textColor
 import org.jetbrains.anko.textColorResource
 import thevoid.iam.components.R
 import thevoid.iam.components.rx.fields.*
+import thevoid.iam.components.widget.delegate.TextWatcherDelegate
 import thevoid.iam.components.widget.util.adapter.TextWatcherAdapter
+
+private val EditText.textWatcher: TextWatcherDelegate
+    get() = ((getTag(R.id.textWatcher) as? TextWatcherDelegate)
+        ?: TextWatcherDelegate().also { setTag(R.id.textWatcher, it) }).also {
+        removeTextChangedListener(it)
+        addTextChangedListener(it)
+    }
+
+
+fun EditText.afterTextChanges(rxEditable: RxField<Editable>) = afterTextChanges(rxEditable) { it }
+
+fun <T : Any> EditText.afterTextChanges(rxEditable: RxField<T>, mapper : (Editable) -> T) =
+    addGetter({
+        textWatcher.addAfterTextChangedCallback(object : TextWatcherAdapter() {
+            override fun afterTextChanged(s: Editable?) {
+                s?.apply { it.invoke(mapper(this)) }
+            }
+        })
+    }, rxEditable)
 
 fun EditText.afterTextChanges(rxEditable: RxString) =
     addGetter({
-        afterChangedWatcher?.also { watcher -> removeTextChangedListener(watcher) }
-        addTextChangedListener(afterChangedWatcher ?: object : TextWatcherAdapter() {
+        textWatcher.addAfterTextChangedCallback(object : TextWatcherAdapter() {
             override fun afterTextChanged(s: Editable?) {
                 s?.apply { it.invoke("$this") }
             }
-        }.also { watcher -> afterChangedWatcher = watcher })
+        })
     }, rxEditable)
 
-fun EditText.beforeTextChanges(rxChanges: RxField<BeforeEditTextChanges>) =
+fun EditText.beforeTextChanges(rxChanges: RxField<BeforeEditTextChanges>) = beforeTextChanges(rxChanges) { it }
+
+fun <T : Any> EditText.beforeTextChanges(rxChanges: RxField<T>, mapper: (BeforeEditTextChanges) -> T) =
     addGetter({
-        beforeChangedWatcher?.also { watcher -> removeTextChangedListener(watcher) }
-        addTextChangedListener(beforeChangedWatcher ?: object : TextWatcherAdapter() {
+        textWatcher.addBeforeTextChangedCallback(object : TextWatcherAdapter() {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                it.invoke(BeforeEditTextChanges(s, start, count, after))
+                it.invoke(mapper(BeforeEditTextChanges(s, start, count, after)))
             }
-        }.also { watcher -> beforeChangedWatcher = watcher })
+        })
     }, rxChanges)
 
-fun EditText.onTextChanges(rxChanges: RxField<OnEditTextChanges>) =
+fun EditText.onTextChanges(rxChanges: RxField<OnEditTextChanges>) = onTextChanges(rxChanges) { it }
+
+fun <T : Any> EditText.onTextChanges(rxChanges: RxField<T>, mapper: (OnEditTextChanges) -> T) =
     addGetter({
-        onChangedWatcher?.also { watcher -> removeTextChangedListener(watcher) }
-        addTextChangedListener(onChangedWatcher ?: object : TextWatcherAdapter() {
+        textWatcher.addOnTextChangedCallback(object : TextWatcherAdapter() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                it.invoke(OnEditTextChanges(s, start, before, count))
+                it.invoke(mapper(OnEditTextChanges(s, start, before, count)))
             }
-        }.also { watcher -> onChangedWatcher = watcher })
+        })
     }, rxChanges)
 
 fun EditText.setTextSilent(text: CharSequence) {
-    userDefinedWatchers.forEach { watcher -> watcher?.also { removeTextChangedListener(it) } }
+    removeTextChangedListener(textWatcher)
     setText(text)
-    userDefinedWatchers.forEach { watcher -> watcher?.also { addTextChangedListener(it) } }
+    addTextChangedListener(textWatcher)
 }
 
 fun EditText.setTextResourceSilent(@StringRes text: Int) {
-    userDefinedWatchers.forEach { watcher -> watcher?.also { removeTextChangedListener(it) } }
+    removeTextChangedListener(textWatcher)
     setText(text)
-    userDefinedWatchers.forEach { watcher -> watcher?.also { addTextChangedListener(it) } }
+    addTextChangedListener(textWatcher)
 }
 
 fun <T : CharSequence> EditText.setText(rxString: RxCharSequence<T>) =
@@ -87,24 +108,6 @@ fun EditText.setHintColor(colorFlowable: Flowable<Int>) =
 
 fun EditText.setTextColorResourse(colorResFlowable: Flowable<Int>) =
     addSetter(colorResFlowable) { textColorResource = it }
-
-
-private var EditText.afterChangedWatcher: TextWatcher?
-    get() = getTag(R.id.afterChangedWatcher) as? TextWatcher
-    set(watcher) = setTag(R.id.afterChangedWatcher, watcher)
-
-
-private var EditText.beforeChangedWatcher: TextWatcher?
-    get() = getTag(R.id.beforeChangedWatcher) as? TextWatcher
-    set(watcher) = setTag(R.id.beforeChangedWatcher, watcher)
-
-
-private var EditText.onChangedWatcher: TextWatcher?
-    get() = getTag(R.id.onChangedWatcher) as? TextWatcher
-    set(watcher) = setTag(R.id.onChangedWatcher, watcher)
-
-private val EditText.userDefinedWatchers
-    get() = listOf(beforeChangedWatcher, onChangedWatcher, afterChangedWatcher)
 
 data class BeforeEditTextChanges(val s: CharSequence?, val start: Int, val count: Int, val after: Int)
 
