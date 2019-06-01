@@ -18,7 +18,12 @@ buildscript {
 ext {
 
     // publish
-    publish = "0.6.0"
+    libVersion = '0.6.3'
+    libWebsite = 'https://github.com/iamthevoid/android-noxml-mvvm.git'
+    libUserOrg = 'iamthevoid'
+    libUploadName = 'android-noxml-mvvm'
+    libLicence = 'Apache-2.0'
+    libGroupId = 'thevoid.iam.components'
 
     anko = "0.10.8"
 

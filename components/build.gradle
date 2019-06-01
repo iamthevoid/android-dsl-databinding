@@ -34,14 +34,14 @@ android {
 }
 
 publish {
-    groupId = 'thevoid.iam.components'
     artifactId = 'noxml-mvvm'
-    publishVersion = "$publish"
-    desc = 'observable setters for anko views'
-    licences = ['Apache-2.0']
-    uploadName = 'android-anko-mvvm'
-    userOrg = 'iamthevoid'
-    website = 'https://github.com/iamthevoid/android-anko-observable-components.git'
+    desc = 'Core of noxml-mvvm. View, view model and getters-setters for rx data'
+    groupId = "$libGroupId"
+    publishVersion = "$libVersion"
+    licences = ["$libLicence"]
+    uploadName = "$libUploadName"
+    userOrg = "$libUserOrg"
+    website = "$libWebsite"
 }
 
 dependencies {
