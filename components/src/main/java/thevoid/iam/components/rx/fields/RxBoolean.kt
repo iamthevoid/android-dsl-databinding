@@ -18,5 +18,7 @@ class RxBoolean(initial : Boolean = false) {
 
     fun get() : Boolean = subject.value.safe
 
+    fun <E> mapper(mapper : Boolean.() -> E) : Flowable<E> = observe().map { it.mapper() }
+
     fun observe() : Flowable<Boolean> = subject.toFlowableLatest()
 }

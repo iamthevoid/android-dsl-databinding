@@ -18,5 +18,7 @@ class RxLong(initial : Long = 0L) {
 
     fun get() : Long = subject.value.safe
 
+    fun <E> mapper(mapper : Long.() -> E) : Flowable<E> = observe().map { it.mapper() }
+
     fun observe() : Flowable<Long> = subject.toFlowableLatest()
 }

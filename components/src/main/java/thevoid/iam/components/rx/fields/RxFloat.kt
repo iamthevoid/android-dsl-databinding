@@ -18,5 +18,7 @@ class RxFloat(initial : Float = 0f) {
 
     fun get() : Float = subject.value.safe
 
+    fun <E> mapper(mapper : Float.() -> E) : Flowable<E> = observe().map { it.mapper() }
+
     fun observe() : Flowable<Float> = subject.toFlowableLatest()
 }

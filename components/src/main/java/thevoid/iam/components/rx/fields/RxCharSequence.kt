@@ -17,5 +17,7 @@ open class RxCharSequence<T : CharSequence>(initial : T = "" as T) {
 
     fun get() : T = subject.value.safe
 
+    fun <E> mapper(mapper : T.() -> E) : Flowable<E> = observe().map { it.mapper() }
+
     fun observe() : Flowable<T> = subject.toFlowableLatest()
 }

@@ -18,5 +18,7 @@ class RxDouble(initial : Double = 0.toDouble()) {
 
     fun get() : Double = subject.value.safe
 
+    fun <E> mapper(mapper : Double.() -> E) : Flowable<E> = observe().map { it.mapper() }
+
     fun observe() : Flowable<Double> = subject.toFlowableLatest()
 }

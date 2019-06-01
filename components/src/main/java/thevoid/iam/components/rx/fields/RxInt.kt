@@ -18,5 +18,7 @@ class RxInt(initial : Int = 0) {
 
     fun get() : Int = subject.value.safe
 
+    fun <E> mapper(mapper : Int.() -> E) : Flowable<E> = observe().map { it.mapper() }
+
     fun observe() : Flowable<Int> = subject.toFlowableLatest()
 }
