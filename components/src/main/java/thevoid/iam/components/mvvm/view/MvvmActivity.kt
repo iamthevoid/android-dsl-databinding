@@ -1,16 +1,15 @@
 package thevoid.iam.components.mvvm.view
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProviders
-import org.jetbrains.anko.AnkoComponent
-import org.jetbrains.anko.AnkoContext
 import thevoid.iam.components.mvvm.viewmodel.LifecycleTrackingViewModel
 import thevoid.iam.components.mvvm.ViewModelBundleProvider
 
 
-abstract class MvvmActivity : AppCompatActivity(), AnkoComponent<MvvmActivity> {
+abstract class MvvmActivity : AppCompatActivity(), MvvmView {
 
     lateinit var viewModels: Map<Class<out ViewModel>, ViewModel>
         private set
@@ -34,10 +33,8 @@ abstract class MvvmActivity : AppCompatActivity(), AnkoComponent<MvvmActivity> {
             }
         }
 
-        setContentView(createView(AnkoContext.create(this, this)))
+        setContentView(provideContentView())
     }
 
     open fun onConfigureViewModel(viewModel: ViewModel) = Unit
-
-    abstract fun provideViewModel(): ViewModelBundleProvider
 }

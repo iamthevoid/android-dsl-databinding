@@ -7,12 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProviders
-import org.jetbrains.anko.AnkoComponent
-import org.jetbrains.anko.AnkoContext
 import thevoid.iam.components.mvvm.viewmodel.LifecycleTrackingViewModel
-import thevoid.iam.components.mvvm.ViewModelBundleProvider
 
-abstract class MvvmDialogFragment : DialogFragment(), AnkoComponent<MvvmDialogFragment> {
+abstract class MvvmDialogFragment : DialogFragment(), MvvmView {
 
     lateinit var viewModels: Map<Class<out ViewModel>, ViewModel>
         private set
@@ -53,7 +50,5 @@ abstract class MvvmDialogFragment : DialogFragment(), AnkoComponent<MvvmDialogFr
     open fun onConfigureViewModel(viewModel: ViewModel) = Unit
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-        context?.let { createView(AnkoContext.create(it, this, false)) }
-
-    abstract fun provideViewModel(): ViewModelBundleProvider
+        provideContentView()
 }

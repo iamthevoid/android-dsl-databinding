@@ -1,11 +1,10 @@
 package thevoid.iam.components.widget.ext
 
 import android.widget.TextView
+import iam.thevoid.ae.color
+import iam.thevoid.ae.string
 import iam.thevoid.e.format
 import io.reactivex.Flowable
-import org.jetbrains.anko.textColor
-import org.jetbrains.anko.textColorResource
-import org.jetbrains.anko.textResource
 import thevoid.iam.components.rx.fields.*
 
 fun <T : CharSequence> TextView.setText(rxString: RxCharSequence<T>) =
@@ -27,13 +26,13 @@ fun TextView.setText(rxDouble: RxDouble, precision: Int? = null) =
     addSetter(rxDouble.observe()) { text = it.format(precision) }
 
 fun TextView.setTextResource(rxIntResource: RxInt) =
-    addSetter(rxIntResource.observe()) { textResource = it }
+    addSetter(rxIntResource.observe()) { text = string(it) }
 
 fun TextView.setTextResource(textResourceFlowable: Flowable<Int>) =
-    addSetter(textResourceFlowable) { textResource = it }
+    addSetter(textResourceFlowable) { text = string(it) }
 
 fun TextView.setTextColor(colorFlowable: Flowable<Int>) =
-    addSetter(colorFlowable) { textColor = it }
+    addSetter(colorFlowable) { setTextColor(it) }
 
 fun TextView.setTextColorResourse(colorResFlowable: Flowable<Int>) =
-    addSetter(colorResFlowable) { textColorResource = it }
+    addSetter(colorResFlowable) { setTextColor(color(it)) }

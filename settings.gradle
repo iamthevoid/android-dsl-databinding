@@ -1,1 +1,1 @@
-include ':app', ':components'
+include ':app', ':components', ':ankoviews'

@@ -35,7 +35,7 @@ android {
 
 publish {
     groupId = 'thevoid.iam.components'
-    artifactId = 'noxml-mvvm'
+    artifactId = 'anko'
     publishVersion = "$publish"
     desc = 'observable setters for anko views'
     licences = ['Apache-2.0']
@@ -47,21 +47,15 @@ publish {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
+    implementation project(":components")
+
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 
     implementation "androidx.appcompat:appcompat:$appcompat"
 
-    implementation "io.reactivex.rxjava2:rxjava:$rxjava"
-    implementation "io.reactivex.rxjava2:rxandroid:$rxandroid"
-
-    implementation "iam.thevoid.ae:android-extensions:$e"
-    implementation "iam.thevoid.e:extensions:$e"
-    implementation "iam.thevoid.rxe:rx-extensions:$e"
-    implementation "iam.thevoid.util:util:$e"
-
-    implementation "androidx.lifecycle:lifecycle-runtime:$lifecycleRt"
-    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycleEx"
+    implementation "org.jetbrains.anko:anko-sdk25:$anko" // sdk15, sdk19, sdk21, sdk23 are also available
+    implementation "org.jetbrains.anko:anko-appcompat-v7:$anko"
+    implementation "org.jetbrains.anko:anko-constraint-layout:$anko"
 
     testImplementation "junit:junit:$junit"
     androidTestImplementation "androidx.test:runner:$runner"

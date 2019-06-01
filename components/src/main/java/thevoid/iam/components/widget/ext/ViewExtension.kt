@@ -4,22 +4,19 @@ import android.graphics.drawable.Drawable
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
+import iam.thevoid.ae.color
 import iam.thevoid.ae.gone
 import iam.thevoid.ae.hide
+import iam.thevoid.ae.setClickable
 import iam.thevoid.util.Optional
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
-import org.jetbrains.anko.backgroundColor
-import org.jetbrains.anko.backgroundColorResource
-import org.jetbrains.anko.backgroundDrawable
-import org.jetbrains.anko.backgroundResource
 import thevoid.iam.components.widget.util.ObserveListener
 import thevoid.iam.components.R
 import thevoid.iam.components.widget.Setter
 import thevoid.iam.components.rx.RxLoading
 import thevoid.iam.components.rx.fields.*
 import thevoid.iam.components.widget.delegate.OnGestureDelegate
-import thevoid.iam.components.widget.util.setClickable
 
 /**
  * BASE
@@ -100,16 +97,16 @@ fun View.hide(needHide: Flowable<Boolean>) =
     addSetter(needHide) { hide(it) }
 
 fun View.setBackgroundColor(color: Flowable<Int>) =
-    addSetter(color) { backgroundColor = it }
+    addSetter(color) { setBackgroundColor(it) }
 
 fun View.setBackgroundColorResource(color: Flowable<Int>) =
-    addSetter(color) { backgroundColorResource = it }
+    addSetter(color) { setBackgroundColor(color(it)) }
 
 fun View.setBackgroundDrawable(background: Flowable<Drawable>) =
-    addSetter(background) { backgroundDrawable = it }
+    addSetter(background) { setBackgroundDrawable(it) }
 
 fun View.setBackgroundResource(background: Flowable<Int>) =
-    addSetter(background) { backgroundResource = it }
+    addSetter(background) { setBackgroundResource(it) }
 
 
 /**

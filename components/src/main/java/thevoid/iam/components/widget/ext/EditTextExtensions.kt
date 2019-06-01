@@ -1,14 +1,11 @@
 package thevoid.iam.components.widget.ext
 
 import android.text.Editable
-import android.text.TextWatcher
 import android.widget.EditText
 import androidx.annotation.StringRes
+import iam.thevoid.ae.color
 import iam.thevoid.e.format
 import io.reactivex.Flowable
-import org.jetbrains.anko.hintTextColor
-import org.jetbrains.anko.textColor
-import org.jetbrains.anko.textColorResource
 import thevoid.iam.components.R
 import thevoid.iam.components.rx.fields.*
 import thevoid.iam.components.widget.delegate.TextWatcherDelegate
@@ -101,13 +98,13 @@ fun EditText.setTextResource(textResourceFlowable: Flowable<Int>) =
     addSetter(textResourceFlowable) { setTextResourceSilent(it) }
 
 fun EditText.setTextColor(colorFlowable: Flowable<Int>) =
-    addSetter(colorFlowable) { textColor = it }
+    addSetter(colorFlowable) { setTextColor(it) }
 
 fun EditText.setHintColor(colorFlowable: Flowable<Int>) =
-    addSetter(colorFlowable) { hintTextColor = it }
+    addSetter(colorFlowable) { setHintTextColor(it) }
 
 fun EditText.setTextColorResourse(colorResFlowable: Flowable<Int>) =
-    addSetter(colorResFlowable) { textColorResource = it }
+    addSetter(colorResFlowable) { setTextColor(color(it)) }
 
 data class BeforeEditTextChanges(val s: CharSequence?, val start: Int, val count: Int, val after: Int)
 

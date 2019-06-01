@@ -2,17 +2,17 @@ package thevoid.iam.ankoobservablecomponents
 
 import android.view.Gravity
 import android.view.View
+import iam.thevoid.ankoviews.widget.mvvm.AnkoMvvmFragment
 import iam.thevoid.e.safe
 import org.jetbrains.anko.*
 import thevoid.iam.components.mvvm.ViewModelBundleProvider
 import thevoid.iam.components.mvvm.createBundle
-import thevoid.iam.components.mvvm.view.MvvmFragment
 import thevoid.iam.components.widget.ext.onTextChanges
 import thevoid.iam.components.widget.ext.setText
 
-class PageFragment : MvvmFragment() {
+class PageFragment : AnkoMvvmFragment() {
 
-    override fun createView(ui: AnkoContext<MvvmFragment>): View =
+    override fun createView(ui: AnkoContext<AnkoMvvmFragment>): View =
         ui.frameLayout {
 
             editText {
