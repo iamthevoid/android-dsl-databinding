@@ -78,6 +78,18 @@ private val View.observeListener: ObserveListener
  * Visibility
  */
 
+fun View.disableUntilLoaded(loading: RxLoading, alpha : Float = 1f) =
+    addSetter(loading.flowable) {
+        isEnabled = !it
+        this@addSetter.alpha = alpha
+    }
+
+fun View.disableWhenLoaded(loading: RxLoading, alpha : Float = 1f) =
+    addSetter(loading.flowable) {
+        isEnabled = it
+        this@addSetter.alpha = alpha
+    }
+
 fun View.hideUntilLoaded(loading: RxLoading) =
     addSetter(loading.flowable) { hide(it) }
 
