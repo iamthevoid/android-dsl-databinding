@@ -55,9 +55,9 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxjava:$rxjava"
     implementation "io.reactivex.rxjava2:rxandroid:$rxandroid"
 
-    implementation "iam.thevoid.ae:android-extensions:$e"
-    implementation "iam.thevoid.e:extensions:$e"
-    implementation "iam.thevoid.rxe:rx-extensions:$e"
+    implementation "iam.thevoid.extensions:android:$e"
+    implementation "iam.thevoid.extensions:pure:$e"
+    implementation "iam.thevoid.extensions:rx:$e"
     implementation "iam.thevoid.util:util:$e"
 
     implementation "androidx.lifecycle:lifecycle-runtime:$lifecycleRt"
