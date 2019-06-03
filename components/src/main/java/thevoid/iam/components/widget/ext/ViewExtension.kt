@@ -8,6 +8,7 @@ import iam.thevoid.ae.color
 import iam.thevoid.ae.gone
 import iam.thevoid.ae.hide
 import iam.thevoid.ae.setClickable
+import iam.thevoid.e.mergeWith
 import iam.thevoid.util.Optional
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
@@ -81,14 +82,26 @@ private val View.observeListener: ObserveListener
 fun View.hideUntilLoaded(loading: RxLoading) =
     addSetter(loading.flowable) { hide(it) }
 
+fun View.hideUntilLoaded(loading: RxLoading, vararg loadings: RxLoading) =
+    addSetter(Flowable.merge(loading.flowable.mergeWith(loadings.map { it.flowable }))) { hide(it) }
+
 fun View.hideWhenLoaded(loading: RxLoading) =
     addSetter(loading.flowable) { hide(!it) }
+
+fun View.hideWhenLoaded(loading: RxLoading, vararg loadings: RxLoading) =
+    addSetter(Flowable.merge(loading.flowable.mergeWith(loadings.map { it.flowable }))) { hide(!it) }
 
 fun View.goneUntilLoaded(loading: RxLoading) =
     addSetter(loading.flowable) { gone(it) }
 
+fun View.goneUntilLoaded(loading: RxLoading, vararg loadings: RxLoading) =
+    addSetter(Flowable.merge(loading.flowable.mergeWith(loadings.map { it.flowable }))) { gone(it) }
+
 fun View.goneWhenLoaded(loading: RxLoading) =
     addSetter(loading.flowable) { gone(!it) }
+
+fun View.goneWhenLoaded(loading: RxLoading, vararg loadings: RxLoading) =
+    addSetter(Flowable.merge(loading.flowable.mergeWith(loadings.map { it.flowable }))) { gone(!it) }
 
 fun View.gone(needGone: Flowable<Boolean>) =
     addSetter(needGone) { gone(it) }
