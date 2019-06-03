@@ -4,6 +4,7 @@ import android.text.Editable
 import android.widget.EditText
 import androidx.annotation.StringRes
 import iam.thevoid.ae.color
+import iam.thevoid.ae.moveCursorToEnd
 import iam.thevoid.e.format
 import io.reactivex.Flowable
 import thevoid.iam.components.R
@@ -64,12 +65,14 @@ fun <T : Any> EditText.onTextChanges(rxChanges: RxField<T>, mapper: (OnEditTextC
 fun EditText.setTextSilent(text: CharSequence) {
     removeTextChangedListener(textWatcher)
     setText(text)
+    moveCursorToEnd()
     addTextChangedListener(textWatcher)
 }
 
 fun EditText.setTextResourceSilent(@StringRes text: Int) {
     removeTextChangedListener(textWatcher)
     setText(text)
+    moveCursorToEnd()
     addTextChangedListener(textWatcher)
 }
 
