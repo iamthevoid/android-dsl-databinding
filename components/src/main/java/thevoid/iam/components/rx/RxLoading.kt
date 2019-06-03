@@ -1,13 +1,12 @@
 package thevoid.iam.components.rx
 
-import iam.thevoid.e.safe
-import iam.thevoid.rxe.toFlowableLatest
 import io.reactivex.*
-import io.reactivex.subjects.BehaviorSubject
 import thevoid.iam.components.rx.fields.RxBoolean
+import java.util.concurrent.atomic.AtomicBoolean
+import java.util.concurrent.atomic.AtomicInteger
 
 open class RxLoading {
-    
+
     private val loading by lazy { RxBoolean() }
 
     internal val flowable: Flowable<Boolean>
@@ -16,37 +15,66 @@ open class RxLoading {
     val now: Boolean
         get() = loading.get()
 
+    private val count = AtomicInteger(0)
+
+    private fun inc() {
+        if (count.incrementAndGet() == 1) {
+            loading.set(true)
+        }
+    }
+
+    private fun dec() {
+        if (count.decrementAndGet() == 0) {
+            loading.set(false)
+        }
+    }
+
+    private fun loadingStarted(loading: AtomicBoolean) {
+        if (!loading.get()) {
+            loading.set(true)
+            inc()
+        }
+    }
+
+    private fun loadingFinished(loading: AtomicBoolean) {
+        if (loading.get()) {
+            loading.set(false)
+            dec()
+        }
+    }
+
     fun completable(): CompletableTransformer = CompletableTransformer { upstream ->
-        upstream.doOnSubscribe { loading.set(true) }
-            .doOnDispose { loading.set(false) }
-            .doOnError { loading.set(false) }
-            .doOnComplete { loading.set(false) }
-            .doOnTerminate { loading.set(false) }
+        val loading  = AtomicBoolean(false)
+        upstream
+            .doOnSubscribe { loadingStarted(loading) }
+            .doOnDispose { loadingFinished(loading) }
+            .doOnError { loadingFinished(loading) }
+            .doOnComplete { loadingFinished(loading) }
     }
 
     fun <T> flowable(): FlowableTransformer<T, T> = FlowableTransformer { upstream ->
-        upstream.doOnSubscribe { loading.set(true) }
-            .doOnCancel { loading.set(false) }
-            .doOnError { loading.set(false) }
-            .doOnNext { loading.set(false) }
-            .doOnComplete { loading.set(false) }
+        val loading  = AtomicBoolean(false)
+        upstream.doOnSubscribe { loadingStarted(loading) }
+            .doOnCancel { loadingFinished(loading) }
+            .doOnError { loadingFinished(loading) }
+            .doOnNext { loadingFinished(loading) }
     }
 
     fun <T> observable(): ObservableTransformer<T, T> = ObservableTransformer { upstream ->
+        val loading  = AtomicBoolean(false)
         upstream
-            .doOnSubscribe { loading.set(true) }
-            .doOnDispose { loading.set(false) }
-            .doOnError { loading.set(false) }
-            .doOnNext { loading.set(false) }
-            .doOnTerminate { loading.set(false) }
+            .doOnSubscribe { loadingStarted(loading) }
+            .doOnDispose { loadingFinished(loading) }
+            .doOnError { loadingFinished(loading) }
+            .doOnNext { loadingFinished(loading) }
     }
 
-    fun <T> single() : SingleTransformer<T,T> = SingleTransformer { upstream ->
+    fun <T> single(): SingleTransformer<T, T> = SingleTransformer { upstream ->
+        val loading  = AtomicBoolean(false)
         upstream
-            .doOnSubscribe { loading.set(true) }
-            .doOnDispose { loading.set(false) }
-            .doOnError { loading.set(false) }
-            .doOnSuccess { loading.set(false) }
-            .doOnTerminate { loading.set(false) }
+            .doOnSubscribe { loadingStarted(loading) }
+            .doOnDispose { loadingFinished(loading) }
+            .doOnError { loadingFinished(loading) }
+            .doOnSuccess { loadingFinished(loading) }
     }
 }
