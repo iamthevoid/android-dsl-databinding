@@ -8,6 +8,6 @@ import thevoid.iam.components.mvvm.view.MvvmDialogFragment
 
 abstract class AnkoMvvmBottomSheetDialogFragment : MvvmBottomSheetDialogFragment(), AnkoComponent<AnkoMvvmBottomSheetDialogFragment> {
 
-    override fun provideContentView(): View? = context?.let { createView(AnkoContext.create(it, this, false)) }
+    override fun provideContentView(): View? = context?.let { createView(AnkoContext.create(it, this)) }
 
 }
