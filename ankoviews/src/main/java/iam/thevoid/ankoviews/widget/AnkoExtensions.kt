@@ -7,5 +7,9 @@ import org.jetbrains.anko.dimenAttr
  * ATTR
  */
 
-val View.actionBarHeight
+/**
+ * Attribute dimen of action bar
+ */
+
+val View.actionBarHeight : Int
     get() = dimenAttr(android.R.attr.actionBarSize)

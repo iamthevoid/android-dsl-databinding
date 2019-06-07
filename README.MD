@@ -1,0 +1,1 @@
+<a href="https://bintray.com/beta/#/iamthevoid/maven/android-noxml-mvvm"><img src="https://github.com/iamthevoid/android-noxml-mvvm/blob/master/lib.svg"></a>

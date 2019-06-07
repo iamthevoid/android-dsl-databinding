@@ -18,7 +18,7 @@ buildscript {
 ext {
 
     // publish
-    libVersion = '0.6.17'
+    libVersion = '0.6.20'
     libWebsite = 'https://github.com/iamthevoid/android-noxml-mvvm.git'
     libUserOrg = 'iamthevoid'
     libUploadName = 'android-noxml-mvvm'
@@ -27,7 +27,7 @@ ext {
 
     anko = "0.10.8"
 
-    e = "0.4.1"
+    e = "0.4.5"
 
     // x
     appcompat = "1.1.0-alpha05"
@@ -56,4 +56,33 @@ allprojects {
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+task versionTxt()  {
+    doLast {
+        new File("$projectDir/lib.svg").text = """
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="174" height="20">
+    <linearGradient id="b" x2="0" y2="100%">
+        <stop offset="0" stop-color="#bbb" stop-opacity=".1"/>
+        <stop offset="1" stop-opacity=".1"/>
+    </linearGradient>
+    <clipPath id="a">
+        <rect width="174" height="20" rx="3" fill="#fff"/>
+    </clipPath>
+    <g clip-path="url(#a)">
+        <path fill="#555" d="M0 0h129v20H0z"/>
+        <path fill="#4c1" d="M129 0h45v20H129z"/>
+        <path fill="url(#b)" d="M0 0h174v20H0z"/>
+    </g>
+    <g fill="#fff" text-anchor="middle" font-family="DejaVu Sans,Verdana,Geneva,sans-serif" font-size="110">
+        <text x="655" y="150" fill="#010101" fill-opacity=".3" transform="scale(.1)" textLength="1190">
+            $libUploadName
+        </text>
+        <text x="655" y="140" transform="scale(.1)" textLength="1190">$libUploadName</text>
+        <text x="1505" y="150" fill="#010101" fill-opacity=".3" transform="scale(.1)" textLength="350">$libVersion</text>
+        <text x="1505" y="140" transform="scale(.1)" textLength="350">$libVersion</text>
+    </g>
+</svg>
+"""
+    }
 }
