@@ -9,7 +9,7 @@ open class RxLoading {
 
     private val loading by lazy { RxBoolean() }
 
-    internal val flowable: Flowable<Boolean>
+    internal val asFlowable: Flowable<Boolean>
         get() = loading.observe()
 
     val now: Boolean
@@ -44,7 +44,7 @@ open class RxLoading {
     }
 
     fun completable(): CompletableTransformer = CompletableTransformer { upstream ->
-        val loading  = AtomicBoolean(false)
+        val loading = AtomicBoolean(false)
         upstream
             .doOnSubscribe { loadingStarted(loading) }
             .doOnDispose { loadingFinished(loading) }
@@ -53,7 +53,7 @@ open class RxLoading {
     }
 
     fun <T> flowable(): FlowableTransformer<T, T> = FlowableTransformer { upstream ->
-        val loading  = AtomicBoolean(false)
+        val loading = AtomicBoolean(false)
         upstream.doOnSubscribe { loadingStarted(loading) }
             .doOnCancel { loadingFinished(loading) }
             .doOnError { loadingFinished(loading) }
@@ -61,7 +61,7 @@ open class RxLoading {
     }
 
     fun <T> observable(): ObservableTransformer<T, T> = ObservableTransformer { upstream ->
-        val loading  = AtomicBoolean(false)
+        val loading = AtomicBoolean(false)
         upstream
             .doOnSubscribe { loadingStarted(loading) }
             .doOnDispose { loadingFinished(loading) }
@@ -70,7 +70,7 @@ open class RxLoading {
     }
 
     fun <T> single(): SingleTransformer<T, T> = SingleTransformer { upstream ->
-        val loading  = AtomicBoolean(false)
+        val loading = AtomicBoolean(false)
         upstream
             .doOnSubscribe { loadingStarted(loading) }
             .doOnDispose { loadingFinished(loading) }

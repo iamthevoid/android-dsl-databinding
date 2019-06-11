@@ -80,28 +80,28 @@ private val View.observeListener: ObserveListener
  */
 
 fun View.hideUntilLoaded(loading: RxLoading) =
-    addSetter(loading.flowable) { hide(it) }
+    addSetter(loading.asFlowable) { hide(it) }
 
 fun View.hideUntilLoaded(loading: RxLoading, vararg loadings: RxLoading) =
-    addSetter(Flowable.merge(loading.flowable.mergeWith(loadings.map { it.flowable }))) { hide(it) }
+    addSetter(Flowable.merge(loading.asFlowable.mergeWith(loadings.map { it.asFlowable }))) { hide(it) }
 
 fun View.hideWhenLoaded(loading: RxLoading) =
-    addSetter(loading.flowable) { hide(!it) }
+    addSetter(loading.asFlowable) { hide(!it) }
 
 fun View.hideWhenLoaded(loading: RxLoading, vararg loadings: RxLoading) =
-    addSetter(Flowable.merge(loading.flowable.mergeWith(loadings.map { it.flowable }))) { hide(!it) }
+    addSetter(Flowable.merge(loading.asFlowable.mergeWith(loadings.map { it.asFlowable }))) { hide(!it) }
 
 fun View.goneUntilLoaded(loading: RxLoading) =
-    addSetter(loading.flowable) { gone(it) }
+    addSetter(loading.asFlowable) { gone(it) }
 
 fun View.goneUntilLoaded(loading: RxLoading, vararg loadings: RxLoading) =
-    addSetter(Flowable.merge(loading.flowable.mergeWith(loadings.map { it.flowable }))) { gone(it) }
+    addSetter(Flowable.merge(loading.asFlowable.mergeWith(loadings.map { it.asFlowable }))) { gone(it) }
 
 fun View.goneWhenLoaded(loading: RxLoading) =
-    addSetter(loading.flowable) { gone(!it) }
+    addSetter(loading.asFlowable) { gone(!it) }
 
 fun View.goneWhenLoaded(loading: RxLoading, vararg loadings: RxLoading) =
-    addSetter(Flowable.merge(loading.flowable.mergeWith(loadings.map { it.flowable }))) { gone(!it) }
+    addSetter(Flowable.merge(loading.asFlowable.mergeWith(loadings.map { it.asFlowable }))) { gone(!it) }
 
 fun View.gone(needGone: Flowable<Boolean>) =
     addSetter(needGone) { gone(it) }
