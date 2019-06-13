@@ -9,7 +9,7 @@ open class RxLoading {
 
     private val loading by lazy { RxBoolean() }
 
-    internal val asFlowable: Flowable<Boolean>
+    val asFlowable: Flowable<Boolean>
         get() = loading.observe()
 
     val now: Boolean
