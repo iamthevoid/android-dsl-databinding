@@ -10,7 +10,12 @@ import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import thevoid.iam.components.mvvm.viewmodel.LifecycleTrackingViewModel
 
-abstract class MvvmBottomSheetDialogFragment : BottomSheetDialogFragment(), MvvmView {
+abstract class MvvmBottomSheetDialogFragment<VM : ViewModel> : BottomSheetDialogFragment(), MvvmView {
+
+    val vm: VM by lazy {
+        viewModels.values.mapNotNull { it as? VM }.firstOrNull()
+            ?: throw IllegalArgumentException("View model not provided")
+    }
 
     lateinit var viewModels: Map<Class<out ViewModel>, ViewModel>
         private set

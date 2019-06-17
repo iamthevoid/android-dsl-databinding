@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import org.jetbrains.anko.frameLayout
 import org.jetbrains.anko.support.v4.viewPager
+import thevoid.iam.ankoobservablecomponents.recycler.RecyclerFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -21,7 +22,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     class Adapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
-        override fun getItem(position: Int): Fragment = if (position == 0) PageFragment() else JustFragment()
-        override fun getCount(): Int = 10
+        override fun getItem(position: Int): Fragment = when (position) {
+            0 -> RecyclerFragment()
+            1 -> PageFragment()
+            else -> JustFragment()
+        }
+        override fun getCount(): Int = 4
     }
 }

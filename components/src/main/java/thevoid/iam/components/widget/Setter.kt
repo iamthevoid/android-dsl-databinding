@@ -1,5 +1,6 @@
 package thevoid.iam.components.widget
 
+import android.util.Log
 import android.view.View
 import iam.thevoid.rxe.subscribeSafe
 import io.reactivex.Flowable
@@ -15,11 +16,17 @@ abstract class Setter<V : View, C>(view: V, private val flowable: Flowable<C>) {
 
     abstract fun set(view: V?, component: C)
 
+    val view
+        get() = viewRef.get()
+
     fun subscribeChanges() {
         disposable?.dispose()
         disposable = null
         disposable = flowable
             .observeOn(AndroidSchedulers.mainThread())
+            .doOnNext {
+                Log.d("fff", "$it")
+            }
             .subscribeSafe { set(viewRef.get(), it) }
     }
 

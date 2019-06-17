@@ -17,15 +17,15 @@ import thevoid.iam.components.mvvm.createBundle
 import thevoid.iam.components.widget.ext.onTextChanges
 import thevoid.iam.components.widget.ext.setText
 
-class PageFragment : AnkoMvvmFragment() {
+class PageFragment : AnkoMvvmFragment<PageViewModel>() {
 
-    override fun createView(ui: AnkoContext<AnkoMvvmFragment>): View =
+    override fun createView(ui: AnkoContext<AnkoMvvmFragment<PageViewModel>>): View =
         ui.sparseConstraintLayout {
 
             editText {
                 id = R.id.et
                 hint = "Enter something"
-                onTextChanges(viewModel<PageViewModel>().changes)
+                onTextChanges(vm.changes)
             }.lparams(matchConstraint, wrapContent)
                 .constraint {
                     connect(
@@ -53,7 +53,7 @@ class PageFragment : AnkoMvvmFragment() {
             textView {
                 id = R.id.text2
                 textSize = dip(16).toFloat()
-                setText(viewModel<PageViewModel>().changes.observe { it.elem?.s?.toString().safe })
+                setText(vm.changes.observe { it.elem?.s?.toString().safe })
             }.constraint {
                 connect(
                     TOP to BOTTOM of R.id.et,

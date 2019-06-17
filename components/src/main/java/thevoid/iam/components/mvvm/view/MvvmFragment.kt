@@ -10,7 +10,12 @@ import androidx.lifecycle.ViewModelProviders
 import thevoid.iam.components.mvvm.viewmodel.LifecycleTrackingViewModel
 
 
-abstract class MvvmFragment : Fragment(), MvvmView {
+abstract class MvvmFragment<VM : ViewModel> : Fragment(), MvvmView {
+
+    val vm: VM by lazy {
+        viewModels.values.mapNotNull { it as? VM }.firstOrNull()
+            ?: throw IllegalArgumentException("View model not provided")
+    }
 
     lateinit var viewModels: Map<Class<out ViewModel>, ViewModel>
         private set

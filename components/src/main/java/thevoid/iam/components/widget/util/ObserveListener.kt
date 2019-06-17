@@ -1,6 +1,7 @@
 package thevoid.iam.components.widget.util
 
 import android.view.View
+import iam.thevoid.e.safe
 import thevoid.iam.components.widget.Setter
 
 class ObserveListener : View.OnAttachStateChangeListener {
@@ -9,13 +10,15 @@ class ObserveListener : View.OnAttachStateChangeListener {
 
     private val observableSetters = mutableMapOf<String, Setter<out View, out Any>>()
 
-    fun subscribeSetter(setter: Setter<out View, out Any>, tag : String = key()) {
+    fun subscribeSetter(setter: Setter<out View, out Any>, tag: String = key()) {
         val alreadyObservable = observableSetters[tag]
-        if (alreadyObservable?.theSameAs(setter) != true) {
-            observableSetters[tag] = setter
-            if (attached)
-                setter.subscribeChanges()
-        }
+        if (alreadyObservable?.theSameAs(setter).safe)
+            alreadyObservable?.unsubscribeChanges()
+
+        observableSetters[tag] = setter
+
+        if (attached)
+            setter.subscribeChanges()
     }
 
     override fun onViewDetachedFromWindow(v: View?) {

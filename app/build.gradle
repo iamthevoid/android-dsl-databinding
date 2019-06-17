@@ -12,6 +12,11 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField "String", "ENDPOINT", '"https://revolut.duckdns.org/"'
+
+        multiDexEnabled true
+
     }
     buildTypes {
         release {
@@ -37,11 +42,21 @@ dependencies {
     implementation "org.jetbrains.anko:anko-sdk25:$anko" // sdk15, sdk19, sdk21, sdk23 are also available
     implementation "org.jetbrains.anko:anko-appcompat-v7:$anko"
     implementation "org.jetbrains.anko:anko-constraint-layout:$anko"
+    implementation "org.jetbrains.anko:anko-recyclerview-v7:$anko"
 
     implementation "iam.thevoid.extensions:android:$e"
     implementation "iam.thevoid.extensions:pure:$e"
     implementation "iam.thevoid.extensions:rx:$e"
     implementation "iam.thevoid.util:util:$e"
+
+    implementation 'androidx.multidex:multidex:2.0.1'
+
+    implementation "com.google.code.gson:gson:$gson"
+    implementation "com.squareup.retrofit2:retrofit:$retrofit"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit"
+    implementation "com.squareup.okhttp3:okhttp:$okhttp"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp"
 
     implementation "io.reactivex.rxjava2:rxjava:$rxjava"
     implementation "io.reactivex.rxjava2:rxandroid:$rxandroid"

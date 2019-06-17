@@ -11,14 +11,11 @@ import thevoid.iam.components.mvvm.view.MvvmFragment
 import thevoid.iam.components.mvvm.createBundle
 import thevoid.iam.components.widget.ext.setBackgroundColor
 
-class JustFragment : AnkoMvvmFragment() {
+class JustFragment : AnkoMvvmFragment<JustViewModel>() {
 
     override fun provideViewModel(): ViewModelBundleProvider = createBundle(JustViewModel::class)
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-        context?.let { createView(AnkoContext.create(it, this)) }
-
-    override fun createView(ui: AnkoContext<AnkoMvvmFragment>): View =
+    override fun createView(ui: AnkoContext<AnkoMvvmFragment<JustViewModel>>): View =
         ui.frameLayout {
             padding = dip(3)
             frameLayout {

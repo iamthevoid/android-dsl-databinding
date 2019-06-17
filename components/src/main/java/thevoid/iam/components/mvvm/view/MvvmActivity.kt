@@ -9,10 +9,15 @@ import thevoid.iam.components.mvvm.viewmodel.LifecycleTrackingViewModel
 import thevoid.iam.components.mvvm.ViewModelBundleProvider
 
 
-abstract class MvvmActivity : AppCompatActivity(), MvvmView {
+abstract class MvvmActivity<VM : ViewModel> : AppCompatActivity(), MvvmView {
 
     lateinit var viewModels: Map<Class<out ViewModel>, ViewModel>
         private set
+
+    val vm: VM by lazy {
+        viewModels.values.mapNotNull { it as? VM }.firstOrNull()
+            ?: throw IllegalArgumentException("View model not provided")
+    }
 
     inline fun <reified VM : ViewModel> viewModel() =
         (viewModels[VM::class.java] as? VM)
