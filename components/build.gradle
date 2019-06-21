@@ -52,7 +52,6 @@ dependencies {
 
     implementation "androidx.appcompat:appcompat:$appcompat"
     implementation "com.google.android.material:material:$design"
-    implementation "androidx.recyclerview:recyclerview:$recycler"
 
     implementation "io.reactivex.rxjava2:rxjava:$rxjava"
     implementation "io.reactivex.rxjava2:rxandroid:$rxandroid"
@@ -61,9 +60,6 @@ dependencies {
     implementation "iam.thevoid.extensions:pure:$e"
     implementation "iam.thevoid.extensions:rx:$e"
     implementation "iam.thevoid.util:util:$e"
-
-    implementation 'me.tatarka.bindingcollectionadapter2:bindingcollectionadapter:3.0.0'
-    implementation 'me.tatarka.bindingcollectionadapter2:bindingcollectionadapter-recyclerview:3.0.0'
 
     implementation "androidx.lifecycle:lifecycle-runtime:$lifecycleRt"
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycleEx"

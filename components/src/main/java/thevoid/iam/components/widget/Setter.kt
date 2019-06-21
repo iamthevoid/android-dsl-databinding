@@ -24,9 +24,6 @@ abstract class Setter<V : View, C>(view: V, private val flowable: Flowable<C>) {
         disposable = null
         disposable = flowable
             .observeOn(AndroidSchedulers.mainThread())
-            .doOnNext {
-                Log.d("fff", "$it")
-            }
             .subscribeSafe { set(viewRef.get(), it) }
     }
 

@@ -4,12 +4,9 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'com.novoda.bintray-release'
 
-repositories {
-
-}
-
 android {
     compileSdkVersion 28
+
 
     defaultConfig {
         minSdkVersion 15
@@ -27,15 +24,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-    compileOptions {
-        sourceCompatibility = '1.8'
-        targetCompatibility = '1.8'
-    }
+
 }
 
 publish {
-    artifactId = 'anko'
-    desc = 'Anko adapter. Anko V part of mvvm + Anko Views'
+    artifactId = 'recycler'
+    desc = 'Recycler Adapter and Rx bindings'
     groupId = "$libGroupId"
     publishVersion = "$libVersion"
     licences = ["$libLicence"]
@@ -45,19 +39,18 @@ publish {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation project(":components")
-    implementation project(":recycler")
+    implementation project (":components")
+
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     implementation "androidx.appcompat:appcompat:$appcompat"
-    implementation "com.google.android.material:material:$design"
+    implementation "androidx.recyclerview:recyclerview:$recycler"
 
-    implementation "org.jetbrains.anko:anko-sdk25:$anko" // sdk15, sdk19, sdk21, sdk23 are also available
-    implementation "org.jetbrains.anko:anko-appcompat-v7:$anko"
-    implementation "org.jetbrains.anko:anko-constraint-layout:$anko"
+    implementation "io.reactivex.rxjava2:rxjava:$rxjava"
+    implementation "io.reactivex.rxjava2:rxandroid:$rxandroid"
 
     testImplementation "junit:junit:$junit"
     androidTestImplementation "androidx.test:runner:$runner"
