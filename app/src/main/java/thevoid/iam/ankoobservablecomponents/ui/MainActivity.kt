@@ -8,9 +8,9 @@ import androidx.fragment.app.FragmentPagerAdapter
 import org.jetbrains.anko.frameLayout
 import org.jetbrains.anko.support.v4.viewPager
 import thevoid.iam.ankoobservablecomponents.R
-import thevoid.iam.ankoobservablecomponents.ui.mvvm.fragment.JustFragment
-import thevoid.iam.ankoobservablecomponents.ui.mvvm.fragment.PageFragment
-import thevoid.iam.ankoobservablecomponents.ui.mvvm.fragment.RecyclerFragment
+import thevoid.iam.ankoobservablecomponents.ui.mvvm.just.JustFragment
+import thevoid.iam.ankoobservablecomponents.ui.mvvm.page.PageFragment
+import thevoid.iam.ankoobservablecomponents.ui.mvvm.recycler.RecyclerFragment
 
 class MainActivity : AppCompatActivity() {
 

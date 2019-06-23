@@ -1,4 +1,4 @@
-package thevoid.iam.ankoobservablecomponents.ui.mvvm.fragment
+package thevoid.iam.ankoobservablecomponents.ui.mvvm.page
 
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintSet
@@ -10,7 +10,6 @@ import org.jetbrains.anko.*
 import org.jetbrains.anko.constraint.layout.ConstraintSetBuilder.Side.*
 import org.jetbrains.anko.constraint.layout.matchConstraint
 import thevoid.iam.ankoobservablecomponents.R
-import thevoid.iam.ankoobservablecomponents.ui.mvvm.vm.PageViewModel
 import thevoid.iam.components.mvvm.ViewModelBundleProvider
 import thevoid.iam.components.mvvm.createBundle
 import thevoid.iam.components.widget.ext.onTextChanges

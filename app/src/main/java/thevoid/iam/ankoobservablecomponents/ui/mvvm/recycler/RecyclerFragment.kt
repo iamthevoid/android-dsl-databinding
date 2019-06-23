@@ -1,4 +1,4 @@
-package thevoid.iam.ankoobservablecomponents.ui.mvvm.fragment
+package thevoid.iam.ankoobservablecomponents.ui.mvvm.recycler
 
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -10,9 +10,9 @@ import org.jetbrains.anko.recyclerview.v7.recyclerView
 import thevoid.iam.components.mvvm.ViewModelBundleProvider
 import thevoid.iam.components.mvvm.createBundle
 import iam.thevoid.recycler.setItems
-import thevoid.iam.ankoobservablecomponents.ui.mvvm.vm.RecyclerViewModel
 
 class RecyclerFragment : AnkoMvvmFragment<RecyclerViewModel>() {
+
     override fun provideViewModel(): ViewModelBundleProvider = createBundle(RecyclerViewModel::class)
 
     override fun createView(ui: AnkoContext<AnkoMvvmFragment<RecyclerViewModel>>): View =

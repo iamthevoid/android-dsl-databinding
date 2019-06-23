@@ -1,4 +1,4 @@
-package thevoid.iam.ankoobservablecomponents.ui.mvvm.vm
+package thevoid.iam.ankoobservablecomponents.ui.mvvm.page
 
 import thevoid.iam.components.mvvm.viewmodel.RxViewModel
 import thevoid.iam.components.rx.fields.RxField
