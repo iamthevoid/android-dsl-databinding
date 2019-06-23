@@ -1,20 +1,18 @@
 package thevoid.iam.components.mvvm.view
 
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProviders
 import thevoid.iam.components.mvvm.viewmodel.LifecycleTrackingViewModel
-import thevoid.iam.components.mvvm.ViewModelBundleProvider
 
 
-abstract class MvvmActivity<VM : ViewModel> : AppCompatActivity(), MvvmView {
+abstract class MvvmActivity<VM : ViewModel> : AppCompatActivity(), MvvmView<VM> {
 
     lateinit var viewModels: Map<Class<out ViewModel>, ViewModel>
         private set
 
-    val vm: VM by lazy {
+    override val vm: VM by lazy {
         viewModels.values.mapNotNull { it as? VM }.firstOrNull()
             ?: throw IllegalArgumentException("View model not provided")
     }
@@ -26,20 +24,24 @@ abstract class MvvmActivity<VM : ViewModel> : AppCompatActivity(), MvvmView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModels = provideViewModel().bundles.let { bundles ->
-            bundles.associate { bundle ->
-                bundle.cls to with(bundle) {
-                    factory?.let { ViewModelProviders.of(this@MvvmActivity, bundle) }
+        viewModels = provideViewModel().bindings.let { bindings ->
+            bindings.associate { binding ->
+                binding.cls to with(binding) {
+                    factory?.let { ViewModelProviders.of(this@MvvmActivity, binding) }
                         ?: ViewModelProviders.of(this@MvvmActivity)
-                }[bundle.cls].also {
-                    (it as? LifecycleTrackingViewModel)?.registerLifecycle(this)
-                    onConfigureViewModel(it)
+                }[binding.cls].also { viewModel ->
+
+                    (viewModel as? LifecycleTrackingViewModel)?.apply {
+                        registerLifecycle(this@MvvmActivity)
+                    }
+
+                    onConfigureViewModel(viewModel)
+
+                    (viewModel as? VM)?.let { vm -> onConfigureGenericViewModel(vm) }
                 }
             }
         }
 
         setContentView(provideContentView())
     }
-
-    open fun onConfigureViewModel(viewModel: ViewModel) = Unit
 }

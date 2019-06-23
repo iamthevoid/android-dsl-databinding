@@ -10,8 +10,8 @@ import org.jetbrains.anko.*
 import org.jetbrains.anko.constraint.layout.ConstraintSetBuilder.Side.*
 import org.jetbrains.anko.constraint.layout.matchConstraint
 import thevoid.iam.ankoobservablecomponents.R
-import thevoid.iam.components.mvvm.ViewModelBundleProvider
-import thevoid.iam.components.mvvm.createBundle
+import thevoid.iam.components.mvvm.ViewModelBindingProvider
+import thevoid.iam.components.mvvm.createBinding
 import thevoid.iam.components.widget.ext.onTextChanges
 import thevoid.iam.components.widget.ext.setText
 
@@ -66,6 +66,6 @@ class PageFragment : AnkoMvvmFragment<PageViewModel>() {
         }
 
 
-    override fun provideViewModel(): ViewModelBundleProvider = createBundle(PageViewModel::class.java)
+    override fun provideViewModel(): ViewModelBindingProvider = createBinding(PageViewModel::class.java)
 
 }

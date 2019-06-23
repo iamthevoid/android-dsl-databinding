@@ -9,9 +9,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProviders
 import thevoid.iam.components.mvvm.viewmodel.LifecycleTrackingViewModel
 
-abstract class MvvmDialogFragment<VM : ViewModel> : DialogFragment(), MvvmView {
+abstract class MvvmDialogFragment<VM : ViewModel> : DialogFragment(), MvvmView<VM> {
 
-    val vm: VM by lazy {
+    override val vm: VM by lazy {
         viewModels.values.mapNotNull { it as? VM }.firstOrNull()
             ?: throw IllegalArgumentException("View model not provided")
     }
@@ -32,27 +32,38 @@ abstract class MvvmDialogFragment<VM : ViewModel> : DialogFragment(), MvvmView {
         if (style != -1)
             setStyle(STYLE_NORMAL, style)
 
-        viewModels = provideViewModel().bundles.let { bundles ->
-            bundles.associate { bundle ->
-                bundle.cls to with(bundle) {
+        viewModels = provideViewModel().bindings.let { bindings ->
+            bindings.associate { binding ->
+                binding.cls to with(binding) {
 
-                    activity?.let { activity ->
-                        factory?.let { ViewModelProviders.of(activity, bundle) } ?: ViewModelProviders.of(activity)
-                    } ?: this@MvvmDialogFragment.let { fragment ->
-                        factory?.let { ViewModelProviders.of(fragment, bundle) } ?: ViewModelProviders.of(fragment)
-                    }
+                    // Check ViewModel provided to fragment
+                    bindingFragment?.let { fragment ->
+                        factory?.let { ViewModelProviders.of(fragment, binding) } ?: ViewModelProviders.of(fragment) }
 
-                }[bundle.cls].also {
-                    (it as? LifecycleTrackingViewModel)?.apply {
+                        ?:
+
+                        // Or to activity
+                        bindingActivity?.let { activity ->
+                            factory?.let { ViewModelProviders.of(activity, binding) } ?: ViewModelProviders.of(activity) }
+
+                        ?:
+
+                        // Or no provided at all
+                        throw IllegalStateException("No ViewModelBinding provided")
+
+                }[binding.cls].also { viewModel ->
+
+                    (viewModel as? LifecycleTrackingViewModel)?.apply {
                         registerLifecycle(this@MvvmDialogFragment)
                     }
-                    onConfigureViewModel(it)
+
+                    onConfigureViewModel(viewModel)
+
+                    (viewModel as? VM)?.let { vm -> onConfigureGenericViewModel(vm) }
                 }
             }
         }
     }
-
-    open fun onConfigureViewModel(viewModel: ViewModel) = Unit
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
         provideContentView()
