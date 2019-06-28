@@ -8,9 +8,9 @@ import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.Subject
 
-class RxField<T>(initial : T? = null, private val onChange : (T?) -> Unit) {
+class RxField<T>(initial: T? = null, private val onChange: (T?) -> Unit = {}) {
 
-    private val subject : BehaviorSubject<Optional<T>> = BehaviorSubject.createDefault(Optional.of(initial))
+    private val subject: BehaviorSubject<Optional<T>> = BehaviorSubject.createDefault(Optional.of(initial))
 
     fun set(elem: T?) {
         if (subject.canPublish())
@@ -18,9 +18,9 @@ class RxField<T>(initial : T? = null, private val onChange : (T?) -> Unit) {
         onChange(elem)
     }
 
-    fun get() : T? = subject.value?.elem
+    fun get(): T? = subject.value?.elem
 
-    fun observe() : Flowable<Optional<T>> = subject.toFlowableLatest()
+    fun observe(): Flowable<Optional<T>> = subject.toFlowableLatest()
 
-    fun <O> observe(mapper : ((Optional<T>) -> O)) = observe().map { mapper(it) }
+    fun <O> observe(mapper: ((Optional<T>) -> O)) = observe().map { mapper(it) }
 }

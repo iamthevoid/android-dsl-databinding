@@ -5,7 +5,7 @@ import iam.thevoid.rxe.toFlowableLatest
 import io.reactivex.Flowable
 import io.reactivex.subjects.BehaviorSubject
 
-open class RxItem<T>(initial: T, val onChange: (T) -> Unit = {}) {
+open class RxItem<T>(initial: T, private val onChange: (T) -> Unit = {}) {
 
     private val subject = BehaviorSubject.createDefault(initial)
 
@@ -22,7 +22,8 @@ open class RxItem<T>(initial: T, val onChange: (T) -> Unit = {}) {
     fun <E> observe(mapper: T.() -> E): Flowable<E> = observe().map { it.mapper() }
 }
 
-open class RxCharSequence<T : CharSequence>(initial: T = "" as T, onChange: (T) -> Unit = {}) : RxItem<T>(initial, onChange)
+open class RxCharSequence<T : CharSequence>(initial: T = "" as T, onChange: (T) -> Unit = {}) :
+    RxItem<T>(initial, onChange)
 
 class RxBoolean(initial: Boolean = false, onChange: (Boolean) -> Unit = {}) : RxItem<Boolean>(initial, onChange)
 
