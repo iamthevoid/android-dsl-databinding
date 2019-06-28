@@ -1,6 +1,7 @@
 package thevoid.iam.components.widget.ext
 
 import com.google.android.material.tabs.TabLayout
+import io.reactivex.Flowable
 import thevoid.iam.components.R
 import thevoid.iam.components.rx.fields.RxField
 import thevoid.iam.components.widget.adapter.OnTabSelectedListenerAdapter
@@ -13,6 +14,18 @@ private val TabLayout.onTabSelectListener: OnTabSelectedListenerDelegate
             removeOnTabSelectedListener(it)
             addOnTabSelectedListener(it)
         }
+
+
+fun TabLayout.selectTab(tabFlowable : Flowable<Int>) =
+    selectTab(tabFlowable) { it }
+
+fun <T : Any> TabLayout.selectTab(tabFlowable : Flowable<T>, mapper: (T) -> Int) =
+    addSetter(tabFlowable) {
+        val tabSelectedListener = onTabSelectListener
+        removeOnTabSelectedListener(tabSelectedListener)
+        selectTab(getTabAt(mapper(it)))
+        addOnTabSelectedListener(tabSelectedListener)
+    }
 
 
 fun TabLayout.onTabReselect(rxTab: RxField<TabLayout.Tab>) =

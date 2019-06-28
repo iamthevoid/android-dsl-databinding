@@ -63,17 +63,19 @@ fun <T : Any> EditText.onTextChanges(rxChanges: RxField<T>, mapper: (OnEditTextC
     }, rxChanges)
 
 fun EditText.setTextSilent(text: CharSequence) {
-    removeTextChangedListener(textWatcher)
+    val watcher = textWatcher
+    removeTextChangedListener(watcher)
     setText(text)
     moveCursorToEnd()
-    addTextChangedListener(textWatcher)
+    addTextChangedListener(watcher)
 }
 
 fun EditText.setTextResourceSilent(@StringRes text: Int) {
-    removeTextChangedListener(textWatcher)
+    val watcher = textWatcher
+    removeTextChangedListener(watcher)
     setText(text)
     moveCursorToEnd()
-    addTextChangedListener(textWatcher)
+    addTextChangedListener(watcher)
 }
 
 fun <T : CharSequence> EditText.setText(rxString: RxCharSequence<T>) =

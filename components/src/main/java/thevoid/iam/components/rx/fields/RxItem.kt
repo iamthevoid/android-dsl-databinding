@@ -5,36 +5,37 @@ import iam.thevoid.rxe.toFlowableLatest
 import io.reactivex.Flowable
 import io.reactivex.subjects.BehaviorSubject
 
-open class RxItem<T>(initial : T) {
+open class RxItem<T>(initial: T, val onChange: (T) -> Unit = {}) {
 
     private val subject = BehaviorSubject.createDefault(initial)
 
     fun set(elem: T) {
         if (subject.canPublish())
             subject.onNext(elem)
+        onChange(elem)
     }
 
-    fun get() : T = subject.value ?: throw IllegalStateException("Value not provided")
+    fun get(): T = subject.value ?: throw IllegalStateException("Value not provided")
 
-    fun observe() : Flowable<T> = subject.toFlowableLatest()
+    fun observe(): Flowable<T> = subject.toFlowableLatest()
 
-    fun <E> observe(mapper : T.() -> E) : Flowable<E> = observe().map { it.mapper() }
+    fun <E> observe(mapper: T.() -> E): Flowable<E> = observe().map { it.mapper() }
 }
 
-open class RxCharSequence<T : CharSequence>(initial: T = "" as T) : RxItem<T>(initial)
+open class RxCharSequence<T : CharSequence>(initial: T = "" as T, onChange: (T) -> Unit = {}) : RxItem<T>(initial, onChange)
 
-class RxBoolean(initial : Boolean = false)  : RxItem<Boolean>(initial)
+class RxBoolean(initial: Boolean = false, onChange: (Boolean) -> Unit = {}) : RxItem<Boolean>(initial, onChange)
 
-class RxFloat(initial : Float = 0f) : RxItem<Float>(initial)
+class RxFloat(initial: Float = 0f, onChange: (Float) -> Unit = {}) : RxItem<Float>(initial, onChange)
 
-class RxDouble(initial : Double = 0.toDouble())  : RxItem<Double>(initial)
+class RxDouble(initial: Double = .0, onChange: (Double) -> Unit = {}) : RxItem<Double>(initial, onChange)
 
-class RxInt(initial : Int = 0) : RxItem<Int>(initial)
+class RxInt(initial: Int = 0, onChange: (Int) -> Unit = {}) : RxItem<Int>(initial, onChange)
 
-class RxLong(initial : Long = 0L) : RxItem<Long>(initial)
+class RxLong(initial: Long = 0L, onChange: (Long) -> Unit = {}) : RxItem<Long>(initial, onChange)
 
-class RxString(string: String = "") : RxCharSequence<String>(string)
+class RxString(string: String = "", onChange: (String) -> Unit = {}) : RxCharSequence<String>(string, onChange)
 
-class RxList<T>(initial : List<T> = emptyList()) : RxItem<List<T>>(initial)
+class RxList<T>(initial: List<T> = emptyList(), onChange: (List<T>) -> Unit = {}) : RxItem<List<T>>(initial, onChange)
 
 
