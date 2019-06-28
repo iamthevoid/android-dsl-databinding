@@ -1,4 +1,4 @@
-package thevoid.iam.components.widget.util.adapter
+package thevoid.iam.components.widget.adapter
 
 import android.text.Editable
 import android.text.TextWatcher

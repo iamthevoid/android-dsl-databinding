@@ -10,7 +10,7 @@ import io.reactivex.Flowable
 import thevoid.iam.components.R
 import thevoid.iam.components.rx.fields.*
 import thevoid.iam.components.widget.delegate.TextWatcherDelegate
-import thevoid.iam.components.widget.util.adapter.TextWatcherAdapter
+import thevoid.iam.components.widget.adapter.TextWatcherAdapter
 
 private val EditText.textWatcher: TextWatcherDelegate
     get() = ((getTag(R.id.textWatcher) as? TextWatcherDelegate)

@@ -38,10 +38,10 @@ fun <T : CharSequence, V : View> V.addGetter(consumer: ((T) -> Unit) -> Unit, rx
         consumer { emitter.onNext(it) }
     }, BackpressureStrategy.LATEST)) { rxCharSequence.set(it) }
 
-fun <T : Any, V : View> V.addGetter(consumer: ((T) -> Unit) -> Unit, rxField: RxField<T>) =
-    addSetter(Flowable.create<T>({ emitter ->
-        consumer { emitter.onNext(it) }
-    }, BackpressureStrategy.LATEST)) { rxField.set(it) }
+fun <T : Any, V : View> V.addGetter(consumer: ((T?) -> Unit) -> Unit, rxField: RxField<T>) =
+    addSetter(Flowable.create<Optional<T>>({ emitter ->
+        consumer { emitter.onNext(Optional.of(it)) }
+    }, BackpressureStrategy.LATEST)) { rxField.set(it.elem) }
 
 fun <V : View> V.addGetter(consumer: ((Int) -> Unit) -> Unit, rxInt: RxInt) =
     addSetter(Flowable.create<Int>({ emitter ->

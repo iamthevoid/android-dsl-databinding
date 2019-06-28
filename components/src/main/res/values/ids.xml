@@ -4,6 +4,8 @@
 
     <item name="textWatcher" type="id"/>
 
+    <item name="onTabSelectListener" type="id"/>
+
     <item name="gestureDetector" type="id"/>
     <item name="gestureDetectorCallback" type="id"/>
 </resources>
