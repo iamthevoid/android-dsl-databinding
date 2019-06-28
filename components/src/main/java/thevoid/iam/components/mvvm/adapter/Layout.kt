@@ -1,4 +1,4 @@
-package iam.thevoid.recycler
+package thevoid.iam.components.mvvm.adapter
 
 import android.content.Context
 import android.view.View

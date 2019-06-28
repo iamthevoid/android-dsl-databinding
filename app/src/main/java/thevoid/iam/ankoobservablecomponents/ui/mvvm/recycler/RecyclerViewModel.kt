@@ -1,6 +1,7 @@
 package thevoid.iam.ankoobservablecomponents.ui.mvvm.recycler
 
 import iam.thevoid.recycler.DiffCallback
+import iam.thevoid.recycler.ItemBindings
 import iam.thevoid.rxe.subscribeSafe
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
@@ -35,18 +36,9 @@ class RecyclerViewModel : RxViewModel() {
         }
     }
 
-    val itemBindings = iam.thevoid.recycler.RxAdapter.ItemBindings()
-        .addBinding(String::class.java) {
-            CurrencyHeaderItem(
-                it
-            )
-        }
-        .addBinding(CurrencyRate::class.java) {
-            CurrencySimpleItem(
-                current,
-                it
-            )
-        }
+    val itemBindings = ItemBindings()
+        .addBinding(String::class.java) { CurrencyHeaderItem(it) }
+        .addBinding(CurrencyRate::class.java) { CurrencySimpleItem(current, it) }
 
     override fun onActive() {
         super.onActive()

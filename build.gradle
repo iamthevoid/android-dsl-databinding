@@ -18,7 +18,7 @@ buildscript {
 ext {
 
     // publish
-    libVersion = '0.7.2'
+    libVersion = '0.7.3'
     libWebsite = 'https://github.com/iamthevoid/android-noxml-mvvm.git'
     libUserOrg = 'iamthevoid'
     libUploadName = 'android-noxml-mvvm'
@@ -28,7 +28,7 @@ ext {
     anko = "0.10.8"
 
 
-    e = "0.4.8"
+    e = "0.4.9"
 
     gson = "2.8.5"
     jsoup = "1.12.1"
