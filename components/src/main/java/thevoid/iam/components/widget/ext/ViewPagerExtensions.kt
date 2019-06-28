@@ -15,10 +15,29 @@ fun ViewPager.setCurrentPage(page: Flowable<Int>, smoothScroll: Boolean = true) 
 fun ViewPager.setCurrentPage(page: RxInt, smoothScroll: Boolean = true) =
     addSetter(page.observe()) { setCurrentItem(it, smoothScroll) }
 
-fun ViewPager.setFragments(
+fun ViewPager.setUntitledFragments(
+    fragments: List<Fragment>,
+    fm: FragmentManager = context.asAppCompatActivity().supportFragmentManager,
+    behavior: Int = FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT
+) = setTitledFactories(SimpleFragmentPagerAdapter.fromUntitledFragments(fragments), fm, behavior)
+
+fun ViewPager.setTitledFragments(
+    fragments: List<Pair<String, Fragment>>,
+    fm: FragmentManager = context.asAppCompatActivity().supportFragmentManager,
+    behavior: Int = FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT
+) = setTitledFactories(SimpleFragmentPagerAdapter.fromTitledFragments(fragments), fm, behavior)
+
+fun ViewPager.setUntitledFactories(
     fragments: List<() -> Fragment>,
     fm: FragmentManager = context.asAppCompatActivity().supportFragmentManager,
     behavior: Int = FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT
+) = setTitledFactories(SimpleFragmentPagerAdapter.fromUntitledFactories(fragments), fm, behavior)
+
+fun ViewPager.setTitledFactories(
+    fragments: List<Pair<String, () -> Fragment>>,
+    fm: FragmentManager = context.asAppCompatActivity().supportFragmentManager,
+    behavior: Int = FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT
 ) {
-    adapter = SimpleFragmentPagerAdapter(fm, fragments, behavior)
+    adapter = (adapter as? SimpleFragmentPagerAdapter)?.apply { setTitledFactories(fragments) }
+        ?: SimpleFragmentPagerAdapter(fm, fragments, behavior)
 }
