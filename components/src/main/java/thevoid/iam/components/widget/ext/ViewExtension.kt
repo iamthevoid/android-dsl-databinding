@@ -43,6 +43,11 @@ fun <T : Any, V : View> V.addGetter(consumer: ((T?) -> Unit) -> Unit, rxField: R
         consumer { emitter.onNext(Optional.of(it)) }
     }, BackpressureStrategy.LATEST)) { rxField.set(it.elem) }
 
+fun <T : Any, V : View> V.addGetter(consumer: ((T) -> Unit) -> Unit, rxField: RxItem<T>) =
+    addSetter(Flowable.create<T>({ emitter ->
+        consumer { emitter.onNext(it) }
+    }, BackpressureStrategy.LATEST)) { rxField.set(it) }
+
 fun <V : View> V.addGetter(consumer: ((Int) -> Unit) -> Unit, rxInt: RxInt) =
     addSetter(Flowable.create<Int>({ emitter ->
         consumer { emitter.onNext(it) }

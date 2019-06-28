@@ -4,6 +4,7 @@ import com.google.android.material.tabs.TabLayout
 import io.reactivex.Flowable
 import thevoid.iam.components.R
 import thevoid.iam.components.rx.fields.RxField
+import thevoid.iam.components.rx.fields.RxItem
 import thevoid.iam.components.widget.adapter.OnTabSelectedListenerAdapter
 import thevoid.iam.components.widget.delegate.OnTabSelectedListenerDelegate
 
@@ -40,6 +41,15 @@ fun <T : Any> TabLayout.onTabReselect(rxField: RxField<T>, mapper : ((TabLayout.
         })
     }, rxField)
 
+fun <T : Any> TabLayout.onTabReselect(rxItem: RxItem<T>, mapper : ((TabLayout.Tab?) -> T?)) =
+    addGetter({
+        onTabSelectListener.addOnTabReselectCallback(object : OnTabSelectedListenerAdapter() {
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+                tab?.also { nonNullTab -> mapper(nonNullTab) }
+            }
+        })
+    }, rxItem)
+
 
 fun TabLayout.onTabUnselected(rxTab: RxField<TabLayout.Tab>) =
     onTabUnselected(rxTab) { it }
@@ -53,6 +63,15 @@ fun <T : Any> TabLayout.onTabUnselected(rxField: RxField<T>, mapper : ((TabLayou
         })
     }, rxField)
 
+fun <T : Any> TabLayout.onTabUnselected(rxItem: RxItem<T>, mapper : ((TabLayout.Tab?) -> T?)) =
+    addGetter({
+        onTabSelectListener.addOnTabUnselectedCallback(object : OnTabSelectedListenerAdapter() {
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+                tab?.also { nonNullTab -> mapper(nonNullTab) }
+            }
+        })
+    }, rxItem)
+
 
 fun TabLayout.onTabSelected(rxTab: RxField<TabLayout.Tab>) =
     onTabSelected(rxTab) { it }
@@ -65,3 +84,12 @@ fun <T : Any> TabLayout.onTabSelected(rxField: RxField<T>, mapper : ((TabLayout.
             }
         })
     }, rxField)
+
+fun <T : Any> TabLayout.onTabSelected(rxItem: RxItem<T>, mapper : ((TabLayout.Tab?) -> T?)) =
+    addGetter({
+        onTabSelectListener.addOnTabSelectedCallback(object : OnTabSelectedListenerAdapter() {
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                tab?.also { nonNullTab -> mapper(nonNullTab) }
+            }
+        })
+    }, rxItem)
