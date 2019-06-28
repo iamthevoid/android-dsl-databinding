@@ -17,14 +17,14 @@ private val TabLayout.onTabSelectListener: OnTabSelectedListenerDelegate
         }
 
 
-fun TabLayout.selectTab(tabFlowable : Flowable<Int>) =
-    selectTab(tabFlowable) { it }
+fun TabLayout.selectTab(tabFlowable : Flowable<Int>, updateIndicator : Boolean = true) =
+    selectTab(tabFlowable, updateIndicator) { it }
 
-fun <T : Any> TabLayout.selectTab(tabFlowable : Flowable<T>, mapper: (T) -> Int) =
+fun <T : Any> TabLayout.selectTab(tabFlowable : Flowable<T>, updateIndicator : Boolean = true, mapper: (T) -> Int) =
     addSetter(tabFlowable) {
         val tabSelectedListener = onTabSelectListener
         removeOnTabSelectedListener(tabSelectedListener)
-        selectTab(getTabAt(mapper(it)))
+        post { selectTab(getTabAt(mapper(it)), updateIndicator) }
         addOnTabSelectedListener(tabSelectedListener)
     }
 
