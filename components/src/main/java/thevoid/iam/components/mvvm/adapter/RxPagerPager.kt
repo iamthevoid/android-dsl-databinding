@@ -13,7 +13,7 @@ class RxPagerPager<T : Any>(items: List<T>, titles: List<String> = emptyList()) 
     private val titles: MutableList<String>
 
     init {
-        this.titles = items.mapIndexed { index, item -> if (titles.size <= index + 1) titles[index] else "" }.toMutableList()
+        this.titles = items.indices.map { if (it < titles.size) titles[it] else "" }.toMutableList()
         this.data = items.toMutableList()
     }
 
@@ -29,7 +29,7 @@ class RxPagerPager<T : Any>(items: List<T>, titles: List<String> = emptyList()) 
     }
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any =
-        ViewHolder(bindings.factory(data[position]::class.java).invoke(container))
+        container.addView(ViewHolder(bindings.factory(data[position]::class.java).invoke(container)).itemView)
 
     override fun destroyItem(collection: ViewGroup, position: Int, view: Any) = collection.removeView(view as? View)
 
@@ -40,10 +40,10 @@ class RxPagerPager<T : Any>(items: List<T>, titles: List<String> = emptyList()) 
     override fun getPageTitle(position: Int): CharSequence? = titles[position]
 
     companion object {
-        fun <T> fromUntitledItems(items : List<T>) =
+        fun <T> fromUntitledItems(items: List<T>) =
             items.map { Pair("", it) }
 
-        fun <T> fromTitlesAndItems(items : List<T>, titles : List<String>) =
-            items.mapIndexed { index, item -> Pair(if (titles.size <= index + 1) titles[index] else "", item) }
+        fun <T> fromTitlesAndItems(items: List<T>, titles: List<String>) =
+            items.mapIndexed { index, item -> Pair(if (index < titles.size) titles[index] else "", item) }
     }
 }
