@@ -3,7 +3,7 @@ package thevoid.iam.components
 import org.junit.Test
 
 import org.junit.Assert.*
-import thevoid.iam.components.mvvm.adapter.RxPagerPager
+import thevoid.iam.components.mvvm.adapter.RxPagerAdapter
 import thevoid.iam.components.widget.util.key
 
 /**
@@ -24,7 +24,7 @@ class ExampleUnitTest {
 
     @Test
     fun testMapper() {
-        val list = RxPagerPager.fromTitlesAndItems(listOf(1,2,3), listOf("One", "Two"))
+        val list = RxPagerAdapter.fromTitlesAndItems(listOf(1,2,3), listOf("One", "Two"))
         print(list)
     }
 }

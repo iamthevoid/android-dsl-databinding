@@ -3,13 +3,12 @@ package thevoid.iam.components.widget.ext
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import iam.thevoid.ae.asAppCompatActivity
 import iam.thevoid.rxe.combine
 import io.reactivex.Flowable
 import thevoid.iam.components.mvvm.adapter.ItemBindings
-import thevoid.iam.components.mvvm.adapter.RxPagerPager
+import thevoid.iam.components.mvvm.adapter.RxPagerAdapter
 import thevoid.iam.components.mvvm.adapter.SimpleFragmentPagerAdapter
 import thevoid.iam.components.rx.fields.RxInt
 import thevoid.iam.components.rx.fields.RxList
@@ -49,10 +48,10 @@ fun <T : Any> ViewPager.setItems(
     itemBindings: ItemBindings,
     titles : List<String> = emptyList()
 ) {
-    (adapter as? RxPagerPager<T>)?.apply {
-        setTitledItems(RxPagerPager.fromTitlesAndItems(items, titles))
+    (adapter as? RxPagerAdapter<T>)?.apply {
+        setTitledItems(RxPagerAdapter.fromTitlesAndItems(items, titles))
     } ?: run {
-        RxPagerPager(items, titles).apply {
+        RxPagerAdapter(items, titles).apply {
             this@apply.bindings = itemBindings
             adapter = this
         }

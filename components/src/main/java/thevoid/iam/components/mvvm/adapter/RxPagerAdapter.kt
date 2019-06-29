@@ -4,18 +4,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.viewpager.widget.PagerAdapter
 
-class RxPagerPager<T : Any>(items: List<T>, titles: List<String> = emptyList()) : PagerAdapter() {
+class RxPagerAdapter<T : Any>(items: List<T>, titles: List<String> = emptyList()) : PagerAdapter() {
 
     var bindings = ItemBindings.EMPTY
 
-    private val data: MutableList<T>
+    private val data: MutableList<T> = items.toMutableList()
 
-    private val titles: MutableList<String>
-
-    init {
-        this.titles = items.indices.map { if (it < titles.size) titles[it] else "" }.toMutableList()
-        this.data = items.toMutableList()
-    }
+    private val titles: MutableList<String> = items.indices
+        .map { if (it < titles.size) titles[it] else "" }
+        .toMutableList()
 
     fun setUntitledItems(items: List<T>) =
         setTitledItems(fromUntitledItems(items))
@@ -26,10 +23,15 @@ class RxPagerPager<T : Any>(items: List<T>, titles: List<String> = emptyList()) 
 
         titles.clear()
         titles.addAll(items.map { it.first })
+
+        notifyDataSetChanged()
     }
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any =
-        container.addView(ViewHolder(bindings.factory(data[position]::class.java).invoke(container)).itemView)
+        ViewHolder(bindings.factory(data[position]::class.java).invoke(container)).also {
+            container.addView(it.itemView)
+            it.onBind(data[position])
+        }
 
     override fun destroyItem(collection: ViewGroup, position: Int, view: Any) = collection.removeView(view as? View)
 
