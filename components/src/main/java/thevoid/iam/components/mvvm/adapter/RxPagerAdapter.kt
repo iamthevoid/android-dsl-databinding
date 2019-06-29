@@ -27,11 +27,14 @@ class RxPagerAdapter<T : Any>(items: List<T>, titles: List<String> = emptyList()
         notifyDataSetChanged()
     }
 
-    override fun instantiateItem(container: ViewGroup, position: Int): Any =
-        ViewHolder(bindings.factory(data[position]::class.java).invoke(container)).also {
-            container.addView(it.itemView)
-            it.onBind(data[position])
-        }
+    override fun instantiateItem(container: ViewGroup, position: Int): View =
+        (bindings.factory(data[position]::class.java).invoke(container) as? Layout<T>)?.let { layout ->
+            ViewHolder(data[position], layout).also {
+                container.addView(layout.view)
+                it.onBind(data[position])
+            }
+            layout.view
+        } ?: View(container.context)
 
     override fun destroyItem(collection: ViewGroup, position: Int, view: Any) = collection.removeView(view as? View)
 

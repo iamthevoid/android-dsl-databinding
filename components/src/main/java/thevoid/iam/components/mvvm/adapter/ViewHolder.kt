@@ -1,9 +1,8 @@
 package thevoid.iam.components.mvvm.adapter
 
-class ViewHolder(private val layout: Layout<*>) {
+class ViewHolder<T>(item : T, private val layout: Layout<T>) {
 
-    val itemView
-        get() = layout.view
+    init { layout.item.set(item) }
 
     fun <T> onBind(item: T) = (layout as? Layout<T>)?.item?.set(item)
 }
