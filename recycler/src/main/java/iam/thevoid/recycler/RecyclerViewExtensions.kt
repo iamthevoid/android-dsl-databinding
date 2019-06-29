@@ -2,6 +2,7 @@ package iam.thevoid.recycler
 
 import androidx.recyclerview.widget.RecyclerView
 import io.reactivex.Flowable
+import thevoid.iam.components.mvvm.adapter.ItemBindings
 import thevoid.iam.components.rx.fields.RxList
 import thevoid.iam.components.widget.ext.addSetter
 

@@ -1,7 +1,7 @@
 package thevoid.iam.ankoobservablecomponents.ui.mvvm.recycler
 
 import iam.thevoid.recycler.DiffCallback
-import iam.thevoid.recycler.ItemBindings
+import thevoid.iam.components.mvvm.adapter.ItemBindings
 import iam.thevoid.rxe.subscribeSafe
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers

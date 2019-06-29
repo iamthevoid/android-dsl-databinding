@@ -9,6 +9,7 @@ import iam.thevoid.ae.gone
 import iam.thevoid.ae.hide
 import iam.thevoid.ae.setClickable
 import iam.thevoid.e.mergeWith
+import iam.thevoid.e.safe
 import iam.thevoid.util.Optional
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
@@ -111,8 +112,20 @@ fun View.goneWhenLoaded(loading: RxLoading, vararg loadings: RxLoading) =
 fun View.gone(needGone: Flowable<Boolean>) =
     addSetter(needGone) { gone(it) }
 
+fun View.gone(needGone: RxField<Boolean>) =
+    addSetter(needGone.observe()) { gone(it.elem.safe) }
+
+fun View.gone(needGone: RxItem<Boolean>) =
+    addSetter(needGone.observe()) { gone(it) }
+
 fun View.hide(needHide: Flowable<Boolean>) =
     addSetter(needHide) { hide(it) }
+
+fun View.hide(needHide: RxField<Boolean>) =
+    addSetter(needHide.observe()) { hide(it.elem.safe) }
+
+fun View.hide(needHide: RxItem<Boolean>) =
+    addSetter(needHide.observe()) { hide(it) }
 
 fun View.setBackgroundColor(color: Flowable<Int>) =
     addSetter(color) { setBackgroundColor(it) }
@@ -126,6 +139,30 @@ fun View.setBackgroundDrawable(background: Flowable<Drawable>) =
 fun View.setBackgroundResource(background: Flowable<Int>) =
     addSetter(background) { setBackgroundResource(it) }
 
+/**
+ * Focus
+ */
+
+
+fun <T : Any> View.onFocusChange(onChange : RxItem<Boolean>) =
+    onFocusChange(onChange) { it }
+
+fun <T : Any> View.onFocusChange(onChange : RxField<Boolean>) =
+    onFocusChange(onChange) { it }
+
+fun <T : Any> View.onFocusChange(onChange : RxField<T>, mapper: (Boolean) -> T?) =
+    addGetter({
+        onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
+            it.invoke(mapper(hasFocus))
+        }
+    }, onChange)
+
+fun <T : Any> View.onFocusChange(onChange : RxItem<T>, mapper: (Boolean) -> T) =
+    addGetter({
+        onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
+            it.invoke(mapper(hasFocus))
+        }
+    }, onChange)
 
 /**
  * Gesture

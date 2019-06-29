@@ -3,6 +3,7 @@ package iam.thevoid.recycler
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import thevoid.iam.components.mvvm.adapter.ItemBindings
 
 class RxRecyclerAdapter<T : Any>(data: List<T> = emptyList()) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -26,7 +27,7 @@ class RxRecyclerAdapter<T : Any>(data: List<T> = emptyList()) : RecyclerView.Ada
     var diffCallbackFactory: ((old: List<T>, new: List<T>) -> DiffCallback<T>)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
-        bindings.viewHolder(parent, viewType)
+        Holder(bindings.factory(viewType).invoke(parent))
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is Holder)

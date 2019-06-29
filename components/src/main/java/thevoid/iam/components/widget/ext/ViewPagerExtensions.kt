@@ -3,17 +3,63 @@ package thevoid.iam.components.widget.ext
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import iam.thevoid.ae.asAppCompatActivity
+import iam.thevoid.rxe.combine
 import io.reactivex.Flowable
+import thevoid.iam.components.mvvm.adapter.ItemBindings
+import thevoid.iam.components.mvvm.adapter.RxPagerPager
 import thevoid.iam.components.mvvm.adapter.SimpleFragmentPagerAdapter
 import thevoid.iam.components.rx.fields.RxInt
+import thevoid.iam.components.rx.fields.RxList
 
 fun ViewPager.setCurrentPage(page: Flowable<Int>, smoothScroll: Boolean = true) =
     addSetter(page) { setCurrentItem(it, smoothScroll) }
 
 fun ViewPager.setCurrentPage(page: RxInt, smoothScroll: Boolean = true) =
     addSetter(page.observe()) { setCurrentItem(it, smoothScroll) }
+
+// View Pager Adapter
+
+fun <T : Any> ViewPager.setItems(
+    items: RxList<T>,
+    itemBindings: ItemBindings
+) = addSetter(items.observe()) { setItems(it, itemBindings) }
+
+fun <T : Any> ViewPager.setItems(
+    items: RxList<T>,
+    titles: RxList<String>,
+    itemBindings: ItemBindings
+) = addSetter(combine(items.observe(), titles.observe())) { setItems(it.first, itemBindings, it.second) }
+
+fun <T : Any> ViewPager.setItems(
+    itemsFlowable: Flowable<List<T>>,
+    itemBindings: ItemBindings
+) = addSetter(itemsFlowable) { setItems(it, itemBindings) }
+
+fun <T : Any> ViewPager.setItems(
+    itemsFlowable: Flowable<List<T>>,
+    titlesFlowable: Flowable<List<String>>,
+    itemBindings: ItemBindings
+) = addSetter(combine(itemsFlowable, titlesFlowable)) { setItems(it.first, itemBindings, it.second) }
+
+fun <T : Any> ViewPager.setItems(
+    items : List<T>,
+    itemBindings: ItemBindings,
+    titles : List<String> = emptyList()
+) {
+    (adapter as? RxPagerPager<T>)?.apply {
+        setTitledItems(RxPagerPager.fromTitlesAndItems(items, titles))
+    } ?: run {
+        RxPagerPager(items, titles).apply {
+            this@apply.bindings = itemBindings
+            adapter = this
+        }
+    }
+}
+
+// Fragment Pager Adapter
 
 fun ViewPager.setUntitledFragments(
     fragments: List<Fragment>,
