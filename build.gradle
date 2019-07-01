@@ -18,7 +18,7 @@ buildscript {
 ext {
 
     // publish
-    libVersion = '0.7.19'
+    libVersion = '0.7.21'
     libWebsite = 'https://github.com/iamthevoid/android-noxml-mvvm.git'
     libUserOrg = 'iamthevoid'
     libUploadName = 'android-noxml-mvvm'

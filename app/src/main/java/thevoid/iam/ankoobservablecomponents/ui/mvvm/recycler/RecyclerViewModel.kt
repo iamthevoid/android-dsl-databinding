@@ -42,7 +42,7 @@ class RecyclerViewModel : RxViewModel() {
 
     override fun onActive() {
         super.onActive()
-        unsubscribeOnInactive(
+        toDispose(
             Single.defer { RevolutApi.service.latest(current.get()) }
                 .subscribeOn(Schedulers.io())
                 .map { it.rates }

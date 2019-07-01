@@ -37,6 +37,10 @@ class RxLong(initial: Long = 0L, onChange: (Long) -> Unit = {}) : RxItem<Long>(i
 
 class RxString(string: String = "", onChange: (String) -> Unit = {}) : RxCharSequence<String>(string, onChange)
 
-class RxList<T>(initial: List<T> = emptyList(), onChange: (List<T>) -> Unit = {}) : RxItem<List<T>>(initial, onChange)
+class RxList<T>(initial: List<T> = emptyList(), onChange: (List<T>) -> Unit = {}) : RxItem<List<T>>(initial, onChange) {
+
+    fun add(items : List<T>) = set(get() + items)
+
+}
 
 
