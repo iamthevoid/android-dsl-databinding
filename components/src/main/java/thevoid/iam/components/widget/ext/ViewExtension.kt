@@ -4,10 +4,7 @@ import android.graphics.drawable.Drawable
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
-import iam.thevoid.ae.color
-import iam.thevoid.ae.gone
-import iam.thevoid.ae.hide
-import iam.thevoid.ae.setClickable
+import iam.thevoid.ae.*
 import iam.thevoid.e.mergeWith
 import iam.thevoid.e.safe
 import iam.thevoid.util.Optional
@@ -144,20 +141,36 @@ fun View.setBackgroundResource(background: Flowable<Int>) =
  */
 
 
-fun <T : Any> View.onFocusChange(onChange : RxItem<Boolean>) =
+fun View.setFocus(focus: RxBoolean) =
+    setFocus(focus.observe())
+
+fun View.setFocus(focus: Flowable<Boolean>) =
+    addSetter(focus) { requestFocus ->
+        val listener = onFocusChangeListener
+        onFocusChangeListener = null
+
+        if (requestFocus)
+            requestFocusFromTouch()
+        else
+            resetFocus()
+
+        onFocusChangeListener = listener
+    }
+
+fun View.onFocusChange(onChange: RxItem<Boolean>) =
     onFocusChange(onChange) { it }
 
-fun <T : Any> View.onFocusChange(onChange : RxField<Boolean>) =
+fun View.onFocusChange(onChange: RxField<Boolean>) =
     onFocusChange(onChange) { it }
 
-fun <T : Any> View.onFocusChange(onChange : RxField<T>, mapper: (Boolean) -> T?) =
+fun <T : Any> View.onFocusChange(onChange: RxField<T>, mapper: (Boolean) -> T?) =
     addGetter({
         onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
             it.invoke(mapper(hasFocus))
         }
     }, onChange)
 
-fun <T : Any> View.onFocusChange(onChange : RxItem<T>, mapper: (Boolean) -> T) =
+fun <T : Any> View.onFocusChange(onChange: RxItem<T>, mapper: (Boolean) -> T) =
     addGetter({
         onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
             it.invoke(mapper(hasFocus))
