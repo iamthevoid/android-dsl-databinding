@@ -7,19 +7,17 @@ import io.reactivex.disposables.Disposable
 
 open class RxViewModel : LifecycleTrackingViewModel() {
 
-    private val disposable by lazy { CompositeDisposable() }
+    private val onInactiveDisposables by lazy { CompositeDisposable() }
     private val onClearDisposables by lazy { CompositeDisposable() }
 
-    protected fun toDispose(disposable: Disposable, vararg disposables: Disposable) {
-        this.disposable.add(disposable)
-        if (disposables.isNotEmpty())
-            this.disposable.addAll(*disposables)
+    protected fun toDispose(disposable: Disposable?, vararg disposables: Disposable?) {
+        disposable?.also { onInactiveDisposables.add(it) }
+        disposables.forEach { it?.also { disp -> onInactiveDisposables.add(disp) } }
     }
 
-    protected fun toDisposeOnCleared(disposable: Disposable, vararg disposables: Disposable) {
-        this.onClearDisposables.add(disposable)
-        if (disposables.isNotEmpty())
-            this.onClearDisposables.addAll(*disposables)
+    protected fun toDisposeOnCleared(disposable: Disposable?, vararg disposables: Disposable?) {
+        disposable?.also { onClearDisposables.add(it) }
+        disposables.forEach { it?.also { disp -> onClearDisposables.add(disp) } }
     }
 
     override fun onActive() {
@@ -27,7 +25,7 @@ open class RxViewModel : LifecycleTrackingViewModel() {
 
     @CallSuper
     override fun onInactive() {
-        disposable.clear()
+        onInactiveDisposables.clear()
     }
 
     @CallSuper
