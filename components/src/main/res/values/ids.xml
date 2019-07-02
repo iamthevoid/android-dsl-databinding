@@ -2,6 +2,8 @@
 <resources>
     <item name="listener" type="id"/>
 
+    <item name="focusOnAttachListener" type="id"/>
+
     <item name="textWatcher" type="id"/>
 
     <item name="onTabSelectListener" type="id"/>

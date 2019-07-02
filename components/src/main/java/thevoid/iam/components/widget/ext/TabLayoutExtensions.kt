@@ -10,11 +10,10 @@ import thevoid.iam.components.widget.delegate.OnTabSelectedListenerDelegate
 
 private val TabLayout.onTabSelectListener: OnTabSelectedListenerDelegate
     get() = ((getTag(R.id.onTabSelectListener) as? OnTabSelectedListenerDelegate)
-        ?: OnTabSelectedListenerDelegate().also { setTag(R.id.onTabSelectListener, it) })
-        .also {
-            removeOnTabSelectedListener(it)
+        ?: OnTabSelectedListenerDelegate().also {
+            setTag(R.id.onTabSelectListener, it)
             addOnTabSelectedListener(it)
-        }
+        })
 
 
 fun TabLayout.selectTab(tabFlowable : Flowable<Int>, updateIndicator : Boolean = true) =

@@ -14,11 +14,10 @@ import thevoid.iam.components.widget.adapter.TextWatcherAdapter
 
 private val EditText.textWatcher: TextWatcherDelegate
     get() = ((getTag(R.id.textWatcher) as? TextWatcherDelegate)
-        ?: TextWatcherDelegate().also { setTag(R.id.textWatcher, it) }).also {
-        removeTextChangedListener(it)
-        addTextChangedListener(it)
-    }
-
+        ?: TextWatcherDelegate().also {
+            setTag(R.id.textWatcher, it)
+            addTextChangedListener(it)
+        })
 
 fun EditText.afterTextChanges(rxEditable: RxField<Editable>) = afterTextChanges(rxEditable) { it }
 

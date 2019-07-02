@@ -15,11 +15,25 @@ import thevoid.iam.components.R
 import thevoid.iam.components.widget.Setter
 import thevoid.iam.components.rx.RxLoading
 import thevoid.iam.components.rx.fields.*
+import thevoid.iam.components.widget.adapter.OnAttachStateChangeListenerAdapter
 import thevoid.iam.components.widget.delegate.OnGestureDelegate
 
 /**
- * BASE
+ * =============== BASE ==============
  */
+
+/**
+ * Basics.
+ * @observeListener is the child of @see#View.OnAttachStateChangeListener and the core of reactive UI.
+ *
+ * Stores all flowables and subscribe on it changes on attach to window and unsubscribe on detach from window.
+ */
+private val View.observeListener: ObserveListener
+    get() = ((getTag(R.id.listener) as? ObserveListener)
+        ?: ObserveListener().also {
+            setTag(R.id.listener, it)
+            addOnAttachStateChangeListener(it)
+        })
 
 fun <T : Any, V : View> V.addSetter(flowable: Flowable<T>, setter: V.(T) -> Unit = {}) {
     observeListener.apply {
@@ -70,13 +84,6 @@ fun <V : View> V.addGetter(consumer: ((Float) -> Unit) -> Unit, rxFloat: RxFloat
     addSetter(Flowable.create<Float>({ emitter ->
         consumer { emitter.onNext(it) }
     }, BackpressureStrategy.LATEST)) { rxFloat.set(it) }
-
-private val View.observeListener: ObserveListener
-    get() = ((getTag(R.id.listener) as? ObserveListener)
-        ?: ObserveListener().also {
-            setTag(R.id.listener, it)
-            addOnAttachStateChangeListener(it)
-        })
 
 /**
  * Visibility
@@ -140,7 +147,6 @@ fun View.setBackgroundResource(background: Flowable<Int>) =
  * Focus
  */
 
-
 fun View.setFocus(focus: RxBoolean) =
     setFocus(focus.observe())
 
@@ -164,17 +170,48 @@ fun View.onFocusChange(onChange: RxField<Boolean>) =
     onFocusChange(onChange) { it }
 
 fun <T : Any> View.onFocusChange(onChange: RxField<T>, mapper: (Boolean) -> T?) =
-    addGetter({
+    addGetter({ bypass ->
+
         onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
-            it.invoke(mapper(hasFocus))
+            bypass.invoke(mapper(hasFocus))
         }
+
+        val focusOnAttachListener =
+            (getTag(R.id.focusOnAttachListener) as? View.OnAttachStateChangeListener) ?: object :
+                OnAttachStateChangeListenerAdapter() {
+                override fun onViewDetachedFromWindow(v: View?) {
+                    bypass.invoke(mapper(false))
+                }
+            }.also { setTag(R.id.focusOnAttachListener, it) }
+
+        removeOnAttachStateChangeListener(focusOnAttachListener)
+        removeOnAttachStateChangeListener(observeListener)
+        // focus listener must be called before observe listener
+        addOnAttachStateChangeListener(focusOnAttachListener)
+        addOnAttachStateChangeListener(observeListener)
+
     }, onChange)
 
 fun <T : Any> View.onFocusChange(onChange: RxItem<T>, mapper: (Boolean) -> T) =
-    addGetter({
+    addGetter({ bypass ->
         onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
-            it.invoke(mapper(hasFocus))
+            bypass.invoke(mapper(hasFocus))
         }
+
+        val focusOnAttachListener =
+            (getTag(R.id.focusOnAttachListener) as? View.OnAttachStateChangeListener) ?: object :
+                OnAttachStateChangeListenerAdapter() {
+                override fun onViewDetachedFromWindow(v: View?) {
+                    bypass.invoke(mapper(false))
+                }
+            }.also { setTag(R.id.focusOnAttachListener, it) }
+
+        removeOnAttachStateChangeListener(focusOnAttachListener)
+        removeOnAttachStateChangeListener(observeListener)
+        // focus listener must be called before observe listener
+        addOnAttachStateChangeListener(focusOnAttachListener)
+        addOnAttachStateChangeListener(observeListener)
+
     }, onChange)
 
 /**
