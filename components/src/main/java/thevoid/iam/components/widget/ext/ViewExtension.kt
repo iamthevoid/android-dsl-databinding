@@ -57,8 +57,12 @@ fun <T : Any, V : View> V.addGetter(consumer: ((T?) -> Unit) -> Unit, rxField: R
 
 fun <T : Any, V : View> V.addGetter(consumer: ((T) -> Unit) -> Unit, rxField: RxItem<T>) =
     addSetter(Flowable.create<T>({ emitter ->
-        consumer { emitter.onNext(it) }
-    }, BackpressureStrategy.LATEST)) { rxField.set(it) }
+        consumer {
+            emitter.onNext(it)
+        }
+    }, BackpressureStrategy.LATEST)) {
+        rxField.set(it)
+    }
 
 fun <V : View> V.addGetter(consumer: ((Int) -> Unit) -> Unit, rxInt: RxInt) =
     addSetter(Flowable.create<Int>({ emitter ->
@@ -147,22 +151,6 @@ fun View.setBackgroundResource(background: Flowable<Int>) =
  * Focus
  */
 
-fun View.setFocus(focus: RxBoolean) =
-    setFocus(focus.observe())
-
-fun View.setFocus(focus: Flowable<Boolean>) =
-    addSetter(focus) { requestFocus ->
-        val listener = onFocusChangeListener
-        onFocusChangeListener = null
-
-        if (requestFocus)
-            requestFocusFromTouch()
-        else
-            resetFocus()
-
-        onFocusChangeListener = listener
-    }
-
 fun View.onFocusChange(onChange: RxItem<Boolean>) =
     onFocusChange(onChange) { it }
 
@@ -171,25 +159,9 @@ fun View.onFocusChange(onChange: RxField<Boolean>) =
 
 fun <T : Any> View.onFocusChange(onChange: RxField<T>, mapper: (Boolean) -> T?) =
     addGetter({ bypass ->
-
         onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
             bypass.invoke(mapper(hasFocus))
         }
-
-        val focusOnAttachListener =
-            (getTag(R.id.focusOnAttachListener) as? View.OnAttachStateChangeListener) ?: object :
-                OnAttachStateChangeListenerAdapter() {
-                override fun onViewDetachedFromWindow(v: View?) {
-                    bypass.invoke(mapper(false))
-                }
-            }.also { setTag(R.id.focusOnAttachListener, it) }
-
-        removeOnAttachStateChangeListener(focusOnAttachListener)
-        removeOnAttachStateChangeListener(observeListener)
-        // focus listener must be called before observe listener
-        addOnAttachStateChangeListener(focusOnAttachListener)
-        addOnAttachStateChangeListener(observeListener)
-
     }, onChange)
 
 fun <T : Any> View.onFocusChange(onChange: RxItem<T>, mapper: (Boolean) -> T) =
@@ -197,21 +169,6 @@ fun <T : Any> View.onFocusChange(onChange: RxItem<T>, mapper: (Boolean) -> T) =
         onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
             bypass.invoke(mapper(hasFocus))
         }
-
-        val focusOnAttachListener =
-            (getTag(R.id.focusOnAttachListener) as? View.OnAttachStateChangeListener) ?: object :
-                OnAttachStateChangeListenerAdapter() {
-                override fun onViewDetachedFromWindow(v: View?) {
-                    bypass.invoke(mapper(false))
-                }
-            }.also { setTag(R.id.focusOnAttachListener, it) }
-
-        removeOnAttachStateChangeListener(focusOnAttachListener)
-        removeOnAttachStateChangeListener(observeListener)
-        // focus listener must be called before observe listener
-        addOnAttachStateChangeListener(focusOnAttachListener)
-        addOnAttachStateChangeListener(observeListener)
-
     }, onChange)
 
 /**
