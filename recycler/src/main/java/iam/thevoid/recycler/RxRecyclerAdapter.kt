@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import thevoid.iam.components.mvvm.adapter.ItemBindings
 import thevoid.iam.components.mvvm.adapter.Layout
 
-class RxRecyclerAdapter<T : Any>(data: List<T> = emptyList()) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+open class RxRecyclerAdapter<T : Any>(data: List<T> = emptyList()) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var data = data.toMutableList()
         set(items) {

@@ -4,7 +4,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.viewpager.widget.PagerAdapter
 
-class RxPagerAdapter<T : Any>(items: List<T>, titles: List<String> = emptyList()) : PagerAdapter() {
+open class RxPagerAdapter<T : Any>(items: List<T>, titles: List<String> = emptyList()) : PagerAdapter() {
 
     var bindings = ItemBindings.EMPTY
 
