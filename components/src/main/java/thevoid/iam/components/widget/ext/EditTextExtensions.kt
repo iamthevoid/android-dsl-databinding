@@ -5,6 +5,8 @@ import android.widget.EditText
 import androidx.annotation.StringRes
 import iam.thevoid.ae.color
 import iam.thevoid.ae.moveCursorToEnd
+import iam.thevoid.ae.requestSoftInput
+import iam.thevoid.ae.resetFocus
 import iam.thevoid.e.format
 import io.reactivex.Flowable
 import thevoid.iam.components.R
@@ -21,7 +23,7 @@ private val EditText.textWatcher: TextWatcherDelegate
 
 fun EditText.afterTextChanges(rxEditable: RxField<Editable>) = afterTextChanges(rxEditable) { it }
 
-fun <T : Any> EditText.afterTextChanges(rxEditable: RxField<T>, mapper : (Editable) -> T) =
+fun <T : Any> EditText.afterTextChanges(rxEditable: RxField<T>, mapper: (Editable) -> T) =
     addGetter({
         textWatcher.addAfterTextChangedCallback(object : TextWatcherAdapter() {
             override fun afterTextChanged(s: Editable?) {
@@ -109,6 +111,25 @@ fun EditText.setHintColor(colorFlowable: Flowable<Int>) =
 
 fun EditText.setTextColorResourse(colorResFlowable: Flowable<Int>) =
     addSetter(colorResFlowable) { setTextColor(color(it)) }
+
+fun EditText.setRequestInput(rxBoolean: RxBoolean) =
+    setRequestInput(rxBoolean.observe())
+
+fun EditText.setRequestInput(requestInput: Flowable<Boolean>) =
+    addSetter(requestInput) {
+        val focusListener = onFocusChangeListener
+        onFocusChangeListener = null
+        if (it) {
+            post {
+                requestSoftInput()
+                onFocusChangeListener = focusListener
+            }
+        } else {
+            resetFocus()
+            onFocusChangeListener = focusListener
+        }
+    }
+
 
 data class BeforeEditTextChanges(val s: CharSequence?, val start: Int, val count: Int, val after: Int)
 

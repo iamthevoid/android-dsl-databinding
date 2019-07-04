@@ -11,6 +11,8 @@ import thevoid.iam.ankoobservablecomponents.R
 import thevoid.iam.ankoobservablecomponents.ui.mvvm.just.JustFragment
 import thevoid.iam.ankoobservablecomponents.ui.mvvm.page.PageFragment
 import thevoid.iam.ankoobservablecomponents.ui.mvvm.recycler.RecyclerFragment
+import thevoid.iam.components.widget.ext.setUntitledFactories
+import thevoid.iam.components.widget.ext.setUntitledFragments
 
 class MainActivity : AppCompatActivity() {
 
@@ -19,17 +21,15 @@ class MainActivity : AppCompatActivity() {
         frameLayout {
             viewPager {
                 id = R.id.pager
-                adapter = Adapter(supportFragmentManager)
+                setUntitledFactories(
+                    listOf(
+                        { PageFragment() },
+                        { RecyclerFragment() },
+                        { JustFragment() },
+                        { JustFragment() }
+                    )
+                )
             }
         }
-    }
-
-    class Adapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
-        override fun getItem(position: Int): Fragment = when (position) {
-            0 -> RecyclerFragment()
-            1 -> PageFragment()
-            else -> JustFragment()
-        }
-        override fun getCount(): Int = 4
     }
 }

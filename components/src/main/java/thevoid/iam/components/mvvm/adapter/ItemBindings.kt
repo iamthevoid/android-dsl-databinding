@@ -7,10 +7,10 @@ class ItemBindings {
     companion object {
         val EMPTY = ItemBindings()
 
-        fun <T, L : Layout<T>> of(cls: Class<T>, factory : (ViewGroup) -> L) =
+        fun <T> of(cls: Class<T>, factory : (ViewGroup) -> Layout<T>) =
             of(cls to factory)
 
-        fun <T, L : Layout<T>> of(binding: Pair<Class<T>, (ViewGroup) -> L>) =
+        fun <T> of(binding: Pair<Class<T>, (ViewGroup) -> Layout<T>>) =
             ItemBindings().addBinding(binding)
     }
 
