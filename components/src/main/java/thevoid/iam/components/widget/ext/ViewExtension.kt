@@ -155,6 +155,7 @@ fun View.onFocusChange(onChange: RxField<Boolean>) =
 
 fun <T : Any> View.onFocusChange(onChange: RxField<T>, mapper: (Boolean) -> T?) =
     addGetter({ bypass ->
+        bypass.invoke(mapper(isFocused))
         onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
             bypass.invoke(mapper(hasFocus))
         }
@@ -162,6 +163,7 @@ fun <T : Any> View.onFocusChange(onChange: RxField<T>, mapper: (Boolean) -> T?) 
 
 fun <T : Any> View.onFocusChange(onChange: RxItem<T>, mapper: (Boolean) -> T) =
     addGetter({ bypass ->
+        bypass.invoke(mapper(isFocused))
         onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
             bypass.invoke(mapper(hasFocus))
         }
