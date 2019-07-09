@@ -44,6 +44,8 @@ open class RxPagerAdapter<T : Any>(items: List<T>, titles: List<String> = emptyL
 
     override fun getPageTitle(position: Int): CharSequence? = titles[position]
 
+    override fun getItemPosition(`object`: Any): Int = POSITION_NONE
+
     companion object {
         fun <T> fromUntitledItems(items: List<T>) =
             items.map { Pair("", it) }
