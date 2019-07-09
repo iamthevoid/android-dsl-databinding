@@ -15,7 +15,6 @@ import thevoid.iam.components.R
 import thevoid.iam.components.widget.Setter
 import thevoid.iam.components.rx.RxLoading
 import thevoid.iam.components.rx.fields.*
-import thevoid.iam.components.widget.adapter.OnAttachStateChangeListenerAdapter
 import thevoid.iam.components.widget.delegate.OnGestureDelegate
 
 /**
@@ -168,6 +167,16 @@ fun <T : Any> View.onFocusChange(onChange: RxItem<T>, mapper: (Boolean) -> T) =
             bypass.invoke(mapper(hasFocus))
         }
     }, onChange)
+
+/**
+ * Transition
+ */
+
+fun View.setTranslationY(rxTranslation : RxFloat) =
+    setTranslationY(rxTranslation.observe())
+
+fun View.setTranslationY(rxTranslation : Flowable<Float>) =
+    addSetter(rxTranslation) { translationY = it }
 
 /**
  * Gesture
