@@ -1,35 +1,24 @@
 package thevoid.iam.ankoobservablecomponents.ui.mvvm.scroll
 
-import iam.thevoid.e.safe
-import iam.thevoid.rxe.subscribeSafe
 import thevoid.iam.components.mvvm.adapter.ItemBindings
 import thevoid.iam.components.mvvm.viewmodel.RxViewModel
-import thevoid.iam.components.rx.fields.RxField
-import thevoid.iam.components.rx.fields.RxFloat
 import thevoid.iam.components.rx.fields.RxList
 
 class ScrollViewModel : RxViewModel() {
 
 
-    private val image by lazy { "https://xakep.ru/wp-content/uploads/2018/03/162024/Android_DrinkBeer-h.jpg" }
+    val images by lazy { RxList(listOf(
+        "https://wallpapershome.com/images/wallpapers/grass-720x1280-5k-4k-wallpaper-osx-green-dew-168.jpg",
+        "https://3.bp.blogspot.com/-HBxSdT2_yfI/WuBUlEENPQI/AAAAAAAAAjk/u8HZIwA1peU1C8Ig1KwBpysIuQtqCYIWwCLcBGAs/s1600/0-02-08-6dcf65b991b29986d9cf466c655b3496462fb4b14ee5682943bcaafe91198ba1_587e4a85.jpg",
+        "https://img.alicdn.com/bao/uploaded/TB1pwD7QVXXXXcSXVXXXXXXXXXX.jpg",
+        "https://cdn.shopify.com/s/files/1/0274/8763/products/fe4be4a1cfb32e094fdbb928da70f7f8.jpg?v=1561991664"
+    )) }
 
-    private val list by lazy { createItems() }
+    val pagerBindings = ItemBindings.of(String::class.java) { ImageItem(it) }
 
-    val items by lazy { RxList(mutableListOf<Any>(image).apply { addAll(list) }) }
+    val items by lazy { RxList(createItems()) }
 
-    val binding = ItemBindings.of(String::class.java) { ImageItem(it, this) }
-        .addBinding(Integer::class.java) { IntItem(it) }
-
-    val scrolled by lazy { RxField<Int>() }
-
-    val scrolledEver by lazy { RxFloat() }
+    val binding = ItemBindings.of(Integer::class.java) { IntItem(it) }
 
     private fun createItems() = (1..100).map { it }
-
-    override fun onActive() {
-        super.onActive()
-        scrolledEver.set(0f)
-        toDispose(scrolled.observe()
-            .subscribeSafe { scrolledEver.set(scrolledEver.get() + it.elem.safe) })
-    }
 }

@@ -51,6 +51,7 @@ dependencies {
     implementation "org.jetbrains.anko:anko-appcompat-v7:$anko"
     implementation "org.jetbrains.anko:anko-constraint-layout:$anko"
     implementation "org.jetbrains.anko:anko-recyclerview-v7:$anko"
+    implementation "org.jetbrains.anko:anko-design:$anko"
 
     implementation "iam.thevoid.extensions:android:$e"
     implementation "iam.thevoid.extensions:pure:$e"
