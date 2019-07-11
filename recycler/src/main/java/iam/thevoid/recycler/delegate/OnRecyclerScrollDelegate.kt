@@ -1,4 +1,4 @@
-package iam.thevoid.recycler
+package iam.thevoid.recycler.delegate
 
 import androidx.recyclerview.widget.RecyclerView
 

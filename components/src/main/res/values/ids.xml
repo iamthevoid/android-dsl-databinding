@@ -12,5 +12,4 @@
 
     <item name="gestureDetectorCallback" type="id"/>
 
-    <item name="recyclerScroll" type="id"/>
 </resources>

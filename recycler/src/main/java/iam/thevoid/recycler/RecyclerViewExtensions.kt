@@ -1,11 +1,8 @@
 package iam.thevoid.recycler
 
-import android.view.GestureDetector
-import android.view.MotionEvent
-import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import iam.thevoid.recycler.delegate.OnRecyclerScrollDelegate
 import io.reactivex.Flowable
-import thevoid.iam.components.R
 import thevoid.iam.components.mvvm.adapter.ItemBindings
 import thevoid.iam.components.rx.fields.RxField
 import thevoid.iam.components.rx.fields.RxList
@@ -73,5 +70,6 @@ fun <T : Any> RecyclerView.onRecyclerScrollStateChanged(rxOnScroll: RxField<T>, 
     }, rxOnScroll)
 
 
-class OnScrolled(val recyclerView: RecyclerView, val dx: Int, val dy: Int)
-class OnScrollStateChanged(val recyclerView: RecyclerView, val state: Int)
+data class OnScrolled(val recyclerView: RecyclerView, val dx: Int, val dy: Int)
+
+data class OnScrollStateChanged(val recyclerView: RecyclerView, val state: Int)
