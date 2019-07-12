@@ -143,6 +143,21 @@ fun View.setBackgroundResource(background: Flowable<Int>) =
     addSetter(background) { setBackgroundResource(it) }
 
 /**
+ * Alpha
+ */
+
+fun View.setAlpha(alpha: RxItem<Float>) =
+    setAlpha(alpha.observe())
+
+fun View.setAlpha(alphaFlowable: Flowable<Float>) =
+    addSetter(alphaFlowable) {
+        alpha = when (it) {
+            in 0.0..1.0 -> it
+            else -> throw IllegalArgumentException("Alpha must be in 0..1f range, current value is $it")
+        }
+    }
+
+/**
  * Focus
  */
 
@@ -172,10 +187,10 @@ fun <T : Any> View.onFocusChange(onChange: RxItem<T>, mapper: (Boolean) -> T) =
  * Transition
  */
 
-fun View.setTranslationY(rxTranslation : RxFloat) =
+fun View.setTranslationY(rxTranslation: RxFloat) =
     setTranslationY(rxTranslation.observe())
 
-fun View.setTranslationY(rxTranslation : Flowable<Float>) =
+fun View.setTranslationY(rxTranslation: Flowable<Float>) =
     addSetter(rxTranslation) { translationY = it }
 
 /**
