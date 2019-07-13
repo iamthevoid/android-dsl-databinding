@@ -4,15 +4,16 @@ import iam.thevoid.rxe.canPublish
 import iam.thevoid.rxe.toFlowableLatest
 import iam.thevoid.util.Optional
 import io.reactivex.Flowable
-import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
-import io.reactivex.subjects.Subject
 
-class RxField<T>(initial: T? = null, private val onChange: (T?) -> Unit = {}) {
+class RxField<T>(initial: T? = null, private val onChange: (T?) -> Unit = {}) : RxPropertyChangedCallback {
+
+    override fun onItemChanged() = set(get())
 
     private val subject: BehaviorSubject<Optional<T>> = BehaviorSubject.createDefault(Optional.of(initial))
 
     fun set(elem: T?) {
+        (elem as? RxProperty)?.rxCallback = this
         if (subject.canPublish())
             subject.onNext(Optional.of(elem))
         onChange(elem)

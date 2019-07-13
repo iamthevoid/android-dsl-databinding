@@ -17,4 +17,10 @@ abstract class Layout<T>(parent: ViewGroup) {
     val item: RxField<T> by lazy(itemFactory)
 
     abstract fun createView(parent: ViewGroup): View
+
+    fun changeItem(itemChange : T.() -> Unit) {
+        item.set(item.get()?.apply {
+            itemChange()
+        })
+    }
 }
