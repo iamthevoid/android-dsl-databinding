@@ -41,7 +41,7 @@ import iam.thevoid.ankoviews.widget.constraint.SparseConstraintLayout
  *      textView {
  *          id = R.id.text2
  *          textSize = dip(16).toFloat()
- *          setText(viewModel<PageViewModel>().changes.observe { it.elem?.s?.toString().safe })
+ *          setText(viewModel<PageViewModel>().changes.mapSelf { it.elem?.s?.toString().safe })
  *      }.constraint {
  *          connect(
  *              TOP to BOTTOM of R.id.et,

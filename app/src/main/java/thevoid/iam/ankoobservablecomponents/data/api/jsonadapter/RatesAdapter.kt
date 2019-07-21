@@ -19,7 +19,7 @@ class RatesAdapter : TypeAdapter<List<CurrencyRate>>() {
             return
         }
 
-        // TODO implement convert back to map if need
+        // TODO implement convert back to mapSelf if need
         out.value(value.toString())
     }
 

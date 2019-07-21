@@ -22,7 +22,9 @@ open class RxItem<T>(initial: T, private val onChange: (T) -> Unit = {}) : RxPro
 
     fun observe(): Flowable<T> = subject.toFlowableLatest()
 
-    fun <E> observe(mapper: T.() -> E): Flowable<E> = observe().map { it.mapper() }
+    fun <E> map(mapper: (T) -> E): Flowable<E> = observe().map { mapper(it) }
+
+    fun <E> mapSelf(mapper: T.() -> E): Flowable<E> = observe().map { it.mapper() }
 }
 
 open class RxCharSequence<T : CharSequence>(initial: T = "" as T, onChange: (T) -> Unit = {}) :
@@ -42,7 +44,7 @@ class RxString(string: String = "", onChange: (String) -> Unit = {}) : RxCharSeq
 
 class RxList<T>(initial: List<T> = emptyList(), onChange: (List<T>) -> Unit = {}) : RxItem<List<T>>(initial, onChange) {
 
-    fun add(items : List<T>) = set(get() + items)
+    fun add(items: List<T>) = set(get() + items)
 
 }
 
