@@ -17,14 +17,14 @@ class CurrencyHeaderItem(viewGroup: ViewGroup) : AnkoLayout<String>(viewGroup) {
     override fun createView(ui: AnkoContext<AnkoLayout<String>>): View =
         ui.frameLayout {
             imageView {
-                setImageUrl(item.map { toImageUrl(it.elem.safe) })
+                setImageUrl(item.map { toImageUrl(it.safe) })
             }.lparams(dip(36), dip(36)) { margin = dip(8) }
 
             textView {
                 padding = dip(8)
                 textSizeDimen = R.dimen.text_medium
                 textColorResource = android.R.color.black
-                setText(item.map { item.get().safe })
+                setText(itemChanges)
             }.lparams {
                 leftMargin = dip(52)
                 gravity = Gravity.CENTER_VERTICAL
@@ -34,7 +34,7 @@ class CurrencyHeaderItem(viewGroup: ViewGroup) : AnkoLayout<String>(viewGroup) {
                 padding = dip(8)
                 textSizeDimen = R.dimen.text_medium
                 textColorResource = android.R.color.black
-                setText(item.map { it.elem.safe }.flatMapSingle { codeToValue(it) })
+                setText(itemChanges.flatMapSingle { codeToValue(it) })
             }.lparams {
                 leftMargin = dip(96)
                 gravity = Gravity.CENTER_VERTICAL

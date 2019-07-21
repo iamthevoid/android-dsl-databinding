@@ -60,7 +60,7 @@ class PageFragment : AnkoMvvmFragment<PageViewModel>() {
             textView {
                 id = R.id.text2
                 textSize = dip(16).toFloat()
-                setText(vm.changes.map { it.elem?.s?.toString().safe })
+                setText(vm.changes.onlyPresent().map { "${it.s}" })
             }.constraint {
                 connect(
                     TOP to BOTTOM of R.id.et,
