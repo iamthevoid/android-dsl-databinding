@@ -12,7 +12,7 @@ class ObserveListener : View.OnAttachStateChangeListener {
 
     fun subscribeSetter(setter: Setter<out View, out Any>, tag: String = key()) {
         val alreadyObservable = observableSetters[tag]
-        if (alreadyObservable?.theSameAs(setter).safe)
+        if (alreadyObservable?.theSameAs(setter).safe())
             alreadyObservable?.unsubscribeChanges()
 
         observableSetters[tag] = setter

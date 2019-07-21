@@ -17,7 +17,7 @@ class CurrencyHeaderItem(viewGroup: ViewGroup) : AnkoLayout<String>(viewGroup) {
     override fun createView(ui: AnkoContext<AnkoLayout<String>>): View =
         ui.frameLayout {
             imageView {
-                setImageUrl(item.map { toImageUrl(it.safe) })
+                setImageUrl(itemChanges.map { toImageUrl(it) })
             }.lparams(dip(36), dip(36)) { margin = dip(8) }
 
             textView {

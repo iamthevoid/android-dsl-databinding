@@ -28,9 +28,9 @@ fun key(): String = with(Thread.currentThread().stackTrace) {
                     "${it.name}_${it.typeParameters.let { typeParameters ->
                         typeParameters.firstOrNull()?.bounds.let { types ->
                             (types?.firstOrNull() as? Class<*>)?.name
-                        }.safe
+                        }.safe()
                     }}"
-            }.safe
+            }.safe()
         )
     }
 }

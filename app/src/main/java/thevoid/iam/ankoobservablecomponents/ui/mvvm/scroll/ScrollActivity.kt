@@ -38,10 +38,10 @@ class ScrollActivity : AnkoMvvmActivity<ScrollViewModel>(), AppBarLayout.OnOffse
     override fun onOffsetChanged(appBarLayout: AppBarLayout?, verticalOffset: Int) {
 
         if (treshhold == 0f)
-            treshhold = appBarLayout?.totalScrollRange.safe.toFloat() * 2 / 3
+            treshhold = appBarLayout?.totalScrollRange.safe().toFloat() * 2 / 3
 
         toolbar.alpha =
-            (verticalOffset.toFloat().absoluteValue - treshhold) / (appBarLayout?.totalScrollRange.safe.toFloat() - treshhold)
+            (verticalOffset.toFloat().absoluteValue - treshhold) / (appBarLayout?.totalScrollRange.safe().toFloat() - treshhold)
     }
 
     override fun provideViewModel(): ViewModelBindingProvider = createBinding(ScrollViewModel::class.java)
