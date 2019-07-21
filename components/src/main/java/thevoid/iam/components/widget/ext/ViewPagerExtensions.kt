@@ -3,6 +3,7 @@ package thevoid.iam.components.widget.ext
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import iam.thevoid.ae.asAppCompatActivity
 import iam.thevoid.rxe.combine
@@ -46,12 +47,14 @@ fun <T : Any> ViewPager.setItems(
 fun <T : Any> ViewPager.setItems(
     items : List<T>,
     itemBindings: ItemBindings,
-    titles : List<String> = emptyList()
+    titles : List<String> = emptyList(),
+    position : Int = PagerAdapter.POSITION_UNCHANGED
 ) {
     (adapter as? RxPagerAdapter<T>)?.apply {
         setTitledItems(RxPagerAdapter.fromTitlesAndItems(items, titles))
     } ?: run {
         RxPagerAdapter(items, titles).apply {
+            this@apply.position = position
             this@apply.bindings = itemBindings
             adapter = this
         }

@@ -3,6 +3,7 @@ package thevoid.iam.components.mvvm.adapter
 import android.content.Context
 import android.view.View
 import android.view.ViewGroup
+import io.reactivex.Flowable
 import thevoid.iam.components.rx.fields.RxField
 
 abstract class Layout<T>(parent: ViewGroup) {
@@ -15,6 +16,8 @@ abstract class Layout<T>(parent: ViewGroup) {
         get() = view.context
 
     val item: RxField<T> by lazy(itemFactory)
+
+    val itemChanges : Flowable<T> by lazy { item.onlyPresent() }
 
     abstract fun createView(parent: ViewGroup): View
 

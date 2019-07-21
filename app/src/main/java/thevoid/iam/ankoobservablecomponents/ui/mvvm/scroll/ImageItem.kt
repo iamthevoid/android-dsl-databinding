@@ -11,7 +11,7 @@ class ImageItem(viewGroup: ViewGroup) : AnkoLayout<String>(viewGroup) {
     override fun createView(ui: AnkoContext<AnkoLayout<String>>): View =
         ui.frameLayout {
             imageView {
-                setImageUrl(item.observe { it.elem.safe })
+                setImageUrl(item.map { it.elem.safe })
             }.lparams(matchParent, wrapContent)
         }.apply {
             layoutParams = ViewGroup.LayoutParams(matchParent, wrapContent)

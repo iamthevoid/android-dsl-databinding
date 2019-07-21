@@ -15,7 +15,7 @@ class IntItem(viewGroup: ViewGroup) : AnkoLayout<Integer>(viewGroup) {
             textColor = Color.BLACK
             setPaddings(dip(20))
             gravity = Gravity.CENTER_VERTICAL
-            setText(item.observe { "item ${it.elem?.toInt()}" })
+            setText(item.map { "item ${it.elem?.toInt()}" })
         }.apply {
             layoutParams = ViewGroup.LayoutParams(matchParent, dip(48))
         }

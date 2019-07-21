@@ -27,14 +27,14 @@ class CurrencySimpleItem(startValue: RxString, viewGroup: ViewGroup) : AnkoLayou
             setOnClickListener { item.get()?.code?.also { current.get()?.set(it) } }
 
             imageView {
-                setImageUrl(item.observe { it.elem?.image.safe })
+                setImageUrl(item.map { it.elem?.image.safe })
             }.lparams(dip(36), dip(36)) { margin = dip(8) }
 
             textView {
                 padding = dip(8)
                 textSizeDimen = R.dimen.text_medium
                 textColorResource = android.R.color.black
-                setText(item.observe { it.elem?.code.safe })
+                setText(item.map { it.elem?.code.safe })
             }.lparams {
                 leftMargin = dip(52)
                 gravity = Gravity.CENTER_VERTICAL
@@ -44,7 +44,7 @@ class CurrencySimpleItem(startValue: RxString, viewGroup: ViewGroup) : AnkoLayou
                 padding = dip(8)
                 textSizeDimen = R.dimen.text_medium
                 textColorResource = android.R.color.black
-                setText(item.observe { it.elem?.code.safe }.flatMapSingle { codeToValue(it) })
+                setText(item.map { it.elem?.code.safe }.flatMapSingle { codeToValue(it) })
             }.lparams {
                 leftMargin = dip(96)
                 gravity = Gravity.CENTER_VERTICAL
@@ -54,7 +54,7 @@ class CurrencySimpleItem(startValue: RxString, viewGroup: ViewGroup) : AnkoLayou
                 padding = dip(8)
                 textColorResource = android.R.color.black
                 textSizeDimen = R.dimen.text_medium
-                setText(item.observe { "${it.elem?.rate.safe}" })
+                setText(item.map { "${it.elem?.rate.safe}" })
             }.lparams {
                 gravity = Gravity.END or Gravity.CENTER_VERTICAL
             }

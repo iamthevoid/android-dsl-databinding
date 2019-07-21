@@ -2,11 +2,15 @@ package thevoid.iam.components.mvvm.adapter
 
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.IntDef
 import androidx.viewpager.widget.PagerAdapter
 
 open class RxPagerAdapter<T : Any>(items: List<T>, titles: List<String> = emptyList()) : PagerAdapter() {
 
     var bindings = ItemBindings.EMPTY
+
+    @Position
+    var position = POSITION_UNCHANGED
 
     private val data: MutableList<T> = items.toMutableList()
 
@@ -44,7 +48,7 @@ open class RxPagerAdapter<T : Any>(items: List<T>, titles: List<String> = emptyL
 
     override fun getPageTitle(position: Int): CharSequence? = titles[position]
 
-    override fun getItemPosition(`object`: Any): Int = POSITION_NONE
+    override fun getItemPosition(`object`: Any): Int = position
 
     companion object {
         fun <T> fromUntitledItems(items: List<T>) =
@@ -53,4 +57,10 @@ open class RxPagerAdapter<T : Any>(items: List<T>, titles: List<String> = emptyL
         fun <T> fromTitlesAndItems(items: List<T>, titles: List<String>) =
             items.mapIndexed { index, item -> Pair(if (index < titles.size) titles[index] else "", item) }
     }
+
+
+    @IntDef(POSITION_NONE, POSITION_UNCHANGED)
+    @Retention(AnnotationRetention.SOURCE)
+    @Target(AnnotationTarget.PROPERTY)
+    annotation class Position
 }

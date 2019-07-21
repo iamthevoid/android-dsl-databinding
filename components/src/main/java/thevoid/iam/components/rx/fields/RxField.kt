@@ -23,5 +23,7 @@ class RxField<T>(initial: T? = null, private val onChange: (T?) -> Unit = {}) : 
 
     fun observe(): Flowable<Optional<T>> = subject.toFlowableLatest()
 
-    fun <O> observe(mapper: ((Optional<T>) -> O)) = observe().map { mapper(it) }
+    fun <O> map(mapper: ((Optional<T>) -> O)) = observe().map { mapper(it) }
+
+    fun onlyPresent() = observe().filter { it.present }.map { it.elem!! }
 }

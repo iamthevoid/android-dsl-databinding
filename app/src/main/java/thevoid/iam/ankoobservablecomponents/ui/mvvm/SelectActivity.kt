@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.Gravity
 import androidx.appcompat.app.AppCompatActivity
 import org.jetbrains.anko.*
+import org.jetbrains.anko.design.textInputLayout
 import thevoid.iam.ankoobservablecomponents.ui.MainActivity
 import thevoid.iam.ankoobservablecomponents.ui.mvvm.scroll.ScrollActivity
 
