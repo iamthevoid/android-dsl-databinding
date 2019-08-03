@@ -52,7 +52,7 @@ open class RxLoading {
             .doOnComplete { loadingFinished(loading) }
     }
 
-    fun <T> flowable(): FlowableTransformer<T, T> = FlowableTransformer { upstream ->
+    fun <T> flowableUntilNext(): FlowableTransformer<T, T> = FlowableTransformer { upstream ->
         val loading = AtomicBoolean(false)
         upstream.doOnSubscribe { loadingStarted(loading) }
             .doOnCancel { loadingFinished(loading) }
@@ -60,13 +60,30 @@ open class RxLoading {
             .doOnNext { loadingFinished(loading) }
     }
 
-    fun <T> observable(): ObservableTransformer<T, T> = ObservableTransformer { upstream ->
+    fun <T> flowableUntilComplete(): FlowableTransformer<T, T> = FlowableTransformer { upstream ->
+        val loading = AtomicBoolean(false)
+        upstream.doOnSubscribe { loadingStarted(loading) }
+            .doOnCancel { loadingFinished(loading) }
+            .doOnError { loadingFinished(loading) }
+            .doOnComplete { loadingFinished(loading) }
+    }
+
+    fun <T> observableUntilNext(): ObservableTransformer<T, T> = ObservableTransformer { upstream ->
         val loading = AtomicBoolean(false)
         upstream
             .doOnSubscribe { loadingStarted(loading) }
             .doOnDispose { loadingFinished(loading) }
             .doOnError { loadingFinished(loading) }
             .doOnNext { loadingFinished(loading) }
+    }
+
+    fun <T> observableUntilComplete(): ObservableTransformer<T, T> = ObservableTransformer { upstream ->
+        val loading = AtomicBoolean(false)
+        upstream
+            .doOnComplete { loadingFinished(loading) }
+            .doOnSubscribe { loadingStarted(loading) }
+            .doOnDispose { loadingFinished(loading) }
+            .doOnError { loadingFinished(loading) }
     }
 
     fun <T> single(): SingleTransformer<T, T> = SingleTransformer { upstream ->
@@ -76,5 +93,15 @@ open class RxLoading {
             .doOnDispose { loadingFinished(loading) }
             .doOnError { loadingFinished(loading) }
             .doOnSuccess { loadingFinished(loading) }
+    }
+
+    fun <T> maybe(): MaybeTransformer<T, T> = MaybeTransformer { upstream ->
+        val loading = AtomicBoolean(false)
+        upstream
+            .doOnSubscribe { loadingStarted(loading) }
+            .doOnDispose { loadingFinished(loading) }
+            .doOnError { loadingFinished(loading) }
+            .doOnSuccess { loadingFinished(loading) }
+            .doOnComplete { loadingFinished(loading) }
     }
 }

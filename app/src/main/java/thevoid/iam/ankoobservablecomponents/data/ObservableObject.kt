@@ -12,13 +12,13 @@ object ObservableObject {
 
     val text = Observable.interval(1, TimeUnit.SECONDS)
         .subscribeOn(Schedulers.io())
-        .compose(loading.observable())
+        .compose(loading.observableUntilNext())
         .map { randomString() }
 
     val number = Observable.interval(300, TimeUnit.MILLISECONDS)
         .subscribeOn(Schedulers.io())
         .map { randomNumber() }
-        .compose(loading.observable())
+        .compose(loading.observableUntilNext())
 
     fun randomString(): String = buildString {
         val random = Random()

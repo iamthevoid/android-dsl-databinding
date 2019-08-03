@@ -14,54 +14,9 @@ import thevoid.iam.components.rx.fields.*
 import thevoid.iam.components.widget.delegate.TextWatcherDelegate
 import thevoid.iam.components.widget.adapter.TextWatcherAdapter
 
-private val EditText.textWatcher: TextWatcherDelegate
-    get() = ((getTag(R.id.textWatcher) as? TextWatcherDelegate)
-        ?: TextWatcherDelegate().also {
-            setTag(R.id.textWatcher, it)
-            addTextChangedListener(it)
-        })
-
-fun EditText.afterTextChanges(rxEditable: RxField<Editable>) = afterTextChanges(rxEditable) { it }
-
-fun <T : Any> EditText.afterTextChanges(rxEditable: RxField<T>, mapper: (Editable) -> T) =
-    addGetter({
-        textWatcher.addAfterTextChangedCallback(object : TextWatcherAdapter() {
-            override fun afterTextChanged(s: Editable?) {
-                s?.apply { it.invoke(mapper(this)) }
-            }
-        })
-    }, rxEditable)
-
-fun EditText.afterTextChanges(rxEditable: RxString) =
-    addGetter({
-        textWatcher.addAfterTextChangedCallback(object : TextWatcherAdapter() {
-            override fun afterTextChanged(s: Editable?) {
-                s?.apply { it.invoke("$this") }
-            }
-        })
-    }, rxEditable)
-
-fun EditText.beforeTextChanges(rxChanges: RxField<BeforeEditTextChanges>) = beforeTextChanges(rxChanges) { it }
-
-fun <T : Any> EditText.beforeTextChanges(rxChanges: RxField<T>, mapper: (BeforeEditTextChanges) -> T) =
-    addGetter({
-        textWatcher.addBeforeTextChangedCallback(object : TextWatcherAdapter() {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                it.invoke(mapper(BeforeEditTextChanges(s, start, count, after)))
-            }
-        })
-    }, rxChanges)
-
-fun EditText.onTextChanges(rxChanges: RxField<OnEditTextChanges>) = onTextChanges(rxChanges) { it }
-
-fun <T : Any> EditText.onTextChanges(rxChanges: RxField<T>, mapper: (OnEditTextChanges) -> T) =
-    addGetter({
-        textWatcher.addOnTextChangedCallback(object : TextWatcherAdapter() {
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                it.invoke(mapper(OnEditTextChanges(s, start, before, count)))
-            }
-        })
-    }, rxChanges)
+/**
+ * SETTER
+ */
 
 fun EditText.setTextSilent(text: CharSequence) {
     val watcher = textWatcher
@@ -130,6 +85,62 @@ fun EditText.setRequestInput(requestInput: Flowable<Boolean>) =
         }
     }
 
+/**
+ * GETTER
+ */
+
+fun EditText.afterTextChanges(rxEditable: RxField<Editable>) = afterTextChanges(rxEditable) { it }
+
+fun <T : Any> EditText.afterTextChanges(rxEditable: RxField<T>, mapper: (Editable) -> T) =
+    addGetter({
+        textWatcher.addAfterTextChangedCallback(object : TextWatcherAdapter() {
+            override fun afterTextChanged(s: Editable?) {
+                s?.apply { it.invoke(mapper(this)) }
+            }
+        })
+    }, rxEditable)
+
+fun EditText.afterTextChanges(rxEditable: RxString) =
+    addGetter({
+        textWatcher.addAfterTextChangedCallback(object : TextWatcherAdapter() {
+            override fun afterTextChanged(s: Editable?) {
+                s?.apply { it.invoke("$this") }
+            }
+        })
+    }, rxEditable)
+
+fun EditText.beforeTextChanges(rxChanges: RxField<BeforeEditTextChanges>) = beforeTextChanges(rxChanges) { it }
+
+fun <T : Any> EditText.beforeTextChanges(rxChanges: RxField<T>, mapper: (BeforeEditTextChanges) -> T) =
+    addGetter({
+        textWatcher.addBeforeTextChangedCallback(object : TextWatcherAdapter() {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                it.invoke(mapper(BeforeEditTextChanges(s, start, count, after)))
+            }
+        })
+    }, rxChanges)
+
+fun EditText.onTextChanges(rxChanges: RxField<OnEditTextChanges>) = onTextChanges(rxChanges) { it }
+
+fun <T : Any> EditText.onTextChanges(rxChanges: RxField<T>, mapper: (OnEditTextChanges) -> T) =
+    addGetter({
+        textWatcher.addOnTextChangedCallback(object : TextWatcherAdapter() {
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                it.invoke(mapper(OnEditTextChanges(s, start, before, count)))
+            }
+        })
+    }, rxChanges)
+
+/**
+ * MAINTENANCE
+ */
+
+private val EditText.textWatcher: TextWatcherDelegate
+    get() = ((getTag(R.id.textWatcher) as? TextWatcherDelegate)
+        ?: TextWatcherDelegate().also {
+            setTag(R.id.textWatcher, it)
+            addTextChangedListener(it)
+        })
 
 data class BeforeEditTextChanges(val s: CharSequence?, val start: Int, val count: Int, val after: Int)
 

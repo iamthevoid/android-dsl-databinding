@@ -52,7 +52,7 @@ fun <T : CharSequence, V : View> V.addGetter(consumer: ((T) -> Unit) -> Unit, rx
 fun <T : Any, V : View> V.addGetter(consumer: ((T?) -> Unit) -> Unit, rxField: RxField<T>) =
     addSetter(Flowable.create<Optional<T>>({ emitter ->
         consumer { emitter.onNext(Optional.of(it)) }
-    }, BackpressureStrategy.LATEST)) { rxField.set(it.elem) }
+    }, BackpressureStrategy.LATEST)) { rxField.set(it.item) }
 
 fun <T : Any, V : View> V.addGetter(consumer: ((T) -> Unit) -> Unit, rxField: RxItem<T>) =
     addSetter(Flowable.create<T>({ emitter ->
@@ -116,7 +116,7 @@ fun View.gone(needGone: Flowable<Boolean>) =
     addSetter(needGone) { gone(it) }
 
 fun View.gone(needGone: RxField<Boolean>) =
-    addSetter(needGone.observe()) { gone(it.elem.safe()) }
+    addSetter(needGone.observe()) { gone(it.item.safe()) }
 
 fun View.gone(needGone: RxItem<Boolean>) =
     addSetter(needGone.observe()) { gone(it) }
@@ -125,7 +125,7 @@ fun View.hide(needHide: Flowable<Boolean>) =
     addSetter(needHide) { hide(it) }
 
 fun View.hide(needHide: RxField<Boolean>) =
-    addSetter(needHide.observe()) { hide(it.elem.safe()) }
+    addSetter(needHide.observe()) { hide(it.item.safe()) }
 
 fun View.hide(needHide: RxItem<Boolean>) =
     addSetter(needHide.observe()) { hide(it) }

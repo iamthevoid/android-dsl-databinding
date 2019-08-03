@@ -19,13 +19,13 @@ class RxField<T>(initial: T? = null, private val onChange: (T?) -> Unit = {}) : 
         onChange(elem)
     }
 
-    fun get(): T? = subject.value?.elem
+    fun get(): T? = subject.value?.item
 
     fun observe(): Flowable<Optional<T>> = subject.toFlowableLatest()
 
-    fun <O> map(mapper: ((T?) -> O)) = observe().map { mapper(it.elem) }
+    fun <O> map(mapper: ((T?) -> O)) = observe().map { mapper(it.item) }
 
-    fun <O> mapSelf(mapper: (T?.() -> O)) = observe().map { it.elem.mapper() }
+    fun <O> mapSelf(mapper: (T?.() -> O)) = observe().map { it.item.mapper() }
 
-    fun onlyPresent() = observe().filter { it.present }.map { it.elem!! }
+    fun onlyPresent() = observe().filter { it.present }.map { it.item!! }
 }
