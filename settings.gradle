@@ -1,1 +1,1 @@
-include ':app', ':components', ':ankoviews', ':recycler', ':design'
+include ':app', ':rx', ':anko-commons', ':recycler-rx', ':design-rx', ':commons', ':anko-rx'

@@ -7,17 +7,16 @@ import androidx.constraintlayout.widget.ConstraintSet.PARENT_ID
 import iam.thevoid.ae.resetFocus
 import iam.thevoid.ankoviews.widget.mvvm.AnkoMvvmFragment
 import iam.thevoid.ankoviews.widget.sparseConstraintLayout
-import iam.thevoid.e.safe
 import org.jetbrains.anko.*
 import org.jetbrains.anko.constraint.layout.ConstraintSetBuilder.Side.*
 import org.jetbrains.anko.constraint.layout.matchConstraint
 import thevoid.iam.ankoobservablecomponents.R
-import thevoid.iam.components.mvvm.ViewModelBindingProvider
-import thevoid.iam.components.mvvm.createBinding
-import thevoid.iam.components.widget.ext.onFocusChange
-import thevoid.iam.components.widget.ext.onTextChanges
-import thevoid.iam.components.widget.ext.setRequestInput
-import thevoid.iam.components.widget.ext.setText
+import iam.thevoid.common.ViewModelBindingProvider
+import iam.thevoid.common.createBinding
+import thevoid.iam.rx.widget.ext.onFocusChange
+import thevoid.iam.rx.widget.ext.onTextChanges
+import thevoid.iam.rx.widget.ext.setRequestInput
+import thevoid.iam.rx.widget.ext.setText
 
 class PageFragment : AnkoMvvmFragment<PageViewModel>() {
 

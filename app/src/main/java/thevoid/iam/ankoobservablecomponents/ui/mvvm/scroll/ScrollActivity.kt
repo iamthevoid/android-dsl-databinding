@@ -2,7 +2,6 @@ package thevoid.iam.ankoobservablecomponents.ui.mvvm.scroll
 
 import android.content.Context
 import android.graphics.Color
-import android.util.Log
 import android.view.View
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,7 +11,6 @@ import com.google.android.material.appbar.CollapsingToolbarLayout.LayoutParams.C
 import com.google.android.material.appbar.CollapsingToolbarLayout.LayoutParams.COLLAPSE_MODE_PIN
 import iam.thevoid.ae.screenHeight
 import iam.thevoid.ae.setPaddings
-import iam.thevoid.ae.statusBarHeight
 import iam.thevoid.ankoviews.widget.mvvm.AnkoMvvmActivity
 import iam.thevoid.e.safe
 import iam.thevoid.recycler.setItems
@@ -24,9 +22,9 @@ import org.jetbrains.anko.design.coordinatorLayout
 import org.jetbrains.anko.recyclerview.v7.recyclerView
 import org.jetbrains.anko.support.v4.viewPager
 import thevoid.iam.ankoobservablecomponents.R
-import thevoid.iam.components.mvvm.ViewModelBindingProvider
-import thevoid.iam.components.mvvm.createBinding
-import thevoid.iam.components.widget.ext.setItems
+import iam.thevoid.common.ViewModelBindingProvider
+import iam.thevoid.common.createBinding
+import thevoid.iam.rx.widget.ext.setItems
 import kotlin.math.absoluteValue
 
 class ScrollActivity : AnkoMvvmActivity<ScrollViewModel>(), AppBarLayout.OnOffsetChangedListener {
@@ -44,7 +42,7 @@ class ScrollActivity : AnkoMvvmActivity<ScrollViewModel>(), AppBarLayout.OnOffse
             (verticalOffset.toFloat().absoluteValue - treshhold) / (appBarLayout?.totalScrollRange.safe().toFloat() - treshhold)
     }
 
-    override fun provideViewModel(): ViewModelBindingProvider = createBinding(ScrollViewModel::class.java)
+    override fun provideViewModel(): iam.thevoid.common.ViewModelBindingProvider = createBinding(ScrollViewModel::class.java)
 
     override fun createView(ui: AnkoContext<Context>): View =
         ui.coordinatorLayout {

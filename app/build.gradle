@@ -34,9 +34,11 @@ android {
 
 dependencies {
 
-    implementation project (":components")
-    implementation project (":ankoviews")
-    implementation project (":recycler")
+    implementation project (':rx')
+    implementation project (':anko-commons')
+    implementation project (':anko-rx')
+    implementation project (':recycler-rx')
+    implementation project (':commons')
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"

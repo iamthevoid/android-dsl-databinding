@@ -2,7 +2,7 @@ package thevoid.iam.ankoobservablecomponents.data
 
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
-import thevoid.iam.components.rx.RxLoading
+import thevoid.iam.rx.rxdata.RxLoading
 import java.util.*
 import java.util.concurrent.TimeUnit
 

@@ -3,7 +3,7 @@ package thevoid.iam.ankoobservablecomponents.ui.mvvm.just
 import iam.thevoid.rxe.toFlowableLatest
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
-import thevoid.iam.components.mvvm.viewmodel.RxViewModel
+import thevoid.iam.rx.viewmodel.RxViewModel
 import java.util.concurrent.TimeUnit
 
 class JustViewModel : RxViewModel() {

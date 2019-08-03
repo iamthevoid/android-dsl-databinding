@@ -3,7 +3,7 @@ package thevoid.iam.ankoobservablecomponents.util
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 import io.reactivex.Flowable
-import thevoid.iam.components.widget.ext.addSetter
+import thevoid.iam.rx.widget.ext.addSetter
 
 fun ImageView.setImageUrl(image : Flowable<String>) =
     addSetter(image) { setImageUrl(it) }

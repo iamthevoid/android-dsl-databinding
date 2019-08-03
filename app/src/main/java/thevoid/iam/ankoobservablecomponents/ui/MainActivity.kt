@@ -8,8 +8,7 @@ import thevoid.iam.ankoobservablecomponents.R
 import thevoid.iam.ankoobservablecomponents.ui.mvvm.just.JustFragment
 import thevoid.iam.ankoobservablecomponents.ui.mvvm.page.PageFragment
 import thevoid.iam.ankoobservablecomponents.ui.mvvm.recycler.RecyclerFragment
-import thevoid.iam.ankoobservablecomponents.ui.mvvm.scroll.ScrollActivity
-import thevoid.iam.components.widget.ext.setUntitledFactories
+import thevoid.iam.rx.widget.ext.setUntitledFactories
 
 class MainActivity : AppCompatActivity() {
 

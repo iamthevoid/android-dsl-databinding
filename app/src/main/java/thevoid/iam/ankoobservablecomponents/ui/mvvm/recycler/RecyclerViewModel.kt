@@ -1,7 +1,7 @@
 package thevoid.iam.ankoobservablecomponents.ui.mvvm.recycler
 
 import iam.thevoid.recycler.DiffCallback
-import thevoid.iam.components.mvvm.adapter.ItemBindings
+import thevoid.iam.rx.adapter.ItemBindings
 import iam.thevoid.rxe.subscribeSafe
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
@@ -9,9 +9,9 @@ import thevoid.iam.ankoobservablecomponents.data.api.RevolutApi
 import thevoid.iam.ankoobservablecomponents.data.api.model.CurrencyRate
 import thevoid.iam.ankoobservablecomponents.ui.mvvm.recycler.items.CurrencyHeaderItem
 import thevoid.iam.ankoobservablecomponents.ui.mvvm.recycler.items.CurrencySimpleItem
-import thevoid.iam.components.mvvm.viewmodel.RxViewModel
-import thevoid.iam.components.rx.fields.RxList
-import thevoid.iam.components.rx.fields.RxString
+import thevoid.iam.rx.rxdata.fields.RxList
+import thevoid.iam.rx.rxdata.fields.RxString
+import thevoid.iam.rx.viewmodel.RxViewModel
 import java.util.concurrent.TimeUnit
 
 class RecyclerViewModel : RxViewModel() {

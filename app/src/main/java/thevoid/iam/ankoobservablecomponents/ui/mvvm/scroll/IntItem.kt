@@ -5,9 +5,9 @@ import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import iam.thevoid.ae.setPaddings
-import iam.thevoid.ankoviews.widget.adapter.AnkoLayout
+import iam.thevoid.ankorx.AnkoLayout
 import org.jetbrains.anko.*
-import thevoid.iam.components.widget.ext.setText
+import thevoid.iam.rx.widget.ext.setText
 
 class IntItem(viewGroup: ViewGroup) : AnkoLayout<Integer>(viewGroup) {
     override fun createView(ui: AnkoContext<AnkoLayout<Integer>>): View =

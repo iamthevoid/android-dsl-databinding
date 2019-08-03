@@ -2,13 +2,12 @@ package thevoid.iam.ankoobservablecomponents.ui.mvvm.scroll
 
 import android.view.View
 import android.view.ViewGroup
-import iam.thevoid.ankoviews.widget.adapter.AnkoLayout
-import iam.thevoid.e.safe
+import iam.thevoid.ankorx.AnkoLayout
 import org.jetbrains.anko.*
 import thevoid.iam.ankoobservablecomponents.util.setImageUrl
 
-class ImageItem(viewGroup: ViewGroup) : AnkoLayout<String>(viewGroup) {
-    override fun createView(ui: AnkoContext<AnkoLayout<String>>): View =
+class ImageItem(viewGroup: ViewGroup) : iam.thevoid.ankorx.AnkoLayout<String>(viewGroup) {
+    override fun createView(ui: AnkoContext<iam.thevoid.ankorx.AnkoLayout<String>>): View =
         ui.frameLayout {
             imageView {
                 setImageUrl(item.onlyPresent())

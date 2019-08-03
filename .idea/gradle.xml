@@ -8,11 +8,13 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/ankoviews" />
+            <option value="$PROJECT_DIR$/anko-commons" />
+            <option value="$PROJECT_DIR$/anko-rx" />
             <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/components" />
-            <option value="$PROJECT_DIR$/design" />
-            <option value="$PROJECT_DIR$/recycler" />
+            <option value="$PROJECT_DIR$/commons" />
+            <option value="$PROJECT_DIR$/design-rx" />
+            <option value="$PROJECT_DIR$/recycler-rx" />
+            <option value="$PROJECT_DIR$/rx" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

@@ -4,22 +4,21 @@ import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import iam.thevoid.ae.setRippleClickAnimation
-import iam.thevoid.ankoviews.widget.adapter.AnkoLayout
-import iam.thevoid.e.safe
+import iam.thevoid.ankorx.AnkoLayout
 import org.jetbrains.anko.*
 import thevoid.iam.ankoobservablecomponents.R
 import thevoid.iam.ankoobservablecomponents.data.api.model.CurrencyRate
 import thevoid.iam.ankoobservablecomponents.util.codeToValue
 import thevoid.iam.ankoobservablecomponents.util.setImageUrl
-import thevoid.iam.components.rx.fields.RxString
-import thevoid.iam.components.widget.ext.setText
+import thevoid.iam.rx.rxdata.fields.RxString
+import thevoid.iam.rx.widget.ext.setText
 import java.lang.ref.WeakReference
 
-class CurrencySimpleItem(startValue: RxString, viewGroup: ViewGroup) : AnkoLayout<CurrencyRate>(viewGroup) {
+class CurrencySimpleItem(startValue: RxString, viewGroup: ViewGroup) : iam.thevoid.ankorx.AnkoLayout<CurrencyRate>(viewGroup) {
 
     private val current = WeakReference(startValue)
 
-    override fun createView(ui: AnkoContext<AnkoLayout<CurrencyRate>>): View =
+    override fun createView(ui: AnkoContext<iam.thevoid.ankorx.AnkoLayout<CurrencyRate>>): View =
         ui.frameLayout {
 
             setRippleClickAnimation()

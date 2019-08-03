@@ -1,8 +1,8 @@
 package thevoid.iam.ankoobservablecomponents.ui.mvvm.scroll
 
-import thevoid.iam.components.mvvm.adapter.ItemBindings
-import thevoid.iam.components.mvvm.viewmodel.RxViewModel
-import thevoid.iam.components.rx.fields.RxList
+import thevoid.iam.rx.adapter.ItemBindings
+import thevoid.iam.rx.rxdata.fields.RxList
+import thevoid.iam.rx.viewmodel.RxViewModel
 
 class ScrollViewModel : RxViewModel() {
 

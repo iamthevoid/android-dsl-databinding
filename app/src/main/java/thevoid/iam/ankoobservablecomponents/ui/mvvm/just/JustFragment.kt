@@ -3,9 +3,9 @@ package thevoid.iam.ankoobservablecomponents.ui.mvvm.just
 import android.view.View
 import iam.thevoid.ankoviews.widget.mvvm.AnkoMvvmFragment
 import org.jetbrains.anko.*
-import thevoid.iam.components.mvvm.ViewModelBindingProvider
-import thevoid.iam.components.mvvm.createBinding
-import thevoid.iam.components.widget.ext.setBackgroundColor
+import iam.thevoid.common.ViewModelBindingProvider
+import iam.thevoid.common.createBinding
+import thevoid.iam.rx.widget.ext.setBackgroundColor
 
 class JustFragment : AnkoMvvmFragment<JustViewModel>() {
 
@@ -15,7 +15,7 @@ class JustFragment : AnkoMvvmFragment<JustViewModel>() {
         ui.frameLayout {
             padding = dip(3)
             frameLayout {
-                setBackgroundColor(viewModel<JustViewModel>().color)
+                setBackgroundColor(vm.color)
             }
         }
 }
