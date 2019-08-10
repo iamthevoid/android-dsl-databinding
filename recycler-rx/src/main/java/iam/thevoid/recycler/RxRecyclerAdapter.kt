@@ -27,9 +27,16 @@ open class RxRecyclerAdapter<T : Any>(data: List<T> = emptyList()) : RecyclerVie
 
     var diffCallbackFactory: ((old: List<T>, new: List<T>) -> DiffCallback<T>)? = null
 
+    private val layoutCache by lazy { mutableMapOf<Int, (ViewGroup) -> Layout<*>>() }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
-        (bindings.factory(viewType).invoke(parent) as? Layout<T>)
-            ?.let { layout -> Holder(layout) } ?: throw IllegalStateException("Binding not provided")
+        createLayout(viewType, parent)?.let { Holder(it) } ?: throw IllegalStateException("Binding not provided")
+
+    private fun createLayout(viewType: Int, parent: ViewGroup) =
+        getLayoutFactory(viewType).invoke(parent) as? Layout<T>
+
+    private fun getLayoutFactory(viewType: Int) =
+        layoutCache[viewType] ?: (bindings.factory(viewType).also { layoutCache[viewType] = it })
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         (holder as? Holder<T>)?.onBind(data[position])

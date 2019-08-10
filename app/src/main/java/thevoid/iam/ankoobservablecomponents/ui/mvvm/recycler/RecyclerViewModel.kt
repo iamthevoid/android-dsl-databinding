@@ -37,7 +37,7 @@ class RecyclerViewModel : RxViewModel() {
     }
 
     val itemBindings = ItemBindings.of(String::class.java) { CurrencyHeaderItem(it) }
-        .addBinding(CurrencyRate::class.java) { CurrencySimpleItem(current, it) }
+        .addBinding(CurrencyRate::class) { CurrencySimpleItem(current, it) }
 
     override fun onActive() {
         super.onActive()

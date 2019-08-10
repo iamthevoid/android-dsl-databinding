@@ -4,6 +4,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.IntDef
 import androidx.viewpager.widget.PagerAdapter
+import kotlin.reflect.KClass
 
 open class RxPagerAdapter<T : Any>(items: List<T>, titles: List<String> = emptyList()) : PagerAdapter() {
 
@@ -31,14 +32,24 @@ open class RxPagerAdapter<T : Any>(items: List<T>, titles: List<String> = emptyL
         notifyDataSetChanged()
     }
 
+    private val layoutCache by lazy { mutableMapOf<KClass<out T>, (ViewGroup) -> Layout<*>>() }
+
     override fun instantiateItem(container: ViewGroup, position: Int): View =
-        (bindings.factory(data[position]::class.java).invoke(container) as? Layout<T>)?.let { layout ->
-            ViewHolder(data[position], layout).also {
-                container.addView(layout.view)
-                it.onBind(data[position])
+        data[position].let {item ->
+            createLayout(item, container)?.let { layout ->
+                ViewHolder(item, layout).also {
+                    container.addView(layout.view)
+                    it.onBind(item)
+                }
+                layout.view
             }
-            layout.view
         } ?: View(container.context)
+
+    private fun createLayout(item : T, container: ViewGroup) =
+        getLayoutFactory(item).invoke(container) as? Layout<T>
+
+    private fun getLayoutFactory(item : T) =
+        item::class.let { key -> (layoutCache[key] ?: (bindings.factory(key)).also { layoutCache[key] = it }) }
 
     override fun destroyItem(collection: ViewGroup, position: Int, view: Any) = collection.removeView(view as? View)
 
