@@ -44,6 +44,6 @@ class ItemBindings {
 
     fun factory(cls: KClass<*>): (ViewGroup) -> Layout<*> =
         factories[cls]
-            ?: factories.takeIf { cls.isSealed }?.filter { cls.isSubclassOf(it.key) }?.values?.firstOrNull()
+            ?: factories.filter { it.key.isSealed }.takeIf { it.isNotEmpty() }?.filter { cls.isSubclassOf(it.key) }?.values?.firstOrNull()
             ?: throw IllegalArgumentException("Type of provided factory is incorrect")
 }
