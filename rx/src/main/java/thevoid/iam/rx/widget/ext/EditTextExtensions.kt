@@ -3,10 +3,7 @@ package thevoid.iam.rx.widget.ext
 import android.text.Editable
 import android.widget.EditText
 import androidx.annotation.StringRes
-import iam.thevoid.ae.color
-import iam.thevoid.ae.moveCursorToEnd
-import iam.thevoid.ae.requestSoftInput
-import iam.thevoid.ae.resetFocus
+import iam.thevoid.ae.*
 import iam.thevoid.e.format
 import io.reactivex.Flowable
 import thevoid.iam.rx.R
@@ -20,45 +17,65 @@ import iam.thevoid.common.adapter.change.textwatcher.OnEditTextChanges
  * SETTER
  */
 
-fun EditText.setTextSilent(text: CharSequence) {
+fun EditText.setTextSilent(text: CharSequence, moveCursorToEnd: Boolean = true) {
+    if (text.toString() == this.text.toString())
+        return
     val watcher = textWatcher
     removeTextChangedListener(watcher)
     setText(text)
-    moveCursorToEnd()
     addTextChangedListener(watcher)
+    if (moveCursorToEnd) {
+        post {
+            moveCursorToEnd()
+            requestSoftInput()
+        }
+    }
 }
 
-fun EditText.setTextResourceSilent(@StringRes text: Int) {
+fun EditText.setTextResourceSilent(@StringRes text: Int, moveCursorToEnd: Boolean = true) {
+    if (string(text) == "${this.text}")
+        return
     val watcher = textWatcher
     removeTextChangedListener(watcher)
     setText(text)
-    moveCursorToEnd()
     addTextChangedListener(watcher)
+    if (moveCursorToEnd) {
+        post {
+            moveCursorToEnd()
+            requestSoftInput()
+        }
+    }
 }
 
-fun <T : CharSequence> EditText.setText(rxString: RxCharSequence<T>) =
-    addSetter(rxString.observe()) { setTextSilent(it) }
+fun <T : CharSequence> EditText.setText(
+    rxString: RxCharSequence<T>,
+    moveCursorToEnd: Boolean = true
+) =
+    addSetter(rxString.observe()) { setTextSilent(it, moveCursorToEnd) }
 
-fun <T : CharSequence> EditText.setText(textFlowable: Flowable<T>) =
-    addSetter(textFlowable) { setTextSilent(it) }
+fun <T : CharSequence> EditText.setText(
+    textFlowable: Flowable<T>,
+    moveCursorToEnd: Boolean = true
+) =
+    addSetter(textFlowable) { setTextSilent(it, moveCursorToEnd) }
 
-fun EditText.setText(rxInt: RxInt) =
-    addSetter(rxInt.observe()) { setTextSilent("$it") }
+fun EditText.setText(rxInt: RxInt, moveCursorToEnd: Boolean = true) =
+    addSetter(rxInt.observe()) { setTextSilent("$it", moveCursorToEnd) }
 
-fun EditText.setText(rxLong: RxLong) =
-    addSetter(rxLong.observe()) { setTextSilent("$it") }
+fun EditText.setText(rxLong: RxLong, moveCursorToEnd: Boolean = true) =
+    addSetter(rxLong.observe()) { setTextSilent("$it", moveCursorToEnd) }
 
-fun EditText.setText(rxFloat: RxFloat, precision: Int? = null) =
-    addSetter(rxFloat.observe()) { setTextSilent(it.format(precision)) }
+fun EditText.setText(rxFloat: RxFloat, precision: Int? = null, moveCursorToEnd: Boolean = true) =
+    addSetter(rxFloat.observe()) { setTextSilent(it.format(precision), moveCursorToEnd) }
 
-fun EditText.setText(rxDouble: RxDouble, precision: Int? = null) =
-    addSetter(rxDouble.observe()) { setTextSilent(it.format(precision)) }
+fun EditText.setText(rxDouble: RxDouble, precision: Int? = null, moveCursorToEnd: Boolean = true) =
+    addSetter(rxDouble.observe()) { setTextSilent(it.format(precision), moveCursorToEnd) }
 
-fun EditText.setTextResource(rxIntResource: RxInt) =
-    addSetter(rxIntResource.observe()) { setTextResourceSilent(it) }
+fun EditText.setTextResource(rxIntResource: RxInt, moveCursorToEnd: Boolean = true) =
+    addSetter(rxIntResource.observe()) { setTextResourceSilent(it, moveCursorToEnd) }
 
-fun EditText.setTextResource(textResourceFlowable: Flowable<Int>) =
-    addSetter(textResourceFlowable) { setTextResourceSilent(it) }
+fun EditText.setTextResource(textResourceFlowable: Flowable<Int>, moveCursorToEnd: Boolean) =
+    addSetter(textResourceFlowable) { setTextResourceSilent(it, moveCursorToEnd) }
 
 fun EditText.setTextColor(colorFlowable: Flowable<Int>) =
     addSetter(colorFlowable) { setTextColor(it) }
@@ -111,20 +128,26 @@ fun EditText.afterTextChanges(rxEditable: RxString) =
         })
     }, rxEditable)
 
-fun EditText.beforeTextChanges(rxChanges: RxField<BeforeEditTextChanges>) = beforeTextChanges(rxChanges) { it }
+fun EditText.beforeTextChanges(rxChanges: RxField<BeforeEditTextChanges>) =
+    beforeTextChanges(rxChanges) { it }
 
-fun <T : Any> EditText.beforeTextChanges(rxChanges: RxField<T>, mapper: (BeforeEditTextChanges) -> T) =
+fun <T : Any> EditText.beforeTextChanges(
+    rxChanges: RxField<T>,
+    mapper: (BeforeEditTextChanges) -> T
+) =
     addGetter({
         textWatcher.addBeforeTextChangedCallback(object : TextWatcherAdapter() {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                it.invoke(mapper(
-                    BeforeEditTextChanges(
-                        s,
-                        start,
-                        count,
-                        after
+                it.invoke(
+                    mapper(
+                        BeforeEditTextChanges(
+                            s,
+                            start,
+                            count,
+                            after
+                        )
                     )
-                ))
+                )
             }
         })
     }, rxChanges)
