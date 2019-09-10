@@ -6,14 +6,14 @@ import android.view.ViewGroup
 import io.reactivex.Flowable
 import thevoid.iam.rx.rxdata.fields.RxField
 
-abstract class Layout<T>(parent: ViewGroup) {
+abstract class Layout<T>(private val parent: ViewGroup) {
 
     private val itemFactory: () -> RxField<T> = { RxField() }
 
     val view by lazy { createView(parent) }
 
     val context : Context
-        get() = view.context
+        get() = parent.context
 
     val item: RxField<T> by lazy(itemFactory)
 

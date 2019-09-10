@@ -1,6 +1,7 @@
 package thevoid.iam.rx.widget.ext
 
 import android.graphics.drawable.Drawable
+import android.os.Build
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
@@ -18,6 +19,7 @@ import thevoid.iam.rx.widget.Setter
 import thevoid.iam.rx.rxdata.RxLoading
 import thevoid.iam.rx.rxdata.fields.*
 import iam.thevoid.common.adapter.delegate.OnGestureDelegate
+import thevoid.iam.rx.widget.util.containsInStackTrace
 
 /**
  * =============== BASE ==============
@@ -46,7 +48,10 @@ fun <T : Any, V : View> V.addSetter(flowable: Flowable<T>, setter: V.(T) -> Unit
     }
 }
 
-fun <T : CharSequence, V : View> V.addGetter(consumer: ((T) -> Unit) -> Unit, rxCharSequence: RxCharSequence<T>) =
+fun <T : CharSequence, V : View> V.addGetter(
+    consumer: ((T) -> Unit) -> Unit,
+    rxCharSequence: RxCharSequence<T>
+) =
     addSetter(Flowable.create<T>({ emitter ->
         consumer { emitter.onNext(it) }
     }, BackpressureStrategy.LATEST)) { rxCharSequence.set(it) }
@@ -94,7 +99,11 @@ fun View.hideUntilLoaded(loading: RxLoading) =
     addSetter(loading.asFlowable) { hide(it) }
 
 fun View.hideUntilLoaded(loading: RxLoading, vararg loadings: RxLoading) =
-    addSetter(Flowable.merge(loading.asFlowable.mergeWith(loadings.map { it.asFlowable }))) { hide(it) }
+    addSetter(Flowable.merge(loading.asFlowable.mergeWith(loadings.map { it.asFlowable }))) {
+        hide(
+            it
+        )
+    }
 
 fun View.hideWhenLoaded(loading: RxLoading) =
     addSetter(loading.asFlowable) { hide(!it) }
@@ -106,7 +115,11 @@ fun View.goneUntilLoaded(loading: RxLoading) =
     addSetter(loading.asFlowable) { gone(it) }
 
 fun View.goneUntilLoaded(loading: RxLoading, vararg loadings: RxLoading) =
-    addSetter(Flowable.merge(loading.asFlowable.mergeWith(loadings.map { it.asFlowable }))) { gone(it) }
+    addSetter(Flowable.merge(loading.asFlowable.mergeWith(loadings.map { it.asFlowable }))) {
+        gone(
+            it
+        )
+    }
 
 fun View.goneWhenLoaded(loading: RxLoading) =
     addSetter(loading.asFlowable) { gone(!it) }
@@ -185,6 +198,24 @@ fun <T : Any> View.onFocusChange(onChange: RxItem<T>, mapper: (Boolean) -> T) =
         }
     }, onChange)
 
+fun <T : Any> View.onFocusChangeForceFalseOnClearFocus(
+    onChange: RxItem<T>,
+    mapper: (Boolean) -> T
+) =
+    addGetter({ bypass ->
+        bypass.invoke(mapper(isFocused))
+        onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
+            bypass.invoke(
+                mapper(
+                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P && hasFocus) {
+                        if (containsInStackTrace("clearFocus")) false else hasFocus
+                    } else hasFocus
+                )
+            )
+        }
+    }, onChange)
+
+
 /**
  * Transition
  */
@@ -200,7 +231,10 @@ fun View.setTranslationY(rxTranslation: Flowable<Float>) =
  */
 
 private val View.gestureDetector
-    get() = (getTag(R.id.gestureDetector) as? GestureDetector) ?: GestureDetector(context, gestureDetectorCallback)
+    get() = (getTag(R.id.gestureDetector) as? GestureDetector) ?: GestureDetector(
+        context,
+        gestureDetectorCallback
+    )
 
 private val View.gestureDetectorCallback: OnGestureDelegate
     get() = (getTag(R.id.gestureDetectorCallback) as? OnGestureDelegate)
@@ -214,8 +248,14 @@ fun View.onScroll(rxOnScroll: RxField<OnScroll>) = onScroll(rxOnScroll) { it }
 
 fun <T : Any> View.onScroll(rxOnScroll: RxField<T>, mapper: (OnScroll) -> T) =
     addGetter({
-        gestureDetectorCallback.addOnScrollCallback(object : GestureDetector.SimpleOnGestureListener() {
-            override fun onScroll(e1: MotionEvent?, e2: MotionEvent?, distanceX: Float, distanceY: Float): Boolean {
+        gestureDetectorCallback.addOnScrollCallback(object :
+            GestureDetector.SimpleOnGestureListener() {
+            override fun onScroll(
+                e1: MotionEvent?,
+                e2: MotionEvent?,
+                distanceX: Float,
+                distanceY: Float
+            ): Boolean {
                 it.invoke(mapper(OnScroll(e1, e2, distanceX, distanceY)))
                 return true
             }
@@ -233,8 +273,14 @@ fun View.onFling(rxOnFling: RxField<OnFling>) = onFling(rxOnFling) { it }
 
 fun <T : Any> View.onFling(rxOnFling: RxField<T>, mapper: (OnFling) -> T) =
     addGetter({
-        gestureDetectorCallback.addOnFlingCallback(object : GestureDetector.SimpleOnGestureListener() {
-            override fun onFling(e1: MotionEvent?, e2: MotionEvent?, velocityX: Float, velocityY: Float): Boolean {
+        gestureDetectorCallback.addOnFlingCallback(object :
+            GestureDetector.SimpleOnGestureListener() {
+            override fun onFling(
+                e1: MotionEvent?,
+                e2: MotionEvent?,
+                velocityX: Float,
+                velocityY: Float
+            ): Boolean {
                 it.invoke(mapper(OnFling(e1, e2, velocityX, velocityY)))
                 return true
             }
@@ -252,7 +298,8 @@ fun View.onDown(rxOnDown: RxField<Optional<MotionEvent>>) = onDown(rxOnDown) { i
 
 fun <T : Any> View.onDown(rxOnDown: RxField<T>, mapper: (Optional<MotionEvent>) -> T) =
     addGetter({
-        gestureDetectorCallback.addOnDownCallback(object : GestureDetector.SimpleOnGestureListener() {
+        gestureDetectorCallback.addOnDownCallback(object :
+            GestureDetector.SimpleOnGestureListener() {
             override fun onDown(e: MotionEvent?): Boolean {
                 it.invoke(mapper(Optional.of(e)))
                 return true
@@ -265,11 +312,16 @@ fun <T : Any> View.onDown(rxOnDown: RxField<T>, mapper: (Optional<MotionEvent>) 
  * ON SINGLE TAP UP
  */
 
-fun View.onSingleTapUp(rxOnSingleTapUp: RxField<Optional<MotionEvent>>) = onSingleTapUp(rxOnSingleTapUp) { it }
+fun View.onSingleTapUp(rxOnSingleTapUp: RxField<Optional<MotionEvent>>) =
+    onSingleTapUp(rxOnSingleTapUp) { it }
 
-fun <T : Any> View.onSingleTapUp(rxOnSingleTapUp: RxField<T>, mapper: (Optional<MotionEvent>) -> T) =
+fun <T : Any> View.onSingleTapUp(
+    rxOnSingleTapUp: RxField<T>,
+    mapper: (Optional<MotionEvent>) -> T
+) =
     addGetter({
-        gestureDetectorCallback.addOnSingleTapUpCallback(object : GestureDetector.SimpleOnGestureListener() {
+        gestureDetectorCallback.addOnSingleTapUpCallback(object :
+            GestureDetector.SimpleOnGestureListener() {
             override fun onSingleTapUp(e: MotionEvent?): Boolean {
                 it.invoke(mapper(Optional.of(e)))
                 return true
@@ -282,11 +334,13 @@ fun <T : Any> View.onSingleTapUp(rxOnSingleTapUp: RxField<T>, mapper: (Optional<
  * ON SHOW PRESS
  */
 
-fun View.onShowPress(rxOnShowPress: RxField<Optional<MotionEvent>>) = onShowPress(rxOnShowPress) { it }
+fun View.onShowPress(rxOnShowPress: RxField<Optional<MotionEvent>>) =
+    onShowPress(rxOnShowPress) { it }
 
 fun <T : Any> View.onShowPress(rxOnShowPress: RxField<T>, mapper: (Optional<MotionEvent>) -> T) =
     addGetter({
-        gestureDetectorCallback.addOnShowPressCallback(object : GestureDetector.SimpleOnGestureListener() {
+        gestureDetectorCallback.addOnShowPressCallback(object :
+            GestureDetector.SimpleOnGestureListener() {
             override fun onShowPress(e: MotionEvent?) = it.invoke(mapper(Optional.of(e)))
         })
         setOnTouchListener { _, event -> gestureDetector.onTouchEvent(event) }
@@ -296,11 +350,13 @@ fun <T : Any> View.onShowPress(rxOnShowPress: RxField<T>, mapper: (Optional<Moti
  * ON LONG PRESS
  */
 
-fun View.onLongPress(rxOnLongPress: RxField<Optional<MotionEvent>>) = onLongPress(rxOnLongPress) { it }
+fun View.onLongPress(rxOnLongPress: RxField<Optional<MotionEvent>>) =
+    onLongPress(rxOnLongPress) { it }
 
 fun <T : Any> View.onLongPress(rxOnLongPress: RxField<T>, mapper: (Optional<MotionEvent>) -> T) =
     addGetter({
-        gestureDetectorCallback.addOnLongPressCallback(object : GestureDetector.SimpleOnGestureListener() {
+        gestureDetectorCallback.addOnLongPressCallback(object :
+            GestureDetector.SimpleOnGestureListener() {
             override fun onLongPress(e: MotionEvent?) = it.invoke(mapper(Optional.of(e)))
         })
         setOnTouchListener { _, event -> gestureDetector.onTouchEvent(event) }

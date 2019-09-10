@@ -1,5 +1,6 @@
 package thevoid.iam.rx.widget.util
 
+import android.annotation.SuppressLint
 import iam.thevoid.e.safe
 import java.lang.reflect.ParameterizedType
 import java.lang.reflect.TypeVariable
@@ -34,3 +35,7 @@ fun key(): String = with(Thread.currentThread().stackTrace) {
         )
     }
 }
+
+@SuppressLint("DefaultLocale")
+fun containsInStackTrace(method : String) =
+    Thread.currentThread().stackTrace.any { it.methodName == method }
