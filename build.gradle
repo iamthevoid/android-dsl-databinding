@@ -25,27 +25,30 @@ ext {
     libLicence = 'Apache-2.0'
     libGroupId = 'thevoid.iam.components'
 
-    anko = "0.10.8"
+    libMinSdk = 19
+    compileApi = 28
+    targetApi = 28
 
     e = "0.5.2"
 
-    gson = "2.8.5"
-    jsoup = "1.12.1"
-    retrofit = "2.6.0"
-    okhttp = "3.14.2"
+    anko = "0.10.8"
     glide = "4.9.0"
 
-    // x
-    appcompat = "1.1.0-rc01"
-    design = "1.1.0-alpha09"
-    recycler = "1.1.0-alpha06"
-    swipe = "1.0.0"
+    jsoup = "1.12.1"
+    gson = "2.8.5"
+    okhttp = "3.14.2"
+    retrofit = "2.6.0"
 
     // rx
-    rxjava = "2.2.7"
-    rxandroid = "2.1.1"
+    rxJava = "2.2.7"
+    rxAndroid = "2.1.1"
 
+    // x
+    appcompat = "1.1.0"
     lifecycle = "2.2.0-alpha02"
+    material = "1.1.0-alpha09"
+    recycler = "1.1.0-alpha06"
+    swipe = "1.0.0"
 
     // test
     espresso = "3.2.0-alpha02"

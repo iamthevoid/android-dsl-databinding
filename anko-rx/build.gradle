@@ -9,11 +9,11 @@ repositories {
 }
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion compileApi
 
     defaultConfig {
-        minSdkVersion 15
-        targetSdkVersion 28
+        minSdkVersion libMinSdk
+        targetSdkVersion targetApi
         versionCode 1
         versionName "1.0"
 
@@ -26,6 +26,8 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+        debug {}
+        releaseDebuggable {}
     }
     compileOptions {
         sourceCompatibility = '1.8'

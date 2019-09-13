@@ -9,11 +9,11 @@ repositories {
 }
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion compileApi
 
     defaultConfig {
-        minSdkVersion 15
-        targetSdkVersion 28
+        minSdkVersion libMinSdk
+        targetSdkVersion targetApi
         versionCode 1
         versionName "1.0"
 
@@ -26,6 +26,8 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+        debug {}
+        releaseDebuggable {}
     }
     compileOptions {
         sourceCompatibility = '1.8'
@@ -52,7 +54,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     implementation "androidx.appcompat:appcompat:$appcompat"
-    implementation "com.google.android.material:material:$design"
+    implementation "com.google.android.material:material:$material"
 
     implementation "org.jetbrains.anko:anko-sdk25:$anko" // sdk15, sdk19, sdk21, sdk23 are also available
     implementation "org.jetbrains.anko:anko-appcompat-v7:$anko"
