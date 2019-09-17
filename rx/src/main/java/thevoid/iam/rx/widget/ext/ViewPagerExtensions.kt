@@ -13,6 +13,7 @@ import iam.thevoid.rxe.combine
 import io.reactivex.Flowable
 import thevoid.iam.rx.R
 import thevoid.iam.rx.adapter.ItemBindings
+import thevoid.iam.rx.adapter.RxFragmentPagerAdapter
 import thevoid.iam.rx.adapter.RxPagerAdapter
 import thevoid.iam.rx.adapter.SimpleFragmentPagerAdapter
 import thevoid.iam.rx.rxdata.fields.RxField
@@ -42,7 +43,13 @@ fun <T : Any> ViewPager.setItems(
     items: RxList<T>,
     titles: RxList<String>,
     itemBindings: ItemBindings
-) = addSetter(combine(items.observe(), titles.observe())) { setItems(it.first, itemBindings, it.second) }
+) = addSetter(combine(items.observe(), titles.observe())) {
+    setItems(
+        it.first,
+        itemBindings,
+        it.second
+    )
+}
 
 fun <T : Any> ViewPager.setItems(
     itemsFlowable: Flowable<List<T>>,
@@ -53,7 +60,13 @@ fun <T : Any> ViewPager.setItems(
     itemsFlowable: Flowable<List<T>>,
     titlesFlowable: Flowable<List<String>>,
     itemBindings: ItemBindings
-) = addSetter(combine(itemsFlowable, titlesFlowable)) { setItems(it.first, itemBindings, it.second) }
+) = addSetter(combine(itemsFlowable, titlesFlowable)) {
+    setItems(
+        it.first,
+        itemBindings,
+        it.second
+    )
+}
 
 fun <T : Any> ViewPager.setItems(
     items: List<T>,
@@ -66,6 +79,54 @@ fun <T : Any> ViewPager.setItems(
     } ?: run {
         RxPagerAdapter(items, titles).apply {
             this@apply.position = position
+            this@apply.bindings = itemBindings
+            adapter = this
+        }
+    }
+}
+
+// Fragment pager adapter
+
+fun <T : Any> ViewPager.setItems(
+    fm: FragmentManager,
+    items: RxList<T>,
+    itemBindings: ItemBindings
+) = addSetter(items.observe()) { setItems(fm, it, itemBindings) }
+
+fun <T : Any> ViewPager.setItems(
+    fm: FragmentManager,
+    items: RxList<T>,
+    titles: RxList<String>,
+    itemBindings: ItemBindings
+) = addSetter(combine(items.observe(), titles.observe())) {
+    setItems(fm, it.first, itemBindings, it.second)
+}
+
+fun <T : Any> ViewPager.setItems(
+    fm: FragmentManager,
+    itemsFlowable: Flowable<List<T>>,
+    itemBindings: ItemBindings
+) = addSetter(itemsFlowable) { setItems(fm, it, itemBindings) }
+
+fun <T : Any> ViewPager.setItems(
+    fm: FragmentManager,
+    itemsFlowable: Flowable<List<T>>,
+    titlesFlowable: Flowable<List<String>>,
+    itemBindings: ItemBindings
+) = addSetter(combine(itemsFlowable, titlesFlowable)) {
+    setItems(fm, it.first, itemBindings, it.second)
+}
+
+fun <T : Any> ViewPager.setItems(
+    fm: FragmentManager,
+    items: List<T>,
+    itemBindings: ItemBindings,
+    titles: List<String> = emptyList()
+) {
+    (adapter as? RxFragmentPagerAdapter<T>)?.apply {
+        setTitledItems(RxPagerAdapter.fromTitlesAndItems(items, titles))
+    } ?: run {
+        RxFragmentPagerAdapter(fm, items, titles).apply {
             this@apply.bindings = itemBindings
             adapter = this
         }
@@ -132,7 +193,6 @@ fun <T : Any> ViewPager.onPageSelect(rxItem: RxItem<T>, mapper: ((Int) -> T)) =
         })
     }, rxItem)
 
-
 fun ViewPager.onPageScrollStateChanged(rxInt: RxInt) =
     onPageScrollStateChanged(rxInt) { it }
 
@@ -160,7 +220,11 @@ fun ViewPager.onPageScrolled(rxField: RxField<OnPageScrolled>) =
 fun <T : Any> ViewPager.onPageScrolled(rxField: RxField<T>, mapper: ((OnPageScrolled) -> T)) =
     addGetter({
         onPageChangeListener.addOnPageScrolledCallback(object : OnPageChangeListenerAdapter() {
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+            override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int
+            ) {
                 it.invoke(mapper(OnPageScrolled(position, positionOffset, positionOffsetPixels)))
             }
         })

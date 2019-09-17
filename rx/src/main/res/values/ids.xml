@@ -14,4 +14,6 @@
 
     <item name="gestureDetectorCallback" type="id"/>
 
+    <item name="chromeClient" type="id" />
+
 </resources>

@@ -17,13 +17,13 @@ open class RxLoading {
 
     private val count = AtomicInteger(0)
 
-    private fun inc() {
+    fun inc() {
         if (count.incrementAndGet() == 1) {
             loading.set(true)
         }
     }
 
-    private fun dec() {
+    fun dec() {
         if (count.decrementAndGet() == 0) {
             loading.set(false)
         }
@@ -77,14 +77,15 @@ open class RxLoading {
             .doOnNext { loadingFinished(loading) }
     }
 
-    fun <T> observableUntilComplete(): ObservableTransformer<T, T> = ObservableTransformer { upstream ->
-        val loading = AtomicBoolean(false)
-        upstream
-            .doOnComplete { loadingFinished(loading) }
-            .doOnSubscribe { loadingStarted(loading) }
-            .doOnDispose { loadingFinished(loading) }
-            .doOnError { loadingFinished(loading) }
-    }
+    fun <T> observableUntilComplete(): ObservableTransformer<T, T> =
+        ObservableTransformer { upstream ->
+            val loading = AtomicBoolean(false)
+            upstream
+                .doOnComplete { loadingFinished(loading) }
+                .doOnSubscribe { loadingStarted(loading) }
+                .doOnDispose { loadingFinished(loading) }
+                .doOnError { loadingFinished(loading) }
+        }
 
     fun <T> single(): SingleTransformer<T, T> = SingleTransformer { upstream ->
         val loading = AtomicBoolean(false)

@@ -11,6 +11,5 @@ fun ImageView.setImageUrl(image : Flowable<String>) =
 fun ImageView.setImageUrl(url : String?) {
     Glide.with(this)
         .load(url)
-        .dontAnimate()
         .into(this)
 }
