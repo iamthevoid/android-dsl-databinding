@@ -3,15 +3,27 @@ package iam.thevoid.recycler
 import android.graphics.Canvas
 import android.graphics.Rect
 import android.view.MotionEvent
-import android.view.MotionEvent.ACTION_DOWN
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import iam.thevoid.e.safe
 
-class HeaderItemDecoration(
+class SingleStickyHeaderItemDecoration(
     parent: RecyclerView,
-    private val isHeader: (itemPosition: Int) -> Boolean
+    private val isHeader: (itemPosition: Int) -> Boolean,
+    private val onClick: (View) -> Unit = { }
 ) : RecyclerView.ItemDecoration() {
+
+    companion object {
+        const val STICKY_INITIAL = -2
+        const val STICKY_NOT_ASSIGNED = -1
+    }
+
+    var stickyHeight = 0
+    var stickyPosition = STICKY_INITIAL
+
+    var isSticked = parent.adapter?.run { itemCount > 0 && isHeader(0) }.safe()
 
     private var currentHeader: Pair<Int, RecyclerView.ViewHolder>? = null
 
@@ -33,11 +45,36 @@ class HeaderItemDecoration(
                 recyclerView: RecyclerView,
                 motionEvent: MotionEvent
             ): Boolean {
-                return if (motionEvent.action == ACTION_DOWN) {
-                    motionEvent.y <= currentHeader?.second?.itemView?.bottom ?: 0
-                } else false
+                if (isSticked && motionEvent.y <= stickyHeight) {
+                    onClick(recyclerView)
+                    return true
+                }
+                return false
             }
         })
+
+        parent.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (stickyPosition == STICKY_INITIAL)
+                    findAndAssignStickyPosition(recyclerView)
+                (recyclerView.layoutManager as? LinearLayoutManager)
+                    ?.findFirstCompletelyVisibleItemPosition().safe().also { firstVisiblePosition ->
+                        isSticked = stickyPosition != STICKY_NOT_ASSIGNED &&
+                                firstVisiblePosition > stickyPosition
+                    }
+            }
+        })
+    }
+
+    fun findAndAssignStickyPosition(recycler: RecyclerView) {
+        stickyPosition = recycler.adapter?.run {
+            if (itemCount > 0)
+                (0 until itemCount).filter(isHeader).run { if (isEmpty()) -1 else first() }
+            else STICKY_NOT_ASSIGNED
+        } ?: STICKY_NOT_ASSIGNED
+
+
     }
 
     override fun onDrawOver(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
@@ -62,24 +99,21 @@ class HeaderItemDecoration(
     }
 
     private fun getHeaderViewForItem(itemPosition: Int, parent: RecyclerView): View? {
-        if (parent.adapter == null) {
-            return null
-        }
+        val adapter = parent.adapter ?: return null
         val headerPosition = getHeaderPositionForItem(itemPosition)
-        val headerType = parent.adapter?.getItemViewType(headerPosition) ?: return null
+        val headerType = adapter.getItemViewType(headerPosition)
+
         // if match reuse viewHolder
         if (currentHeader?.first == headerPosition && currentHeader?.second?.itemViewType == headerType) {
             return currentHeader?.second?.itemView
         }
 
-        val headerHolder = parent.adapter?.createViewHolder(parent, headerType)
-        if (headerHolder != null) {
-            parent.adapter?.onBindViewHolder(headerHolder, headerPosition)
-            fixLayoutSize(parent, headerHolder.itemView)
-            // save for next draw
-            currentHeader = headerPosition to headerHolder
-        }
-        return headerHolder?.itemView
+        val headerHolder = adapter.createViewHolder(parent, headerType)
+        adapter.onBindViewHolder(headerHolder, headerPosition)
+        fixLayoutSize(parent, headerHolder.itemView)
+        // save for next draw
+        currentHeader = headerPosition to headerHolder
+        return headerHolder.itemView
     }
 
     private fun drawHeader(c: Canvas, header: View) {
@@ -138,7 +172,7 @@ class HeaderItemDecoration(
         )
 
         view.measure(childWidthSpec, childHeightSpec)
-        view.layout(0, 0, view.measuredWidth, view.measuredHeight)
+        view.layout(0, 0, view.measuredWidth, view.measuredHeight.also { stickyHeight = it })
     }
 
     private fun getHeaderPositionForItem(itemPosition: Int): Int {

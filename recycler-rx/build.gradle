@@ -48,6 +48,8 @@ dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
+    implementation "iam.thevoid.extensions:pure:$e"
+
     implementation "androidx.appcompat:appcompat:$appcompat"
     implementation "androidx.recyclerview:recyclerview:$recycler"
 
