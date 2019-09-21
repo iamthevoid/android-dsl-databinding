@@ -62,9 +62,11 @@ internal class RxFragmentPagerAdapter<T : Any>(
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
-        ): View? = (contentView ?: container?.let { factory?.invoke(it) }).also {
+        ): View? = prepareView(contentView ?: container?.let { factory?.invoke(it) }).also {
             contentView = it
         }
 
+        private fun prepareView(view: View?): View? =
+            (view?.parent as? ViewGroup)?.removeView(view).let { view }
     }
 }
