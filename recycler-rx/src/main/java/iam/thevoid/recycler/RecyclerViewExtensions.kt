@@ -6,7 +6,8 @@ import io.reactivex.Flowable
 import thevoid.iam.rx.adapter.ItemBindings
 import thevoid.iam.rx.rxdata.fields.RxField
 import thevoid.iam.rx.rxdata.fields.RxList
-import thevoid.iam.rx.widget.ext.*
+import thevoid.iam.rx.widget.ext.addGetter
+import thevoid.iam.rx.widget.ext.addSetter
 
 fun <T : Any> RecyclerView.setItems(
     items: RxList<T>,
@@ -36,6 +37,37 @@ private fun <T : Any> RecyclerView.setItems(
     }
 }
 
+inline fun <T : Any, reified A : RxRecyclerAdapter<T>> RecyclerView.setItems(
+    items: RxList<T>,
+    itemBindings: ItemBindings,
+    crossinline adapterFactory: (List<T>) -> A? = { null },
+    noinline diffCallbackFactory: ((old: List<T>, new: List<T>) -> DiffCallback<T>)? = null
+) = addSetter(items.observe()) { setItems(it, itemBindings, adapterFactory, diffCallbackFactory) }
+
+inline fun <T : Any, reified A : RxRecyclerAdapter<T>> RecyclerView.setItems(
+    itemsFlowable: Flowable<List<T>>,
+    itemBindings: ItemBindings,
+    crossinline adapterFactory: (List<T>) -> A? = { null },
+    noinline diffCallbackFactory: ((old: List<T>, new: List<T>) -> DiffCallback<T>)? = null
+) = addSetter(itemsFlowable) { setItems(it, itemBindings, adapterFactory, diffCallbackFactory) }
+
+
+inline fun <T : Any, reified A : RxRecyclerAdapter<T>> RecyclerView.setItems(
+    items: List<T>,
+    itemBindings: ItemBindings,
+    adapterFactory: (List<T>) -> A? = { null },
+    noinline diffCallbackFactory: ((old: List<T>, new: List<T>) -> DiffCallback<T>)? = null
+) {
+    (adapter as? RxRecyclerAdapter<T>)?.apply {
+        data = items.toMutableList()
+    } ?: run {
+        (adapterFactory(items) ?: RxRecyclerAdapter(items)).apply {
+            this@apply.bindings = itemBindings
+            this@apply.diffCallbackFactory = diffCallbackFactory
+            adapter = this
+        }
+    }
+}
 
 private val RecyclerView.onRecyclerScroll
     get() = (getTag(R.id.recyclerScroll) as? OnRecyclerScrollDelegate) ?: OnRecyclerScrollDelegate()
@@ -45,7 +77,8 @@ private val RecyclerView.onRecyclerScroll
         }
 
 
-fun RecyclerView.onRecyclerScrolled(rxOnScroll: RxField<OnScrolled>) = onRecyclerScrolled(rxOnScroll) { it }
+fun RecyclerView.onRecyclerScrolled(rxOnScroll: RxField<OnScrolled>) =
+    onRecyclerScrolled(rxOnScroll) { it }
 
 fun <T : Any> RecyclerView.onRecyclerScrolled(rxOnScroll: RxField<T>, mapper: (OnScrolled) -> T) =
     addGetter({
@@ -57,10 +90,13 @@ fun <T : Any> RecyclerView.onRecyclerScrolled(rxOnScroll: RxField<T>, mapper: (O
     }, rxOnScroll)
 
 
+fun RecyclerView.onScrollStateChanged(rxOnScroll: RxField<OnScrollStateChanged>) =
+    onRecyclerScrollStateChanged(rxOnScroll) { it }
 
-fun RecyclerView.onScrollStateChanged(rxOnScroll: RxField<OnScrollStateChanged>) = onRecyclerScrollStateChanged(rxOnScroll) { it }
-
-fun <T : Any> RecyclerView.onRecyclerScrollStateChanged(rxOnScroll: RxField<T>, mapper: (OnScrollStateChanged) -> T) =
+fun <T : Any> RecyclerView.onRecyclerScrollStateChanged(
+    rxOnScroll: RxField<T>,
+    mapper: (OnScrollStateChanged) -> T
+) =
     addGetter({
         onRecyclerScroll.addOnScrolled(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
