@@ -24,4 +24,9 @@ abstract class DiffCallback<T>(private val oldItems: List<T>, private val newIte
     abstract fun areItemsTheSame(oldItem: T, newItem: T): Boolean
 
     abstract fun areContentsTheSame(oldItem: T, newItem: T): Boolean
+
+    interface Diffable {
+        fun areItemsTheSame(another: Any?): Boolean
+        fun areContentsTheSame(another: Any?): Boolean
+    }
 }

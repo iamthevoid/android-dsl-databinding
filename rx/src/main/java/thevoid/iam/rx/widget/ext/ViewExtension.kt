@@ -5,20 +5,23 @@ import android.os.Build
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
-import iam.thevoid.ae.*
+import iam.thevoid.ae.color
+import iam.thevoid.ae.gone
+import iam.thevoid.ae.hide
+import iam.thevoid.ae.setClickable
 import iam.thevoid.common.adapter.change.scroll.OnFling
 import iam.thevoid.common.adapter.change.scroll.OnScroll
+import iam.thevoid.common.adapter.delegate.OnGestureDelegate
 import iam.thevoid.e.mergeWith
 import iam.thevoid.e.safe
 import iam.thevoid.util.Optional
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
-import thevoid.iam.rx.widget.util.ObserveListener
 import thevoid.iam.rx.R
-import thevoid.iam.rx.widget.Setter
 import thevoid.iam.rx.rxdata.RxLoading
 import thevoid.iam.rx.rxdata.fields.*
-import iam.thevoid.common.adapter.delegate.OnGestureDelegate
+import thevoid.iam.rx.widget.Setter
+import thevoid.iam.rx.widget.util.ObserveListener
 import thevoid.iam.rx.widget.util.containsInStackTrace
 
 /**
@@ -92,8 +95,23 @@ fun <V : View> V.addGetter(consumer: ((Float) -> Unit) -> Unit, rxFloat: RxFloat
     }, BackpressureStrategy.LATEST)) { rxFloat.set(it) }
 
 /**
+ * Enabled
+ */
+
+fun View.disableWhenLoading(loading: RxLoading) =
+    addSetter(loading.asFlowable) { isEnabled = !it }
+
+fun View.enableleWhenLoading(loading: RxLoading) =
+    addSetter(loading.asFlowable) { isEnabled = it }
+
+
+fun View.setEnabled(enabled: Flowable<Boolean>) =
+    addSetter(enabled) { isEnabled = it }
+
+/**
  * Visibility
  */
+
 
 fun View.hideUntilLoaded(loading: RxLoading) =
     addSetter(loading.asFlowable) { hide(it) }
@@ -173,6 +191,16 @@ fun View.setAlpha(alphaFlowable: Flowable<Float>) =
     }
 
 /**
+ * On click listener
+ */
+
+fun View.setOnclickListener(onClick: Flowable<View.OnClickListener>) =
+    addSetter(onClick) {
+        setOnClickListener(null)
+        setOnClickListener(it)
+    }
+
+/**
  * Focus
  */
 
@@ -197,6 +225,12 @@ fun <T : Any> View.onFocusChange(onChange: RxItem<T>, mapper: (Boolean) -> T) =
             bypass.invoke(mapper(hasFocus))
         }
     }, onChange)
+
+fun View.onFocusChangeForceFalseOnClearFocus(onChange: RxBoolean) =
+    onFocusChangeForceFalseOnClearFocus(onChange) { it }
+
+fun View.onFocusChangeForceFalseOnClearFocus(onChange: RxItem<Boolean>) =
+    onFocusChangeForceFalseOnClearFocus(onChange) { it }
 
 fun <T : Any> View.onFocusChangeForceFalseOnClearFocus(
     onChange: RxItem<T>,

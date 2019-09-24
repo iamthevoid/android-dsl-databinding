@@ -57,7 +57,7 @@ class SingleStickyHeaderItemDecoration(
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 if (stickyPosition == STICKY_INITIAL)
-                    findAndAssignStickyPosition(recyclerView)
+                    stickyPosition = findAndAssignStickyPosition(recyclerView)
                 (recyclerView.layoutManager as? LinearLayoutManager)
                     ?.findFirstCompletelyVisibleItemPosition().safe().also { firstVisiblePosition ->
                         isSticked = stickyPosition != STICKY_NOT_ASSIGNED &&
@@ -67,15 +67,12 @@ class SingleStickyHeaderItemDecoration(
         })
     }
 
-    fun findAndAssignStickyPosition(recycler: RecyclerView) {
-        stickyPosition = recycler.adapter?.run {
+    fun findAndAssignStickyPosition(recycler: RecyclerView) =
+        recycler.adapter?.run {
             if (itemCount > 0)
                 (0 until itemCount).filter(isHeader).run { if (isEmpty()) -1 else first() }
             else STICKY_NOT_ASSIGNED
         } ?: STICKY_NOT_ASSIGNED
-
-
-    }
 
     override fun onDrawOver(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
         super.onDrawOver(c, parent, state)
@@ -100,7 +97,8 @@ class SingleStickyHeaderItemDecoration(
 
     private fun getHeaderViewForItem(itemPosition: Int, parent: RecyclerView): View? {
         val adapter = parent.adapter ?: return null
-        val headerPosition = getHeaderPositionForItem(itemPosition)
+
+        val headerPosition = getHeaderPositionForItem(itemPosition) ?: return null
         val headerType = adapter.getItemViewType(headerPosition)
 
         // if match reuse viewHolder
@@ -175,8 +173,8 @@ class SingleStickyHeaderItemDecoration(
         view.layout(0, 0, view.measuredWidth, view.measuredHeight.also { stickyHeight = it })
     }
 
-    private fun getHeaderPositionForItem(itemPosition: Int): Int {
-        var headerPosition = 0
+    private fun getHeaderPositionForItem(itemPosition: Int): Int? {
+        var headerPosition: Int? = null
         var currentPosition = itemPosition
         do {
             if (isHeader(currentPosition)) {

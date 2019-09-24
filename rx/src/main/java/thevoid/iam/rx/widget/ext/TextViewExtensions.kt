@@ -36,3 +36,9 @@ fun TextView.setTextColor(colorFlowable: Flowable<Int>) =
 
 fun TextView.setTextColorResourse(colorResFlowable: Flowable<Int>) =
     addSetter(colorResFlowable) { setTextColor(color(it)) }
+
+fun TextView.setHintTextColor(colorResFlowable: Flowable<Int>) =
+    addSetter(colorResFlowable) { setHintTextColor(it) }
+
+fun TextView.setHintTextColorResourse(colorResFlowable: Flowable<Int>) =
+    addSetter(colorResFlowable) { setHintTextColor(color(it)) }
