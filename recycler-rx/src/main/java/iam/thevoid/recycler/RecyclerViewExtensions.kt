@@ -16,7 +16,7 @@ fun <T : Any> RecyclerView.setItems(
 ) = addSetter(items.observe()) { setItems(it, itemBindings, diffCallbackFactory) }
 
 fun <T : Any> RecyclerView.setItems(
-    itemsFlowable: Flowable<List<T>>,
+    itemsFlowable: Flowable<out List<T>>,
     itemBindings: ItemBindings,
     diffCallbackFactory: ((old: List<T>, new: List<T>) -> DiffCallback<T>)? = null
 ) = addSetter(itemsFlowable) { setItems(it, itemBindings, diffCallbackFactory) }
