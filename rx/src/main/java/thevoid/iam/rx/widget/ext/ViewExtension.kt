@@ -98,15 +98,27 @@ fun <V : View> V.addGetter(consumer: ((Float) -> Unit) -> Unit, rxFloat: RxFloat
  * Enabled
  */
 
-fun View.disableWhenLoading(loading: RxLoading) =
+fun View.disableWhileLoading(loading: RxLoading) =
     addSetter(loading.asFlowable) { isEnabled = !it }
 
-fun View.enableleWhenLoading(loading: RxLoading) =
+fun View.enableWhileLoading(loading: RxLoading) =
     addSetter(loading.asFlowable) { isEnabled = it }
-
 
 fun View.setEnabled(enabled: Flowable<Boolean>) =
     addSetter(enabled) { isEnabled = it }
+
+///**
+// * Clickable
+// */
+//
+//fun View.disableClickOnLoad(loading: RxLoading) =
+//    setClickable(loading.asFlowable.map { !it })
+//
+//fun View.enableClickOnLoad(loading: RxLoading) =
+//    setClickable(loading.asFlowable)
+//
+//fun View.setClickable(flowable: Flowable<Boolean>) =
+//    addSetter(flowable) { isClickable = it }
 
 /**
  * Visibility
