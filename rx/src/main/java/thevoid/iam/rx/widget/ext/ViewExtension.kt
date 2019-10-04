@@ -5,10 +5,8 @@ import android.os.Build
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
-import iam.thevoid.ae.color
-import iam.thevoid.ae.gone
-import iam.thevoid.ae.hide
-import iam.thevoid.ae.setClickable
+import android.view.ViewGroup
+import iam.thevoid.ae.*
 import iam.thevoid.common.adapter.change.scroll.OnFling
 import iam.thevoid.common.adapter.change.scroll.OnScroll
 import iam.thevoid.common.adapter.delegate.OnGestureDelegate
@@ -17,6 +15,7 @@ import iam.thevoid.e.safe
 import iam.thevoid.util.Optional
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
+import io.reactivex.functions.Function4
 import thevoid.iam.rx.R
 import thevoid.iam.rx.rxdata.RxLoading
 import thevoid.iam.rx.rxdata.fields.*
@@ -107,18 +106,31 @@ fun View.enableWhileLoading(loading: RxLoading) =
 fun View.setEnabled(enabled: Flowable<Boolean>) =
     addSetter(enabled) { isEnabled = it }
 
-///**
-// * Clickable
-// */
-//
-//fun View.disableClickOnLoad(loading: RxLoading) =
-//    setClickable(loading.asFlowable.map { !it })
-//
-//fun View.enableClickOnLoad(loading: RxLoading) =
-//    setClickable(loading.asFlowable)
-//
-//fun View.setClickable(flowable: Flowable<Boolean>) =
-//    addSetter(flowable) { isClickable = it }
+/**
+ * Margin
+ */
+
+fun View.setLeftMargin(leftMargin: Flowable<Int>) = setMargins(left = leftMargin)
+
+fun View.setTopMargin(topMargin: Flowable<Int>) = setMargins(top = topMargin)
+
+fun View.setRightMargin(rightMargin: Flowable<Int>) = setMargins(right = rightMargin)
+
+fun View.setBottomMargin(bottomMargin: Flowable<Int>) = setMargins(bottom = bottomMargin)
+
+fun View.setMargins(
+    left: Flowable<Int> = Flowable.just(marginLeft),
+    top: Flowable<Int> = Flowable.just(marginTop),
+    right: Flowable<Int> = Flowable.just(marginRight),
+    bottom: Flowable<Int> = Flowable.just(marginBottom)
+) =
+    addSetter(
+        Flowable.combineLatest<Int, Int, Int, Int, Margins>(left, top, right, bottom,
+            Function4 { l, t, r, b -> Margins(l, t, r, b) })
+    ) { margins ->
+        (layoutParams as? ViewGroup.MarginLayoutParams)
+            ?.setMargins(margins.left, margins.top, margins.right, margins.bottom)
+    }
 
 /**
  * Visibility
@@ -408,3 +420,4 @@ fun <T : Any> View.onLongPress(rxOnLongPress: RxField<T>, mapper: (Optional<Moti
         setOnTouchListener { _, event -> gestureDetector.onTouchEvent(event) }
     }, rxOnLongPress).also { setClickable() }
 
+data class Margins(val left: Int, val top: Int, val right: Int, val bottom: Int)
