@@ -1,1 +1,1 @@
-include ':app', ':rx', ':anko-commons', ':recycler-rx', ':design-rx', ':commons', ':anko-rx'
+include ':noxml-test-app', ':rx', ':anko-commons', ':recycler-rx', ':design-rx', ':commons', ':anko-rx'
