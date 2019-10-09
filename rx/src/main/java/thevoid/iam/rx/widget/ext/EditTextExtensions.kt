@@ -4,14 +4,14 @@ import android.text.Editable
 import android.widget.EditText
 import androidx.annotation.StringRes
 import iam.thevoid.ae.*
+import iam.thevoid.common.adapter.adapters.TextWatcherAdapter
+import iam.thevoid.common.adapter.change.textwatcher.BeforeEditTextChanges
+import iam.thevoid.common.adapter.change.textwatcher.OnEditTextChanges
+import iam.thevoid.common.adapter.delegate.TextWatcherDelegate
 import iam.thevoid.e.format
 import io.reactivex.Flowable
 import thevoid.iam.rx.R
 import thevoid.iam.rx.rxdata.fields.*
-import iam.thevoid.common.adapter.delegate.TextWatcherDelegate
-import iam.thevoid.common.adapter.adapters.TextWatcherAdapter
-import iam.thevoid.common.adapter.change.textwatcher.BeforeEditTextChanges
-import iam.thevoid.common.adapter.change.textwatcher.OnEditTextChanges
 
 /**
  * SETTER
@@ -110,7 +110,18 @@ fun EditText.setRequestInput(requestInput: Flowable<Boolean>) =
 
 fun EditText.afterTextChanges(rxEditable: RxField<Editable>) = afterTextChanges(rxEditable) { it }
 
+fun EditText.afterTextChanges(item: RxItem<String>) = afterTextChanges(item) { "$it" }
+
 fun <T : Any> EditText.afterTextChanges(rxEditable: RxField<T>, mapper: (Editable) -> T) =
+    addGetter({
+        textWatcher.addAfterTextChangedCallback(object : TextWatcherAdapter() {
+            override fun afterTextChanged(s: Editable?) {
+                s?.apply { it.invoke(mapper(this)) }
+            }
+        })
+    }, rxEditable)
+
+fun <T : Any> EditText.afterTextChanges(rxEditable: RxItem<T>, mapper: (Editable) -> T) =
     addGetter({
         textWatcher.addAfterTextChangedCallback(object : TextWatcherAdapter() {
             override fun afterTextChanged(s: Editable?) {
