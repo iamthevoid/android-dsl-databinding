@@ -8,7 +8,7 @@ buildscript {
     }
     dependencies {
         classpath 'com.novoda:bintray-release:0.9.1'
-        classpath 'com.android.tools.build:gradle:3.5.0'
+        classpath 'com.android.tools.build:gradle:3.5.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -51,9 +51,9 @@ ext {
     swipe = "1.0.0"
 
     // test
-    espresso = "3.2.0-alpha02"
+    espresso = "3.2.0"
     junit = "4.12"
-    runner = "1.1.2-alpha02"
+    runner = "1.2.0"
 }
 
 allprojects {
