@@ -104,6 +104,15 @@ fun <T : Any> ViewPager.setItems(
 
 fun <T : Any> ViewPager.setItems(
     fm: FragmentManager,
+    items: Flowable<List<T>>,
+    titles: List<String>,
+    itemBindings: ItemBindings
+) = addSetter(combine(items, Flowable.just(titles))) {
+    setItems(fm, it.first, itemBindings, it.second)
+}
+
+fun <T : Any> ViewPager.setItems(
+    fm: FragmentManager,
     itemsFlowable: Flowable<List<T>>,
     itemBindings: ItemBindings
 ) = addSetter(itemsFlowable) { setItems(fm, it, itemBindings) }
