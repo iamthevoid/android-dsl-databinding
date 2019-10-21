@@ -3,6 +3,7 @@ package iam.thevoid.recycler
 import androidx.recyclerview.widget.RecyclerView
 import iam.thevoid.recycler.delegate.OnRecyclerScrollDelegate
 import io.reactivex.Flowable
+import io.reactivex.Single
 import thevoid.iam.rx.adapter.ItemBindings
 import thevoid.iam.rx.rxdata.fields.RxField
 import thevoid.iam.rx.rxdata.fields.RxList
@@ -67,6 +68,32 @@ inline fun <T : Any, reified A : RxRecyclerAdapter<T>> RecyclerView.setItems(
             adapter = this
         }
     }
+}
+
+private var RecyclerView.paginationLoader
+    private set(loader) = setTag(R.id.recyclerPaginatedLoader, loader)
+    get() = (getTag(R.id.recyclerPaginatedLoader) as? PaginationLoader<*>)
+
+
+fun <T : Any> RecyclerView.setPaginationLoader(
+    firstPage: Int,
+    loader: (Int) -> Single<PaginationLoader.Response<T>>,
+    itemBindings: ItemBindings,
+    pageTransformer: (Int) -> Int = { it }
+) =
+    setPaginationLoader(PaginationLoader(firstPage, loader, pageTransformer), itemBindings)
+
+fun <T : Any> RecyclerView.setPaginationLoader(
+    pageLoader: PaginationLoader<T>,
+    itemBindings: ItemBindings
+) =
+    setItems(pageLoader.observe(), itemBindings).also {
+        addOnScrollListener(pageLoader)
+        paginationLoader = pageLoader
+    }
+
+fun RecyclerView.reloadFirstPage() {
+    paginationLoader?.loadFirst()
 }
 
 private val RecyclerView.onRecyclerScroll

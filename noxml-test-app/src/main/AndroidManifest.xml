@@ -31,6 +31,7 @@
             </intent-filter>
 
         </activity>
+        <activity android:name=".ui.mvvm.serial.ButikActivity" />
     </application>
 
 </manifest>
