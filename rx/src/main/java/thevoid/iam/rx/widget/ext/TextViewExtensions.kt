@@ -2,6 +2,7 @@ package thevoid.iam.rx.widget.ext
 
 import android.widget.TextView
 import iam.thevoid.ae.color
+import iam.thevoid.ae.setTextStrikeThru
 import iam.thevoid.ae.string
 import iam.thevoid.e.format
 import io.reactivex.Flowable
@@ -42,3 +43,6 @@ fun TextView.setHintTextColor(colorResFlowable: Flowable<Int>) =
 
 fun TextView.setHintTextColorResourse(colorResFlowable: Flowable<Int>) =
     addSetter(colorResFlowable) { setHintTextColor(color(it)) }
+
+fun TextView.setTextStrikeThru(strikeThru: Flowable<Boolean>) =
+    addSetter(strikeThru) { setTextStrikeThru(it) }

@@ -1,6 +1,7 @@
 package iam.thevoid.recycler
 
 import androidx.recyclerview.widget.DiffUtil
+import iam.thevoid.e.safe
 
 abstract class DiffCallback<T>(private val oldItems: List<T>, private val newItems: List<T>) : DiffUtil.Callback() {
 
@@ -32,5 +33,12 @@ abstract class DiffCallback<T>(private val oldItems: List<T>, private val newIte
 
     abstract class SimpleDiffable : Diffable {
         override fun areContentsTheSame(another: Any?): Boolean = areItemsTheSame(another)
+    }
+
+    abstract class AlwaysDiffContent : Diffable {
+        override fun areItemsTheSame(another: Any?): Boolean =
+            another?.let { it::class == this::class }.safe()
+
+        override fun areContentsTheSame(another: Any?): Boolean = false
     }
 }
