@@ -12,7 +12,7 @@ import java.util.concurrent.atomic.AtomicBoolean
 
 class PaginationLoader<T>(
     private val startPage: Int,
-    val loader: (Int) -> Single<Response<T>>
+    val loader: (Int) -> Single<out Response<T>>
 ) :
     EndlessScrollListener() {
 
@@ -50,5 +50,5 @@ class PaginationLoader<T>(
     }
 
 
-    data class Response<T>(val items: List<T>, val isLastPage: Boolean)
+    open class Response<T>(val items: List<T>, val isLastPage: Boolean)
 }

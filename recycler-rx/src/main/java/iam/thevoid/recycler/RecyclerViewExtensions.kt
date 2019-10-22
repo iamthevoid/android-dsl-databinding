@@ -77,18 +77,23 @@ private var RecyclerView.paginationLoader
 
 fun <T : Any> RecyclerView.setPaginationLoader(
     firstPage: Int,
-    loader: (Int) -> Single<PaginationLoader.Response<T>>,
-    itemBindings: ItemBindings
-) = setPaginationLoader(PaginationLoader(firstPage, loader), itemBindings)
+    loader: (Int) -> Single<out PaginationLoader.Response<T>>,
+    itemBindings: ItemBindings,
+    diffCallbackFactory: ((old: List<T>, new: List<T>) -> DiffCallback<T>)? = null
+) = setPaginationLoader(PaginationLoader(firstPage, loader), itemBindings, diffCallbackFactory)
 
 fun <T : Any> RecyclerView.setPaginationLoader(
     pageLoader: PaginationLoader<T>,
-    itemBindings: ItemBindings
-) =
-    setItems(pageLoader.observe(), itemBindings).also {
+    itemBindings: ItemBindings,
+    diffCallbackFactory: ((old: List<T>, new: List<T>) -> DiffCallback<T>)? = null
+) {
+    if (paginationLoader != null)
+        return
+    setItems(pageLoader.observe(), itemBindings, diffCallbackFactory).also {
         addOnScrollListener(pageLoader)
         paginationLoader = pageLoader
     }
+}
 
 fun RecyclerView.reloadFirstPage() {
     paginationLoader?.loadFirst()
