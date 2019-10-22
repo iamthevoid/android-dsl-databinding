@@ -78,10 +78,8 @@ private var RecyclerView.paginationLoader
 fun <T : Any> RecyclerView.setPaginationLoader(
     firstPage: Int,
     loader: (Int) -> Single<PaginationLoader.Response<T>>,
-    itemBindings: ItemBindings,
-    pageTransformer: (Int) -> Int = { it }
-) =
-    setPaginationLoader(PaginationLoader(firstPage, loader, pageTransformer), itemBindings)
+    itemBindings: ItemBindings
+) = setPaginationLoader(PaginationLoader(firstPage, loader), itemBindings)
 
 fun <T : Any> RecyclerView.setPaginationLoader(
     pageLoader: PaginationLoader<T>,
