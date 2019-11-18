@@ -9,11 +9,7 @@ open class RxLoading {
 
     private val loading by lazy { RxBoolean() }
 
-    val asFlowable: Flowable<Boolean>
-        get() = loading.observe()
-
-    val now: Boolean
-        get() = loading.get()
+    fun observe() = loading.observe()
 
     private val count = AtomicInteger(0)
 

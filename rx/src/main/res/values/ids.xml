@@ -12,6 +12,8 @@
 
     <item name="gestureDetector" type="id"/>
 
+    <item name="heightListener" type="id" />
+
     <item name="gestureDetectorCallback" type="id"/>
 
     <item name="chromeClient" type="id" />

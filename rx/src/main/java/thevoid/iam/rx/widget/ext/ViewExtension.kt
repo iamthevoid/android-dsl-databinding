@@ -1,11 +1,10 @@
+@file:Suppress("unused")
+
 package thevoid.iam.rx.widget.ext
 
 import android.graphics.drawable.Drawable
 import android.os.Build
-import android.view.GestureDetector
-import android.view.MotionEvent
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import iam.thevoid.ae.*
 import iam.thevoid.common.adapter.change.scroll.OnFling
 import iam.thevoid.common.adapter.change.scroll.OnScroll
@@ -40,6 +39,20 @@ private val View.observeListener: ObserveListener
             addOnAttachStateChangeListener(it)
         })
 
+fun <T : Any, V : View> V.addSetter(
+    flowable: Flowable<T>,
+    onUnsubscribe: () -> Unit,
+    setter: V.(T) -> Unit = {}
+) {
+    observeListener.apply {
+        subscribeSetter(object : Setter<V, T>(this@addSetter, flowable, onUnsubscribe) {
+            override fun set(view: V?, component: T) {
+                view?.apply { setter(this, component) }
+            }
+        })
+    }
+}
+
 fun <T : Any, V : View> V.addSetter(flowable: Flowable<T>, setter: V.(T) -> Unit = {}) {
     observeListener.apply {
         subscribeSetter(object : Setter<V, T>(this@addSetter, flowable) {
@@ -52,56 +65,85 @@ fun <T : Any, V : View> V.addSetter(flowable: Flowable<T>, setter: V.(T) -> Unit
 
 fun <T : CharSequence, V : View> V.addGetter(
     consumer: ((T) -> Unit) -> Unit,
-    rxCharSequence: RxCharSequence<T>
+    rxCharSequence: RxCharSequence<T>,
+    onUnsubscribe: () -> Unit = {}
 ) =
     addSetter(Flowable.create<T>({ emitter ->
         consumer { emitter.onNext(it) }
-    }, BackpressureStrategy.LATEST)) { rxCharSequence.set(it) }
+    }, BackpressureStrategy.LATEST), onUnsubscribe) { rxCharSequence.set(it) }
 
-fun <T : Any, V : View> V.addGetter(consumer: ((T?) -> Unit) -> Unit, rxField: RxField<T>) =
+fun <T : Any, V : View> V.addGetter(
+    consumer: ((T?) -> Unit) -> Unit,
+    rxField: RxField<T>,
+    onUnsubscribe: () -> Unit = {}
+) =
     addSetter(Flowable.create<Optional<T>>({ emitter ->
         consumer { emitter.onNext(Optional.of(it)) }
-    }, BackpressureStrategy.LATEST)) { rxField.set(it.item) }
+    }, BackpressureStrategy.LATEST), onUnsubscribe) { rxField.set(it.item) }
 
-fun <T : Any, V : View> V.addGetter(consumer: ((T) -> Unit) -> Unit, rxField: RxItem<T>) =
+fun <T : Any, V : View> V.addGetter(
+    consumer: ((T) -> Unit) -> Unit,
+    rxField: RxItem<T>,
+    onUnsubscribe: () -> Unit = {}
+) =
     addSetter(Flowable.create<T>({ emitter ->
         consumer { emitter.onNext(it) }
-    }, BackpressureStrategy.LATEST)) { rxField.set(it) }
+    }, BackpressureStrategy.LATEST), onUnsubscribe) { rxField.set(it) }
 
-fun <V : View> V.addGetter(consumer: ((Int) -> Unit) -> Unit, rxInt: RxInt) =
+fun <V : View> V.addGetter(
+    consumer: ((Int) -> Unit) -> Unit,
+    rxInt: RxInt,
+    onUnsubscribe: () -> Unit = {}
+) =
     addSetter(Flowable.create<Int>({ emitter ->
         consumer { emitter.onNext(it) }
-    }, BackpressureStrategy.LATEST)) { rxInt.set(it) }
+    }, BackpressureStrategy.LATEST), onUnsubscribe) { rxInt.set(it) }
 
-fun <V : View> V.addGetter(consumer: ((Long) -> Unit) -> Unit, rxLong: RxLong) =
+fun <V : View> V.addGetter(
+    consumer: ((Long) -> Unit) -> Unit,
+    rxLong: RxLong,
+    onUnsubscribe: () -> Unit = {}
+) =
     addSetter(Flowable.create<Long>({ emitter ->
         consumer { emitter.onNext(it) }
-    }, BackpressureStrategy.LATEST)) { rxLong.set(it) }
+    }, BackpressureStrategy.LATEST), onUnsubscribe) { rxLong.set(it) }
 
-fun <V : View> V.addGetter(consumer: ((Boolean) -> Unit) -> Unit, rxBoolean: RxBoolean) =
+fun <V : View> V.addGetter(
+    consumer: ((Boolean) -> Unit) -> Unit,
+    rxBoolean: RxBoolean,
+    onUnsubscribe: () -> Unit = {}
+) =
     addSetter(Flowable.create<Boolean>({ emitter ->
         consumer { emitter.onNext(it) }
-    }, BackpressureStrategy.LATEST)) { rxBoolean.set(it) }
+    }, BackpressureStrategy.LATEST), onUnsubscribe) { rxBoolean.set(it) }
 
-fun <V : View> V.addGetter(consumer: ((Double) -> Unit) -> Unit, rxDouble: RxDouble) =
+fun <V : View> V.addGetter(
+    consumer: ((Double) -> Unit) -> Unit,
+    rxDouble: RxDouble,
+    onUnsubscribe: () -> Unit = {}
+) =
     addSetter(Flowable.create<Double>({ emitter ->
         consumer { emitter.onNext(it) }
-    }, BackpressureStrategy.LATEST)) { rxDouble.set(it) }
+    }, BackpressureStrategy.LATEST), onUnsubscribe) { rxDouble.set(it) }
 
-fun <V : View> V.addGetter(consumer: ((Float) -> Unit) -> Unit, rxFloat: RxFloat) =
+fun <V : View> V.addGetter(
+    consumer: ((Float) -> Unit) -> Unit,
+    rxFloat: RxFloat,
+    onUnsubscribe: () -> Unit = {}
+) =
     addSetter(Flowable.create<Float>({ emitter ->
         consumer { emitter.onNext(it) }
-    }, BackpressureStrategy.LATEST)) { rxFloat.set(it) }
+    }, BackpressureStrategy.LATEST), onUnsubscribe) { rxFloat.set(it) }
 
 /**
  * Enabled
  */
 
 fun View.disableWhileLoading(loading: RxLoading) =
-    addSetter(loading.asFlowable) { isEnabled = !it }
+    addSetter(loading.observe()) { isEnabled = !it }
 
 fun View.enableWhileLoading(loading: RxLoading) =
-    addSetter(loading.asFlowable) { isEnabled = it }
+    addSetter(loading.observe()) { isEnabled = it }
 
 fun View.setEnabled(enabled: Flowable<Boolean>) =
     addSetter(enabled) { isEnabled = it }
@@ -138,36 +180,32 @@ fun View.setMargins(
 
 
 fun View.hideUntilLoaded(loading: RxLoading) =
-    addSetter(loading.asFlowable) { hide(it) }
+    addSetter(loading.observe()) { hide(it) }
 
 fun View.hideUntilLoaded(loading: RxLoading, vararg loadings: RxLoading) =
-    addSetter(Flowable.merge(loading.asFlowable.mergeWith(loadings.map { it.asFlowable }))) {
+    addSetter(Flowable.merge(loading.observe().mergeWith(loadings.map { it.observe() }))) {
         hide(
             it
         )
     }
 
 fun View.hideWhenLoaded(loading: RxLoading) =
-    addSetter(loading.asFlowable) { hide(!it) }
+    addSetter(loading.observe()) { hide(!it) }
 
 fun View.hideWhenLoaded(loading: RxLoading, vararg loadings: RxLoading) =
-    addSetter(Flowable.merge(loading.asFlowable.mergeWith(loadings.map { it.asFlowable }))) { hide(!it) }
+    addSetter(Flowable.merge(loading.observe().mergeWith(loadings.map { it.observe() }))) { hide(!it) }
 
 fun View.goneUntilLoaded(loading: RxLoading) =
-    addSetter(loading.asFlowable) { gone(it) }
+    addSetter(loading.observe()) { gone(it) }
 
 fun View.goneUntilLoaded(loading: RxLoading, vararg loadings: RxLoading) =
-    addSetter(Flowable.merge(loading.asFlowable.mergeWith(loadings.map { it.asFlowable }))) {
-        gone(
-            it
-        )
-    }
+    addSetter(Flowable.merge(loading.observe().mergeWith(loadings.map { it.observe() }))) { gone(it) }
 
 fun View.goneWhenLoaded(loading: RxLoading) =
-    addSetter(loading.asFlowable) { gone(!it) }
+    addSetter(loading.observe()) { gone(!it) }
 
 fun View.goneWhenLoaded(loading: RxLoading, vararg loadings: RxLoading) =
-    addSetter(Flowable.merge(loading.asFlowable.mergeWith(loadings.map { it.asFlowable }))) { gone(!it) }
+    addSetter(Flowable.merge(loading.observe().mergeWith(loadings.map { it.observe() }))) { gone(!it) }
 
 fun View.gone(needGone: Flowable<Boolean>) =
     addSetter(needGone) { gone(it) }
@@ -193,6 +231,7 @@ fun View.setBackgroundColor(color: Flowable<Int>) =
 fun View.setBackgroundColorResource(color: Flowable<Int>) =
     addSetter(color) { setBackgroundColor(color(it)) }
 
+@Suppress("DEPRECATION")
 fun View.setBackgroundDrawable(background: Flowable<Drawable>) =
     addSetter(background) { setBackgroundDrawable(it) }
 
@@ -283,6 +322,31 @@ fun View.setTranslationY(rxTranslation: RxFloat) =
 
 fun View.setTranslationY(rxTranslation: Flowable<Float>) =
     addSetter(rxTranslation) { translationY = it }
+
+/**
+ * Height
+ */
+
+@Suppress("ObjectLiteralToLambda", "DEPRECATION")
+fun View.getHeight(rxInt: RxInt) = addGetter({
+    val listener = object : ViewTreeObserver.OnGlobalLayoutListener {
+        override fun onGlobalLayout() {
+            it.invoke(measuredHeight)
+        }
+    }
+    setTag(R.id.heightListener, listener)
+    viewTreeObserver.addOnGlobalLayoutListener(listener)
+}, rxInt) {
+    (getTag(R.id.heightListener) as? ViewTreeObserver.OnGlobalLayoutListener)
+        ?.also {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                viewTreeObserver.removeOnGlobalLayoutListener(it)
+            } else {
+                viewTreeObserver.removeGlobalOnLayoutListener(it)
+            }
+        }
+}
+
 
 /**
  * Gesture

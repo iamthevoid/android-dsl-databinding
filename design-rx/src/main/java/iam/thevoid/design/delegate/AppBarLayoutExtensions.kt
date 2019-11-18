@@ -4,8 +4,10 @@ import com.google.android.material.appbar.AppBarLayout
 import iam.thevoid.design.OnOffsetChangeListenerDelegate
 import iam.thevoid.design.R
 import iam.thevoid.design.adapter.OnOffsetChangeListenerAdapter
+import iam.thevoid.e.safe
 import thevoid.iam.rx.rxdata.fields.RxField
 import thevoid.iam.rx.widget.ext.addGetter
+import kotlin.math.absoluteValue
 
 private val AppBarLayout.onOffsetChangedListener
     get() = (getTag(R.id.onOffsetChangedListenerDelegate) as? OnOffsetChangeListenerDelegate) ?:
@@ -15,6 +17,9 @@ private val AppBarLayout.onOffsetChangedListener
             }
 
 fun  AppBarLayout.onOffsetChange(field : RxField<OnOffsetChange>) = onOffsetChange(field) { it }
+
+fun AppBarLayout.onOffsetChangePercent(field: RxField<Float>) =
+    onOffsetChange(field) { it.toPercent() }
 
 fun <T : Any> AppBarLayout.onOffsetChange(field : RxField<T>, mapper : (OnOffsetChange) -> T?) =
     addGetter({
@@ -26,4 +31,7 @@ fun <T : Any> AppBarLayout.onOffsetChange(field : RxField<T>, mapper : (OnOffset
     }, field)
 
 
-data class OnOffsetChange(val appBarLayout: AppBarLayout?, val verticalOffset : Int)
+data class OnOffsetChange(val appBarLayout: AppBarLayout?, val verticalOffset: Int) {
+    fun toPercent() =
+        verticalOffset.toFloat().absoluteValue / appBarLayout?.totalScrollRange.safe().toFloat()
+}

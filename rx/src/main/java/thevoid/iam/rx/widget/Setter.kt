@@ -7,7 +7,11 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import java.lang.ref.WeakReference
 
-abstract class Setter<V : View, C>(view: V, private val flowable: Flowable<C>) {
+abstract class Setter<V : View, C>(
+    view: V,
+    private val flowable: Flowable<C>,
+    private val onUnsubscribe: () -> Unit = {}
+) {
 
     private val viewRef: WeakReference<V> = WeakReference(view)
 
@@ -23,6 +27,7 @@ abstract class Setter<V : View, C>(view: V, private val flowable: Flowable<C>) {
         disposable = null
         disposable = flowable
             .observeOn(AndroidSchedulers.mainThread())
+            .doOnTerminate(onUnsubscribe)
             .subscribeSafe { set(viewRef.get(), it) }
     }
 

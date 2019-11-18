@@ -19,6 +19,8 @@ class RxField<T>(initial: T? = null, private val onChange: (T?) -> Unit = {}) : 
         onChange(elem)
     }
 
+    fun update(onUpdate: T.() -> Unit) = set(get()?.also { it.onUpdate() })
+
     fun get(): T? = subject.value?.item
 
     fun observe(): Flowable<Optional<T>> = subject.toFlowableLatest()

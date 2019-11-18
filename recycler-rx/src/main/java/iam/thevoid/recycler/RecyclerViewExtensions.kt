@@ -6,6 +6,7 @@ import io.reactivex.Flowable
 import io.reactivex.Single
 import thevoid.iam.rx.adapter.ItemBindings
 import thevoid.iam.rx.rxdata.fields.RxField
+import thevoid.iam.rx.rxdata.fields.RxInt
 import thevoid.iam.rx.rxdata.fields.RxList
 import thevoid.iam.rx.widget.ext.addGetter
 import thevoid.iam.rx.widget.ext.addSetter
@@ -95,9 +96,54 @@ fun <T : Any> RecyclerView.setPaginationLoader(
     }
 }
 
+fun RecyclerView.reloadFirstPage(trigger: Flowable<Any>) =
+    addSetter(trigger) { reloadFirstPage() }
+
 fun RecyclerView.reloadFirstPage() {
     paginationLoader?.loadFirst()
 }
+
+/**
+ * Spacing bindings
+ */
+
+private val RecyclerView.startSpacing
+    get() = (getTag(R.id.recyclerStartSpacing) as? StartEndPaddingRecyclerDecoration)
+        ?: StartEndPaddingRecyclerDecoration().also {
+            addItemDecoration(it)
+            setTag(R.id.recyclerStartSpacing, it)
+        }
+
+fun RecyclerView.setStartSpacing(spacing: RxInt) =
+    setStartSpacing(spacing.observe())
+
+fun RecyclerView.setStartSpacing(spacing: Flowable<Int>) =
+    addSetter(spacing) {
+        val decoration = startSpacing
+        removeItemDecoration(decoration)
+        decoration.start = it
+        addItemDecoration(decoration)
+    }
+
+private val RecyclerView.endSpacing
+    get() = (getTag(R.id.recyclerEndSpacing) as? StartEndPaddingRecyclerDecoration)
+        ?: StartEndPaddingRecyclerDecoration().also {
+            addItemDecoration(it)
+            setTag(R.id.recyclerEndSpacing, it)
+        }
+
+fun RecyclerView.setEndSpacing(spacing: Flowable<Int>) =
+    addSetter(spacing) {
+        val decoration = endSpacing
+        removeItemDecoration(decoration)
+        decoration.end = it
+        addItemDecoration(decoration)
+    }
+
+
+/**
+ * On RecyclerView scroll reverse binding
+ */
 
 private val RecyclerView.onRecyclerScroll
     get() = (getTag(R.id.recyclerScroll) as? OnRecyclerScrollDelegate) ?: OnRecyclerScrollDelegate()
