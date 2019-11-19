@@ -1,54 +1,68 @@
 package iam.thevoid.recycler
 
-import android.annotation.SuppressLint
 import android.util.Log
-import androidx.recyclerview.widget.RecyclerView
-import iam.thevoid.e.safe
-import io.reactivex.BackpressureStrategy
+import io.reactivex.Flowable
 import io.reactivex.Single
+import io.reactivex.disposables.Disposable
+import io.reactivex.processors.PublishProcessor
 import io.reactivex.schedulers.Schedulers
-import io.reactivex.subjects.BehaviorSubject
+import thevoid.iam.rx.rxdata.fields.RxList
 import java.util.concurrent.atomic.AtomicBoolean
 
 class PaginationLoader<T>(
-    private val startPage: Int,
-    val loader: (Int) -> Single<out Response<T>>
-) :
-    EndlessScrollListener() {
+    private val pageNumberMapper: (Int) -> Int = { it },
+    private val loader: (Int) -> Single<out Response<T>>
+) {
+    private val startPage = 0
 
-    private val subject: BehaviorSubject<List<T>> by lazy { BehaviorSubject.createDefault(emptyList<T>()) }
+    private var retrieveDisposable: Disposable? = null
+
+    private val refresh by lazy { PublishProcessor.create<Any>().toSerialized() }
+
+    private val rxItems by lazy { RxList<T>() }
 
     private val lastPage by lazy { AtomicBoolean() }
 
-    override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView) {
-        if (!lastPage.get())
-            loadMore(page)
+    fun refresh() {
+        if (!rxItems.isEmpty())
+            refresh.onNext(Any())
     }
 
-    fun observe() = subject.toFlowable(BackpressureStrategy.LATEST)
-        .doOnSubscribe { loadMore(startPage) }
-
-    fun loadFirst() {
-        loadMore(startPage)
+    val items: Flowable<List<T>> by lazy {
+        rxItems.observe()
+            .doOnSubscribe {
+                if (rxItems.isEmpty())
+                    retrieveDisposable = loader(pageNumberMapper(startPage))
+                        .subscribeOn(Schedulers.io())
+                        .repeatWhen { it.flatMapMaybe { refresh.firstElement() } }
+                        .subscribe(::onItemsReceived) {
+                            Log.e(javaClass.name, "error when retrieve first page", it)
+                        }
+            }
     }
 
-    @SuppressLint("CheckResult")
-    private fun loadMore(page: Int) {
-        loader(page)
-            .doOnSubscribe { if (page == startPage) resetState() }
+    private fun onItemsReceived(response: Response<T>) {
+        if (response.page == pageNumberMapper(startPage))
+            rxItems.set(response.items)
+        else
+            rxItems.add(response.items)
+
+        lastPage.set(response.isLastPage)
+    }
+
+
+    fun loadMore(page: Int) {
+        retrieveDisposable = loader(pageNumberMapper(page))
             .subscribeOn(Schedulers.io())
-            .subscribe({
-                lastPage.set(it.isLastPage)
-                subject.apply {
-                    onNext(mutableListOf<T>().apply {
-                        if (page != startPage)
-                            addAll(value.safe())
-                        addAll(it.items)
-                    })
-                }
-            }, { Log.e("PaginationLoader", "Can not load page $page", it) })
+            .subscribe(::onItemsReceived) {
+                Log.e(javaClass.name, "error when retrieve page $page", it)
+            }
+    }
+
+    fun release() {
+        retrieveDisposable?.dispose()
     }
 
 
-    open class Response<T>(val items: List<T>, val isLastPage: Boolean)
+    open class Response<T>(val page: Int, val items: List<T>, val isLastPage: Boolean)
 }

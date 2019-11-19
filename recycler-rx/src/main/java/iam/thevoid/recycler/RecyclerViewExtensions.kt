@@ -1,6 +1,7 @@
 package iam.thevoid.recycler
 
 import androidx.recyclerview.widget.RecyclerView
+import iam.thevoid.recycler.delegate.EndlessScrollDelegate
 import iam.thevoid.recycler.delegate.OnRecyclerScrollDelegate
 import io.reactivex.Flowable
 import io.reactivex.Single
@@ -73,18 +74,27 @@ inline fun <T : Any, reified A : RxRecyclerAdapter<T>> RecyclerView.setItems(
 
 private var RecyclerView.paginationLoader
     private set(loader) = setTag(R.id.recyclerPaginatedLoader, loader)
-    get() = (getTag(R.id.recyclerPaginatedLoader) as? PaginationLoader<*>)
+    get() = (getTag(R.id.recyclerPaginatedLoader) as? OldPaginationLoader<*>)
+
+private val RecyclerView.endlessScrollDelegate
+    get() = getTag(R.id.recyclerEndlessScroll) as? EndlessScrollDelegate
+        ?: EndlessScrollDelegate().also {
+            setTag(R.id.recyclerEndlessScroll, it)
+            addOnScrollListener(it)
+        }
 
 
+@Deprecated("")
 fun <T : Any> RecyclerView.setPaginationLoader(
     firstPage: Int,
-    loader: (Int) -> Single<out PaginationLoader.Response<T>>,
+    loader: (Int) -> Single<out OldPaginationLoader.Response<T>>,
     itemBindings: ItemBindings,
     diffCallbackFactory: ((old: List<T>, new: List<T>) -> DiffCallback<T>)? = null
-) = setPaginationLoader(PaginationLoader(firstPage, loader), itemBindings, diffCallbackFactory)
+) = setPaginationLoader(OldPaginationLoader(firstPage, loader), itemBindings, diffCallbackFactory)
 
+@Deprecated("")
 fun <T : Any> RecyclerView.setPaginationLoader(
-    pageLoader: PaginationLoader<T>,
+    pageLoader: OldPaginationLoader<T>,
     itemBindings: ItemBindings,
     diffCallbackFactory: ((old: List<T>, new: List<T>) -> DiffCallback<T>)? = null
 ) {
@@ -96,9 +106,23 @@ fun <T : Any> RecyclerView.setPaginationLoader(
     }
 }
 
+fun RecyclerView.resetEndlessScrollState() {
+    endlessScrollDelegate.resetListeners()
+}
+
+fun RecyclerView.setLoadMore(action: (Int) -> Unit) {
+    endlessScrollDelegate.addListener(object : EndlessScrollListener() {
+        override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView) {
+            action(page)
+        }
+    })
+}
+
+@Deprecated("")
 fun RecyclerView.reloadFirstPage(trigger: Flowable<Any>) =
     addSetter(trigger) { reloadFirstPage() }
 
+@Deprecated("")
 fun RecyclerView.reloadFirstPage() {
     paginationLoader?.loadFirst()
 }

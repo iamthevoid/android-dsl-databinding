@@ -8,8 +8,9 @@ import iam.thevoid.ankorx.AnkoLayout
 import iam.thevoid.ankoviews.widget.mvvm.AnkoMvvmActivity
 import iam.thevoid.common.ViewModelBindingProvider
 import iam.thevoid.common.createBinding
-import iam.thevoid.recycler.reloadFirstPage
-import iam.thevoid.recycler.setPaginationLoader
+import iam.thevoid.recycler.resetEndlessScrollState
+import iam.thevoid.recycler.setItems
+import iam.thevoid.recycler.setLoadMore
 import iam.thevoid.rxe.mapSelf
 import org.jetbrains.anko.*
 import org.jetbrains.anko.recyclerview.v7.recyclerView
@@ -29,8 +30,12 @@ class ButikActivity : AnkoMvvmActivity<ButikViewModel>() {
             setRefreshing(vm.refreshing)
             recyclerView {
                 layoutManager = LinearLayoutManager(context)
-                setPaginationLoader(0, vm.productPage, bindings)
-            }.also { setOnRefreshListener { it.reloadFirstPage() } }
+                setItems(vm.loader.items, bindings)
+                setLoadMore(vm.loader::loadMore)
+            }.also {
+                setOnRefreshListener { vm.loader.refresh() }
+                it.resetEndlessScrollState()
+            }
         }.apply { layoutParams = ViewGroup.LayoutParams(matchParent, matchParent) }
 
     val bindings by lazy { ItemBindings.of(Product::class) { ProductLayout(it) } }

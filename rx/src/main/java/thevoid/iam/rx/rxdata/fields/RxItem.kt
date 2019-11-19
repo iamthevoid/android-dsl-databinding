@@ -82,6 +82,7 @@ class RxList<T>(initial: List<T> = emptyList(), onChange: (List<T>) -> Unit = {}
         set(list)
     }
 
+    fun isEmpty() = get().isEmpty()
 }
 
 

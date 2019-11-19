@@ -3,5 +3,6 @@
     <item name="recyclerStartSpacing" type="id" />
     <item name="recyclerEndSpacing" type="id" />
     <item name="recyclerScroll" type="id"/>
+    <item name="recyclerEndlessScroll" type="id" />
     <item name="recyclerPaginatedLoader" type="id" />
 </resources>
