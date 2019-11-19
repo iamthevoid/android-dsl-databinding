@@ -142,12 +142,14 @@ fun RecyclerView.setStartSpacing(spacing: RxInt) =
     setStartSpacing(spacing.observe())
 
 fun RecyclerView.setStartSpacing(spacing: Flowable<Int>) =
-    addSetter(spacing) {
-        val decoration = startSpacing
-        removeItemDecoration(decoration)
-        decoration.start = it
-        addItemDecoration(decoration)
-    }
+    addSetter(spacing) { setStartSpacing(it) }
+
+fun RecyclerView.setStartSpacing(spacing: Int) {
+    val decoration = startSpacing
+    removeItemDecoration(decoration)
+    decoration.start = spacing
+    addItemDecoration(decoration)
+}
 
 private val RecyclerView.endSpacing
     get() = (getTag(R.id.recyclerEndSpacing) as? StartEndPaddingRecyclerDecoration)
@@ -156,13 +158,18 @@ private val RecyclerView.endSpacing
             setTag(R.id.recyclerEndSpacing, it)
         }
 
+fun RecyclerView.setEndSpacing(spacing: RxInt) =
+    setEndSpacing(spacing.observe())
+
 fun RecyclerView.setEndSpacing(spacing: Flowable<Int>) =
-    addSetter(spacing) {
-        val decoration = endSpacing
-        removeItemDecoration(decoration)
-        decoration.end = it
-        addItemDecoration(decoration)
-    }
+    addSetter(spacing) { setEndSpacing(it) }
+
+fun RecyclerView.setEndSpacing(spacing: Int) {
+    val decoration = endSpacing
+    removeItemDecoration(decoration)
+    decoration.end = spacing
+    addItemDecoration(decoration)
+}
 
 
 /**
