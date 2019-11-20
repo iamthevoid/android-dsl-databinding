@@ -142,7 +142,7 @@ fun RecyclerView.setStartSpacing(spacing: RxInt) =
     setStartSpacing(spacing.observe())
 
 fun RecyclerView.setStartSpacing(spacing: Flowable<Int>) =
-    addSetter(spacing) { setStartSpacing(it) }
+    addSetter(spacing.distinctUntilChanged()) { setStartSpacing(it) }
 
 fun RecyclerView.setStartSpacing(spacing: Int) {
     val decoration = startSpacing
