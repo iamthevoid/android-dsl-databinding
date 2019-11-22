@@ -1,16 +1,16 @@
 package thevoid.iam.rx.rxdata.fields
 
+import com.jakewharton.rx.ReplayingShare
 import iam.thevoid.rxe.canPublish
-import iam.thevoid.rxe.toFlowableLatest
 import iam.thevoid.util.Optional
 import io.reactivex.Flowable
-import io.reactivex.subjects.BehaviorSubject
+import io.reactivex.processors.BehaviorProcessor
 
 class RxField<T>(initial: T? = null, private val onChange: (T?) -> Unit = {}) : RxPropertyChangedCallback {
 
     override fun onItemChanged() = set(get())
 
-    private val subject: BehaviorSubject<Optional<T>> = BehaviorSubject.createDefault(Optional.of(initial))
+    private val subject by lazy { BehaviorProcessor.createDefault(Optional.of(initial)) }
 
     fun set(elem: T?) {
         (elem as? RxProperty)?.rxCallback = this
@@ -23,7 +23,7 @@ class RxField<T>(initial: T? = null, private val onChange: (T?) -> Unit = {}) : 
 
     fun get(): T? = subject.value?.item
 
-    fun observe(): Flowable<Optional<T>> = subject.toFlowableLatest()
+    fun observe(): Flowable<Optional<T>> = subject.compose(ReplayingShare.instance())
 
     fun <O> map(mapper: ((T?) -> O)) = observe().map { mapper(it.item) }
 
