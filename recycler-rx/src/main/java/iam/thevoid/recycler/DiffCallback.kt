@@ -42,3 +42,32 @@ abstract class DiffCallback<T>(private val oldItems: List<T>, private val newIte
         override fun areContentsTheSame(another: Any?): Boolean = false
     }
 }
+
+fun <T : Any> List<T>.areListItemsContentsTheSame(list: List<T>): Boolean {
+    if (isEmpty() && list.isEmpty())
+        return true
+
+    if (size != list.size)
+        return false
+
+    if (first()::class != list.first()::class)
+        return false
+
+    return when (first()) {
+        is DiffCallback.Diffable ->
+            all { item ->
+                list.find {
+                    (it as? DiffCallback.Diffable)?.areContentsTheSame(item).safe()
+                } != null
+            } &&
+                    list.all { item ->
+                        find {
+                            (it as? DiffCallback.Diffable)?.areContentsTheSame(
+                                item
+                            ).safe()
+                        } != null
+                    }
+        else ->
+            all { list.contains(it) } && list.all { contains(it) }
+    }
+}
