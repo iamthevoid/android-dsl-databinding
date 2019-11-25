@@ -43,6 +43,18 @@ abstract class DiffCallback<T>(private val oldItems: List<T>, private val newIte
     }
 }
 
+fun <T : Any> diffCallback(): ((List<T>, List<T>) -> DiffCallback<T>) = { old, new ->
+    object : DiffCallback<T>(old, new) {
+        override fun areItemsTheSame(oldItem: T, newItem: T): Boolean =
+            if (oldItem is Diffable && newItem is Diffable) oldItem.areItemsTheSame(newItem)
+            else (oldItem::class == newItem::class) && oldItem == newItem
+
+        override fun areContentsTheSame(oldItem: T, newItem: T): Boolean =
+            if (oldItem is Diffable && newItem is Diffable) oldItem.areContentsTheSame(newItem)
+            else (oldItem::class == newItem::class) && oldItem == newItem
+    }
+}
+
 fun <T : Any> List<T>.areListItemsContentsTheSame(list: List<T>): Boolean {
     if (isEmpty() && list.isEmpty())
         return true

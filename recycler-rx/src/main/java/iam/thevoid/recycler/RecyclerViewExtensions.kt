@@ -15,19 +15,19 @@ import thevoid.iam.rx.widget.ext.addSetter
 fun <T : Any> RecyclerView.setItems(
     items: RxList<T>,
     itemBindings: ItemBindings,
-    diffCallbackFactory: ((old: List<T>, new: List<T>) -> DiffCallback<T>)? = null
+    diffCallbackFactory: ((old: List<T>, new: List<T>) -> DiffCallback<T>) = diffCallback()
 ) = addSetter(items.observe()) { setItems(it, itemBindings, diffCallbackFactory) }
 
 fun <T : Any> RecyclerView.setItems(
     itemsFlowable: Flowable<out List<T>>,
     itemBindings: ItemBindings,
-    diffCallbackFactory: ((old: List<T>, new: List<T>) -> DiffCallback<T>)? = null
+    diffCallbackFactory: ((old: List<T>, new: List<T>) -> DiffCallback<T>) = diffCallback()
 ) = addSetter(itemsFlowable) { setItems(it, itemBindings, diffCallbackFactory) }
 
 private fun <T : Any> RecyclerView.setItems(
     items: List<T>,
     itemBindings: ItemBindings,
-    diffCallbackFactory: ((old: List<T>, new: List<T>) -> DiffCallback<T>)? = null
+    diffCallbackFactory: ((old: List<T>, new: List<T>) -> DiffCallback<T>) = diffCallback()
 ) {
     (adapter as? RxRecyclerAdapter<T>)?.apply {
         data = items.toMutableList()
@@ -44,14 +44,14 @@ inline fun <T : Any, reified A : RxRecyclerAdapter<T>> RecyclerView.setItems(
     items: RxList<T>,
     itemBindings: ItemBindings,
     crossinline adapterFactory: (List<T>) -> A? = { null },
-    noinline diffCallbackFactory: ((old: List<T>, new: List<T>) -> DiffCallback<T>)? = null
+    noinline diffCallbackFactory: ((old: List<T>, new: List<T>) -> DiffCallback<T>) = diffCallback()
 ) = addSetter(items.observe()) { setItems(it, itemBindings, adapterFactory, diffCallbackFactory) }
 
 inline fun <T : Any, reified A : RxRecyclerAdapter<T>> RecyclerView.setItems(
     itemsFlowable: Flowable<List<T>>,
     itemBindings: ItemBindings,
     crossinline adapterFactory: (List<T>) -> A? = { null },
-    noinline diffCallbackFactory: ((old: List<T>, new: List<T>) -> DiffCallback<T>)? = null
+    noinline diffCallbackFactory: ((old: List<T>, new: List<T>) -> DiffCallback<T>) = diffCallback()
 ) = addSetter(itemsFlowable) { setItems(it, itemBindings, adapterFactory, diffCallbackFactory) }
 
 
@@ -59,7 +59,7 @@ inline fun <T : Any, reified A : RxRecyclerAdapter<T>> RecyclerView.setItems(
     items: List<T>,
     itemBindings: ItemBindings,
     adapterFactory: (List<T>) -> A? = { null },
-    noinline diffCallbackFactory: ((old: List<T>, new: List<T>) -> DiffCallback<T>)? = null
+    noinline diffCallbackFactory: ((old: List<T>, new: List<T>) -> DiffCallback<T>) = diffCallback()
 ) {
     (adapter as? RxRecyclerAdapter<T>)?.apply {
         data = items.toMutableList()
@@ -89,14 +89,14 @@ fun <T : Any> RecyclerView.setPaginationLoader(
     firstPage: Int,
     loader: (Int) -> Single<out OldPaginationLoader.Response<T>>,
     itemBindings: ItemBindings,
-    diffCallbackFactory: ((old: List<T>, new: List<T>) -> DiffCallback<T>)? = null
+    diffCallbackFactory: ((old: List<T>, new: List<T>) -> DiffCallback<T>) = diffCallback()
 ) = setPaginationLoader(OldPaginationLoader(firstPage, loader), itemBindings, diffCallbackFactory)
 
 @Deprecated("")
 fun <T : Any> RecyclerView.setPaginationLoader(
     pageLoader: OldPaginationLoader<T>,
     itemBindings: ItemBindings,
-    diffCallbackFactory: ((old: List<T>, new: List<T>) -> DiffCallback<T>)? = null
+    diffCallbackFactory: ((old: List<T>, new: List<T>) -> DiffCallback<T>) = diffCallback()
 ) {
     if (paginationLoader != null)
         return

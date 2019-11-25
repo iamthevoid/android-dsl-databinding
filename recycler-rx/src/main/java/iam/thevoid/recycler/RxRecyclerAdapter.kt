@@ -10,22 +10,18 @@ open class RxRecyclerAdapter<T : Any>(data: List<T> = emptyList()) : RecyclerVie
 
     var data = data.toMutableList()
         set(items) {
-            diffCallbackFactory?.invoke(field, items)?.let { callback ->
+            diffCallbackFactory(field, items).let { callback ->
                 DiffUtil.calculateDiff(callback).apply {
                     field.clear()
                     field.addAll(items)
                     dispatchUpdatesTo(this@RxRecyclerAdapter)
                 }
-            } ?: run {
-                field.clear()
-                field.addAll(items)
-                notifyDataSetChanged()
             }
         }
 
     var bindings = ItemBindings.EMPTY
 
-    var diffCallbackFactory: ((old: List<T>, new: List<T>) -> DiffCallback<T>)? = null
+    var diffCallbackFactory: ((old: List<T>, new: List<T>) -> DiffCallback<T>) = diffCallback()
 
     private val layoutCache by lazy { mutableMapOf<Int, (ViewGroup) -> Layout<*>>() }
 
