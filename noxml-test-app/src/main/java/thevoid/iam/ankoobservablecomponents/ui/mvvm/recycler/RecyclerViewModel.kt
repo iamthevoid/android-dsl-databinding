@@ -20,7 +20,7 @@ class RecyclerViewModel : RxViewModel() {
 
     val data by lazy { RxList<Any>() }
 
-    val diffCallback: ((old: List<Any>, new: List<Any>) -> DiffCallback<Any>)? = { old, new ->
+    val diffCallback: ((old: List<Any>, new: List<Any>) -> DiffCallback<Any>) = { old, new ->
         object : DiffCallback<Any>(old, new) {
             override fun areItemsTheSame(oldItem: Any, newItem: Any): Boolean = oldItem::class == newItem::class &&
                     pairOfNonNull<CurrencyRate>(oldItem, newItem)?.let { (old, new) -> old.code == new.code } ?: true
