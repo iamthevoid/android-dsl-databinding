@@ -39,6 +39,12 @@ private val View.observeListener: ObserveListener
             addOnAttachStateChangeListener(it)
         })
 
+fun View.fakeAttachToWindow() =
+    observeListener.onViewAttachedToWindow(this)
+
+fun View.fakeDetachFromWindow() =
+    observeListener.onViewDetachedFromWindow(this)
+
 fun <T : Any, V : View> V.addSetter(
     flowable: Flowable<T>,
     onUnsubscribe: () -> Unit,

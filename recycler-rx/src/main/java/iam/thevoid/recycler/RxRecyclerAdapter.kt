@@ -26,7 +26,8 @@ open class RxRecyclerAdapter<T : Any>(data: List<T> = emptyList()) : RecyclerVie
     private val layoutCache by lazy { mutableMapOf<Int, (ViewGroup) -> Layout<*>>() }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
-        createLayout(viewType, parent)?.let { Holder(it) } ?: throw IllegalStateException("Binding not provided")
+        createLayout(viewType, parent)?.let(::Holder)
+            ?: throw IllegalStateException("Binding not provided")
 
     private fun createLayout(viewType: Int, parent: ViewGroup) =
         getLayoutFactory(viewType).invoke(parent) as? Layout<T>

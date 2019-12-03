@@ -1,6 +1,5 @@
 package thevoid.iam.rx.rxdata.fields
 
-import com.jakewharton.rx.ReplayingShare
 import iam.thevoid.rxe.canPublish
 import iam.thevoid.util.Optional
 import io.reactivex.Flowable
@@ -23,7 +22,7 @@ class RxField<T>(initial: T? = null, private val onChange: (T?) -> Unit = {}) : 
 
     fun get(): T? = subject.value?.item
 
-    fun observe(): Flowable<Optional<T>> = subject.compose(ReplayingShare.instance())
+    fun observe(): Flowable<Optional<T>> = subject
 
     fun <O> map(mapper: ((T?) -> O)) = observe().map { mapper(it.item) }
 

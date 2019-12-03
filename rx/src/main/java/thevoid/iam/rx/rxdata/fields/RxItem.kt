@@ -1,6 +1,5 @@
 package thevoid.iam.rx.rxdata.fields
 
-import com.jakewharton.rx.ReplayingShare
 import iam.thevoid.e.safe
 import iam.thevoid.rxe.canPublish
 import io.reactivex.Flowable
@@ -22,7 +21,7 @@ open class RxItem<T>(initial: T, private val onChange: (T) -> Unit = {}) :
 
     fun get(): T = subject.value ?: throw IllegalStateException("Value not provided")
 
-    fun observe(): Flowable<T> = subject.compose(ReplayingShare.instance())
+    fun observe(): Flowable<T> = subject
 
     fun <E> map(mapper: (T) -> E): Flowable<E> = observe().map { mapper(it) }
 
