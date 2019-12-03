@@ -16,14 +16,6 @@ var TextInputLayout.errorTextResourse : Int
     @Deprecated(Internals.NO_GETTER, level = DeprecationLevel.ERROR) get() = Internals.noGetter()
     set(@StringRes value) { error = string(value) }
 
-var TextInputLayout.hintResourse : Int
-    @Deprecated(Internals.NO_GETTER, level = DeprecationLevel.ERROR) get() = Internals.noGetter()
-    set(@StringRes value) { hint = string(value) }
-
-var TextInputLayout.hintTextColorResourse : Int
-    @Deprecated(Internals.NO_GETTER, level = DeprecationLevel.ERROR) get() = Internals.noGetter()
-    set(@ColorRes value) { hintTextColor = ColorStateList.valueOf(color(value)) }
-
 var TextInputLayout.errorTextColorResourse : Int
     @Deprecated(Internals.NO_GETTER, level = DeprecationLevel.ERROR) get() = Internals.noGetter()
     set(@ColorRes value) { errorTextColor = color(value) }

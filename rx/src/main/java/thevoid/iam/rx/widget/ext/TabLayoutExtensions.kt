@@ -1,12 +1,12 @@
 package thevoid.iam.rx.widget.ext
 
 import com.google.android.material.tabs.TabLayout
+import iam.thevoid.common.adapter.adapters.OnTabSelectedListenerAdapter
+import iam.thevoid.common.adapter.delegate.OnTabSelectedListenerDelegate
 import io.reactivex.Flowable
 import thevoid.iam.rx.R
 import thevoid.iam.rx.rxdata.fields.RxField
 import thevoid.iam.rx.rxdata.fields.RxItem
-import iam.thevoid.common.adapter.adapters.OnTabSelectedListenerAdapter
-import iam.thevoid.common.adapter.delegate.OnTabSelectedListenerDelegate
 
 private val TabLayout.onTabSelectListener: OnTabSelectedListenerDelegate
     get() = ((getTag(R.id.onTabSelectListener) as? OnTabSelectedListenerDelegate)
@@ -15,15 +15,18 @@ private val TabLayout.onTabSelectListener: OnTabSelectedListenerDelegate
             addOnTabSelectedListener(it)
         })
 
+fun TabLayout.selectTab(tab: TabLayout.Tab?) {
+    post { tab?.select() }
+}
 
-fun TabLayout.selectTab(tabFlowable : Flowable<Int>, updateIndicator : Boolean = true) =
-    selectTab(tabFlowable, updateIndicator) { it }
+fun TabLayout.selectTab(tabFlowable: Flowable<Int>) =
+    selectTab(tabFlowable) { it }
 
-fun <T : Any> TabLayout.selectTab(tabFlowable : Flowable<T>, updateIndicator : Boolean = true, mapper: (T) -> Int) =
+fun <T : Any> TabLayout.selectTab(tabFlowable: Flowable<T>, mapper: (T) -> Int) =
     addSetter(tabFlowable) {
         val tabSelectedListener = onTabSelectListener
         removeOnTabSelectedListener(tabSelectedListener)
-        post { selectTab(getTabAt(mapper(it)), updateIndicator) }
+        selectTab(getTabAt(mapper(it)))
         addOnTabSelectedListener(tabSelectedListener)
     }
 
