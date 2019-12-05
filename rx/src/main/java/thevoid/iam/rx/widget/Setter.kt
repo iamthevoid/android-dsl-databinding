@@ -1,6 +1,5 @@
 package thevoid.iam.rx.widget
 
-import android.os.Looper
 import android.view.View
 import iam.thevoid.rxe.subscribeSafe
 import io.reactivex.Flowable
@@ -27,12 +26,7 @@ abstract class Setter<V : View, C>(
         disposable?.dispose()
         disposable = null
         disposable = flowable
-            .flatMap {
-                if (Looper.myLooper() == Looper.getMainLooper())
-                    Flowable.just(it)
-                else
-                    Flowable.just(it).observeOn(AndroidSchedulers.mainThread())
-            }
+            .observeOn(AndroidSchedulers.mainThread())
             .doOnTerminate(onUnsubscribe)
             .subscribeSafe { set(viewRef.get(), it) }
     }
