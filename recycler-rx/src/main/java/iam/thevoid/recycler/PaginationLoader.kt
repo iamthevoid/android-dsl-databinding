@@ -24,9 +24,11 @@ class PaginationLoader<T>(
     private val lastPage by lazy { AtomicBoolean() }
 
     fun refresh() {
-        if (!rxItems.isEmpty())
+//        if (!rxItems.isEmpty())
             refresh.onNext(Any())
     }
+
+    fun clear() = rxItems.set(emptyList())
 
     val items: Flowable<List<T>> by lazy {
         rxItems.observe()
