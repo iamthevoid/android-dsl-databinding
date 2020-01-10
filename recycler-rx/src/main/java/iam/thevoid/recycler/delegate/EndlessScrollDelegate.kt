@@ -18,6 +18,9 @@ class EndlessScrollDelegate : EndlessScrollListener() {
     override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView) =
         listeners.forEach { it.onLoadMore(page, totalItemsCount, view) }
 
-    fun resetListeners() = listeners.forEach { it.resetState() }
+    fun resetListeners() {
+        resetState()
+        listeners.forEach { it.resetState() }
+    }
 
 }

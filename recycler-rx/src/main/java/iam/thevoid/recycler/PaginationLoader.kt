@@ -11,7 +11,8 @@ import java.util.concurrent.atomic.AtomicBoolean
 
 class PaginationLoader<T>(
     private val pageNumberMapper: (Int) -> Int = { it },
-    private val loader: (Int) -> Single<out Response<T>>
+    private val cacheSupplier: Single<Response<T>> = Single.just(Response()),
+    private val nextPage: (Int) -> Single<out Response<T>>
 ) {
     private val startPage = 0
 
@@ -23,10 +24,7 @@ class PaginationLoader<T>(
 
     private val lastPage by lazy { AtomicBoolean() }
 
-    fun refresh() {
-//        if (!rxItems.isEmpty())
-            refresh.onNext(Any())
-    }
+    fun refresh() = refresh.onNext(Any())
 
     fun clear() = rxItems.set(emptyList())
 
@@ -34,9 +32,11 @@ class PaginationLoader<T>(
         rxItems.observe()
             .doOnSubscribe {
                 if (rxItems.isEmpty())
-                    retrieveDisposable = loader(pageNumberMapper(startPage))
-                        .subscribeOn(Schedulers.io())
-                        .repeatWhen { it.flatMapMaybe { refresh.firstElement() } }
+                    retrieveDisposable = Flowable.concatArrayEager(
+                        cacheSupplier.toFlowable(),
+                        nextPage(pageNumberMapper(startPage))
+                            .subscribeOn(Schedulers.io())
+                            .repeatWhen { it.flatMapMaybe { refresh.firstElement() } })
                         .subscribe(::onItemsReceived) {
                             Log.e(javaClass.name, "error when retrieve first page", it)
                         }
@@ -54,11 +54,14 @@ class PaginationLoader<T>(
 
 
     fun loadMore(page: Int) {
-        retrieveDisposable = loader(pageNumberMapper(page))
-            .subscribeOn(Schedulers.io())
-            .subscribe(::onItemsReceived) {
-                Log.e(javaClass.name, "error when retrieve page $page", it)
-            }
+        if (!lastPage.get()) {
+            retrieveDisposable?.dispose()
+            retrieveDisposable = nextPage(pageNumberMapper(page))
+                .subscribeOn(Schedulers.io())
+                .subscribe(::onItemsReceived) {
+                    Log.e(javaClass.name, "error when retrieve page $page", it)
+                }
+        }
     }
 
     fun release() {
@@ -66,5 +69,9 @@ class PaginationLoader<T>(
     }
 
 
-    open class Response<T>(val page: Int, val items: List<T>, val isLastPage: Boolean)
+    open class Response<T>(
+        val page: Int = 1,
+        val items: List<T> = emptyList(),
+        val isLastPage: Boolean = true
+    )
 }
