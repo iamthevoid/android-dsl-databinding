@@ -32,7 +32,10 @@ open class RxCharSequence<T : CharSequence>(initial: T = "" as T, onChange: (T) 
     RxItem<T>(initial, onChange)
 
 class RxBoolean(initial: Boolean = false, onChange: (Boolean) -> Unit = {}) :
-    RxItem<Boolean>(initial, onChange)
+    RxItem<Boolean>(initial, onChange) {
+
+    fun invert() = observe().map { !it }
+}
 
 class RxFloat(initial: Float = 0f, onChange: (Float) -> Unit = {}) :
     RxItem<Float>(initial, onChange)
