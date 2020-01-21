@@ -34,7 +34,7 @@ open class RxCharSequence<T : CharSequence>(initial: T = "" as T, onChange: (T) 
 class RxBoolean(initial: Boolean = false, onChange: (Boolean) -> Unit = {}) :
     RxItem<Boolean>(initial, onChange) {
 
-    fun invert() = observe().map { !it }
+    fun not() = observe().map { !it }
 }
 
 class RxFloat(initial: Float = 0f, onChange: (Float) -> Unit = {}) :
