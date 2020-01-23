@@ -11,12 +11,13 @@ import java.util.concurrent.atomic.AtomicBoolean
 
 class PaginationLoader<T>(
     private val pageNumberMapper: (Int) -> Int = { it },
-    private val cacheSupplier: Single<Response<T>> = Single.just(Response()),
     private val nextPage: (Int) -> Single<out Response<T>>
 ) {
     private val startPage = 0
 
     private var retrieveDisposable: Disposable? = null
+
+    private var startDisposable: Disposable? = null
 
     private val refresh by lazy { PublishProcessor.create<Any>().toSerialized() }
 
@@ -32,11 +33,9 @@ class PaginationLoader<T>(
         rxItems.observe()
             .doOnSubscribe {
                 if (rxItems.isEmpty())
-                    retrieveDisposable = Flowable.concatArrayEager(
-                        cacheSupplier.toFlowable(),
-                        nextPage(pageNumberMapper(startPage))
-                            .subscribeOn(Schedulers.io())
-                            .repeatWhen { it.flatMapMaybe { refresh.firstElement() } })
+                    startDisposable = nextPage(pageNumberMapper(startPage))
+                        .subscribeOn(Schedulers.io())
+                        .repeatWhen { it.flatMapMaybe { refresh.firstElement() } }
                         .subscribe(::onItemsReceived) {
                             Log.e(javaClass.name, "error when retrieve first page", it)
                         }
@@ -66,6 +65,7 @@ class PaginationLoader<T>(
 
     fun release() {
         retrieveDisposable?.dispose()
+        startDisposable?.dispose()
     }
 
 
