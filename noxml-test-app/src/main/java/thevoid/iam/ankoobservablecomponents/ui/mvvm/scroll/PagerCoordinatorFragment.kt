@@ -1,6 +1,5 @@
 package thevoid.iam.ankoobservablecomponents.ui.mvvm.scroll
 
-import android.content.Context
 import android.graphics.Color
 import android.view.View
 import androidx.appcompat.widget.Toolbar
@@ -11,8 +10,7 @@ import com.google.android.material.appbar.CollapsingToolbarLayout.LayoutParams.C
 import com.google.android.material.appbar.CollapsingToolbarLayout.LayoutParams.COLLAPSE_MODE_PIN
 import iam.thevoid.ae.screenHeight
 import iam.thevoid.ae.setPaddings
-import iam.thevoid.ankoviews.widget.mvvm.AnkoMvvmActivity
-import iam.thevoid.common.createBinding
+import iam.thevoid.common.viewModel
 import iam.thevoid.e.safe
 import iam.thevoid.recycler.setItems
 import org.jetbrains.anko.*
@@ -23,10 +21,11 @@ import org.jetbrains.anko.design.coordinatorLayout
 import org.jetbrains.anko.recyclerview.v7.recyclerView
 import org.jetbrains.anko.support.v4.viewPager
 import thevoid.iam.ankoobservablecomponents.R
+import thevoid.iam.ankoobservablecomponents.ui.BaseFragment
 import thevoid.iam.rx.widget.ext.setItems
 import kotlin.math.absoluteValue
 
-class ScrollActivity : AnkoMvvmActivity<ScrollViewModel>(), AppBarLayout.OnOffsetChangedListener {
+class PagerCoordinatorFragment : BaseFragment(), AppBarLayout.OnOffsetChangedListener {
 
     lateinit var toolbar: Toolbar
 
@@ -41,13 +40,13 @@ class ScrollActivity : AnkoMvvmActivity<ScrollViewModel>(), AppBarLayout.OnOffse
             (verticalOffset.toFloat().absoluteValue - treshhold) / (appBarLayout?.totalScrollRange.safe().toFloat() - treshhold)
     }
 
-    override fun provideViewModel(): iam.thevoid.common.ViewModelBindingProvider = createBinding(ScrollViewModel::class.java)
+    val vm by viewModel<ScrollViewModel>()
 
-    override fun createView(ui: AnkoContext<Context>): View =
+    override fun createView(ui: AnkoContext<BaseFragment>): View =
         ui.coordinatorLayout {
 
             appBarLayout {
-                addOnOffsetChangedListener(this@ScrollActivity)
+                addOnOffsetChangedListener(this@PagerCoordinatorFragment)
                 collapsingToolbarLayout {
                     viewPager {
                         clipToPadding = false

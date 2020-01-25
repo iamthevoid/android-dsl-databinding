@@ -27,7 +27,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         debug {}
-        releaseDebuggable {}
     }
     compileOptions {
         sourceCompatibility = '1.8'

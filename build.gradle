@@ -18,18 +18,18 @@ buildscript {
 ext {
 
     // publish
-    libVersion = '0.9.20'
+    libVersion = '0.9.21'
     libWebsite = 'https://github.com/iamthevoid/android-noxml-mvvm.git'
     libUserOrg = 'iamthevoid'
     libUploadName = 'android-noxml-mvvm'
     libLicence = 'Apache-2.0'
     libGroupId = 'thevoid.iam.components'
 
-    libMinSdk = 19
+    libMinSdk = 16
     compileApi = 28
     targetApi = 28
 
-    e = "0.5.2"
+    e = "0.5.20"
 
     anko = "0.10.8"
     glide = "4.9.0"
@@ -45,9 +45,9 @@ ext {
 
     // x
     appcompat = "1.1.0"
-    lifecycle = "2.2.0-alpha02"
-    material = "1.1.0-alpha09"
-    recycler = "1.1.0-alpha06"
+    lifecycle = "2.2.0"
+    material = "1.0.0"
+    recycler = "1.1.0"
     swipe = "1.0.0"
 
     // test

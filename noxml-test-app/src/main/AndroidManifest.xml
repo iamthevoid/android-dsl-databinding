@@ -12,16 +12,13 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme" tools:ignore="GoogleAppIndexingWarning">
-        <activity
-                android:theme="@style/AppTheme.NoActionBar"
-                android:name="thevoid.iam.ankoobservablecomponents.ui.MainActivity"/>
 
         <activity
-                android:name=".ui.mvvm.scroll.ScrollActivity"
+                android:name=".ui.ContainerActivity"
                 android:theme="@style/AppTheme.NoActionBar"/>
 
         <activity
-                android:name=".ui.mvvm.SelectActivity"
+                android:name=".ui.SelectActivity"
                 android:label="@string/app_name"
                 android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -31,7 +28,7 @@
             </intent-filter>
 
         </activity>
-        <activity android:name=".ui.mvvm.serial.ButikActivity" />
+        <activity android:name=".ui.mvvm.pagination.PaginationLoaderFragment" />
     </application>
 
 </manifest>

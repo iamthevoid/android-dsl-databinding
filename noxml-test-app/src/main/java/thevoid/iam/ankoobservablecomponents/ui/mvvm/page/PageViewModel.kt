@@ -11,11 +11,5 @@ class PageViewModel : RxViewModel() {
 
     val changes by lazy { RxField<OnEditTextChanges>() }
 
-    val input by lazy { RxBoolean() }
-
-    override fun onActive() {
-        super.onActive()
-        input.set(true)
-        input.observe().subscribeSafe { Log.d("PageViewModel", "$it") }
-    }
+    val input by lazy { RxBoolean(true) }
 }

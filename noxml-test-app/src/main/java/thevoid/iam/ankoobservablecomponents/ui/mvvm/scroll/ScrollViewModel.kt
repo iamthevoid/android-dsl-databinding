@@ -1,10 +1,11 @@
 package thevoid.iam.ankoobservablecomponents.ui.mvvm.scroll
 
+import androidx.lifecycle.ViewModel
 import thevoid.iam.rx.adapter.ItemBindings
 import thevoid.iam.rx.rxdata.fields.RxList
 import thevoid.iam.rx.viewmodel.RxViewModel
 
-class ScrollViewModel : RxViewModel() {
+class ScrollViewModel : ViewModel() {
 
 
     val images by lazy { RxList(listOf(

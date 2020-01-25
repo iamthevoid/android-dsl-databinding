@@ -5,15 +5,11 @@ import iam.thevoid.rxe.canPublish
 import io.reactivex.Flowable
 import io.reactivex.processors.BehaviorProcessor
 
-open class RxItem<T>(initial: T, private val onChange: (T) -> Unit = {}) :
-    RxPropertyChangedCallback {
+open class RxItem<T>(initial: T, private val onChange: (T) -> Unit = {}) {
 
-    override fun onItemChanged() = set(get())
-
-    private val subject by lazy { BehaviorProcessor.createDefault(initial) }
+    private val subject = BehaviorProcessor.createDefault(initial)
 
     fun set(elem: T) {
-        (elem as? RxProperty)?.rxCallback = this
         if (subject.canPublish())
             subject.onNext(elem)
         onChange(elem)

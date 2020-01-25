@@ -5,14 +5,11 @@ import iam.thevoid.util.Optional
 import io.reactivex.Flowable
 import io.reactivex.processors.BehaviorProcessor
 
-class RxField<T>(initial: T? = null, private val onChange: (T?) -> Unit = {}) : RxPropertyChangedCallback {
+class RxField<T>(initial: T? = null, private val onChange: (T?) -> Unit = {})  {
 
-    override fun onItemChanged() = set(get())
-
-    private val subject by lazy { BehaviorProcessor.createDefault(Optional.of(initial)) }
+    private val subject = BehaviorProcessor.createDefault(Optional.of(initial))
 
     fun set(elem: T?) {
-        (elem as? RxProperty)?.rxCallback = this
         if (subject.canPublish())
             subject.onNext(Optional.of(elem))
         onChange(elem)

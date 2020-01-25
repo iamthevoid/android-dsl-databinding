@@ -1,12 +1,13 @@
 package thevoid.iam.ankoobservablecomponents.ui.mvvm.just
 
+import androidx.lifecycle.ViewModel
 import iam.thevoid.rxe.toFlowableLatest
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import thevoid.iam.rx.viewmodel.RxViewModel
 import java.util.concurrent.TimeUnit
 
-class JustViewModel : RxViewModel() {
+class JustViewModel : ViewModel() {
 
     var colorVal : Long = 0xff000000
 

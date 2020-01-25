@@ -1,12 +1,13 @@
-package thevoid.iam.ankoobservablecomponents.ui.mvvm.serial
+package thevoid.iam.ankoobservablecomponents.ui.mvvm.pagination
 
+import androidx.lifecycle.ViewModel
 import iam.thevoid.recycler.PaginationLoader
 import thevoid.iam.ankoobservablecomponents.data.api.ButikApi
 import thevoid.iam.rx.rxdata.RxLoading
 import thevoid.iam.rx.utils.loading
 import thevoid.iam.rx.viewmodel.RxViewModel
 
-class ButikViewModel : RxViewModel() {
+class ButikViewModel : ViewModel() {
 
     val refreshing by lazy { RxLoading() }
 
@@ -16,10 +17,5 @@ class ButikViewModel : RxViewModel() {
                 PaginationLoader.Response(it.currentPage, it.items, it.isLastPage)
             }
         }
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        loader.release()
     }
 }

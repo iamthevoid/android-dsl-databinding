@@ -1,13 +1,10 @@
-package thevoid.iam.ankoobservablecomponents.ui.mvvm.serial
+package thevoid.iam.ankoobservablecomponents.ui.mvvm.pagination
 
-import android.content.Context
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import iam.thevoid.ankorx.AnkoLayout
-import iam.thevoid.ankoviews.widget.mvvm.AnkoMvvmActivity
-import iam.thevoid.common.ViewModelBindingProvider
-import iam.thevoid.common.createBinding
+import iam.thevoid.common.viewModel
 import iam.thevoid.recycler.resetEndlessScrollState
 import iam.thevoid.recycler.setItems
 import iam.thevoid.recycler.setLoadMore
@@ -16,16 +13,18 @@ import org.jetbrains.anko.*
 import org.jetbrains.anko.recyclerview.v7.recyclerView
 import org.jetbrains.anko.support.v4.swipeRefreshLayout
 import thevoid.iam.ankoobservablecomponents.data.api.butik.Product
+import thevoid.iam.ankoobservablecomponents.ui.BaseFragment
 import thevoid.iam.rx.adapter.ItemBindings
 import thevoid.iam.rx.widget.ext.setRefreshing
 import thevoid.iam.rx.widget.ext.setText
 
-class ButikActivity : AnkoMvvmActivity<ButikViewModel>() {
+class PaginationLoaderFragment : BaseFragment() {
 
-    override fun provideViewModel(): ViewModelBindingProvider =
-        createBinding(ButikViewModel::class)
+    val vm by viewModel<ButikViewModel>()
 
-    override fun createView(ui: AnkoContext<Context>): View =
+    val bindings by lazy { ItemBindings.of(Product::class) { ProductLayout(it) } }
+
+    override fun createView(ui: AnkoContext<BaseFragment>): View =
         ui.swipeRefreshLayout {
             setRefreshing(vm.refreshing)
             recyclerView {
@@ -36,9 +35,7 @@ class ButikActivity : AnkoMvvmActivity<ButikViewModel>() {
                 setOnRefreshListener { vm.loader.refresh() }
                 it.resetEndlessScrollState()
             }
-        }.apply { layoutParams = ViewGroup.LayoutParams(matchParent, matchParent) }
-
-    val bindings by lazy { ItemBindings.of(Product::class) { ProductLayout(it) } }
+        }
 
     class ProductLayout(parent: ViewGroup) : AnkoLayout<Product>(parent) {
         override fun createView(ui: AnkoContext<AnkoLayout<Product>>): View =

@@ -9,20 +9,24 @@ import iam.thevoid.ankoviews.widget.mvvm.AnkoMvvmFragment
 import iam.thevoid.ankoviews.widget.sparseConstraintLayout
 import iam.thevoid.common.ViewModelBindingProvider
 import iam.thevoid.common.createBinding
+import iam.thevoid.common.viewModel
 import org.jetbrains.anko.*
 import org.jetbrains.anko.constraint.layout.ConstraintSetBuilder.Side.*
 import org.jetbrains.anko.constraint.layout.matchConstraint
 import thevoid.iam.ankoobservablecomponents.R
+import thevoid.iam.ankoobservablecomponents.ui.BaseFragment
 import thevoid.iam.rx.widget.ext.onFocusChange
 import thevoid.iam.rx.widget.ext.onTextChanges
 import thevoid.iam.rx.widget.ext.setRequestInput
 import thevoid.iam.rx.widget.ext.setText
 
-class PageFragment : AnkoMvvmFragment<PageViewModel>() {
+class PageFragment : BaseFragment() {
+
+    val vm by viewModel<PageViewModel>()
 
     var et: EditText? = null
 
-    override fun createView(ui: AnkoContext<AnkoMvvmFragment<PageViewModel>>): View =
+    override fun createView(ui: AnkoContext<BaseFragment>): View =
         ui.sparseConstraintLayout {
 
             et = editText {
@@ -73,8 +77,5 @@ class PageFragment : AnkoMvvmFragment<PageViewModel>() {
                 horizontalWeight = 1f
             }
         }
-
-
-    override fun provideViewModel(): ViewModelBindingProvider = createBinding(PageViewModel::class.java)
 
 }
