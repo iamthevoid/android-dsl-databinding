@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <item name="focusOnAttachListener" type="id"/>
+
+    <item name="onPageChangeListener" type="id"/>
+
+    <item name="chromeClient" type="id" />
+
+</resources>

@@ -1,0 +1,107 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-kapt'
+
+
+android {
+    compileSdkVersion compileApi
+    defaultConfig {
+        applicationId "iam.thevoid.noxml.demo"
+        minSdkVersion libMinSdk
+        targetSdkVersion targetApi
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField "String", "ENDPOINT", '"https://revolut.duckdns.org/"'
+
+        multiDexEnabled true
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [
+                        "room.schemaLocation"  : "$projectDir/noxml-test-app/schemas".toString(),
+                        "room.incremental"     : "true",
+                        "room.expandProjection": "true"
+                ]
+            }
+        }
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility = '1.8'
+        targetCompatibility = '1.8'
+    }
+}
+
+dependencies {
+
+    implementation project(':anko-core')
+    implementation project(':anko-coroutines')
+    implementation project(':anko-rx')
+    implementation project(':anko-mvvm')
+
+    implementation project(':core')
+    implementation project(':core-recycler')
+    implementation project(':core-mvvm')
+
+    implementation project(':coroutines-core')
+    implementation project(':coroutines-recycler')
+
+    implementation project(':rx-recycler')
+    implementation project(':rx-core')
+    implementation project(':rx-mvvm')
+
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines"
+
+    implementation "androidx.appcompat:appcompat:$appcompat"
+
+    implementation "com.github.bumptech.glide:glide:$glide"
+    kapt "com.github.bumptech.glide:compiler:$glide"
+
+    implementation "org.jetbrains.anko:anko-sdk25:$anko"
+    implementation "org.jetbrains.anko:anko-appcompat-v7:$anko"
+    implementation "org.jetbrains.anko:anko-constraint-layout:$anko"
+    implementation "org.jetbrains.anko:anko-recyclerview-v7:$anko"
+    implementation "org.jetbrains.anko:anko-design:$anko"
+
+    implementation "iam.thevoid.extensions:android:$e"
+    implementation "iam.thevoid.extensions:pure:$e"
+    implementation "iam.thevoid.extensions:rx:$e"
+    implementation "iam.thevoid.util:util:$e"
+
+    implementation 'androidx.multidex:multidex:2.0.1'
+
+    implementation "androidx.room:room-runtime:$room"
+    implementation "androidx.room:room-ktx:$room"
+    kapt "androidx.room:room-compiler:$room"
+
+    implementation "androidx.core:core-ktx:$ktx"
+
+    implementation "org.jsoup:jsoup:$jsoup"
+    implementation "com.google.code.gson:gson:$gson"
+    implementation "com.squareup.retrofit2:retrofit:$retrofit"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit"
+    implementation "com.squareup.retrofit2:converter-scalars:$retrofit"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit"
+    implementation "com.squareup.okhttp3:okhttp:$okhttp"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp"
+
+    implementation "io.reactivex.rxjava2:rxjava:$rxJava"
+    implementation "io.reactivex.rxjava2:rxandroid:$rxAndroid"
+
+    testImplementation "junit:junit:$junit"
+    androidTestImplementation "androidx.test:runner:$runner"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$espresso"
+}

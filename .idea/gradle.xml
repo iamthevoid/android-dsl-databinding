@@ -1,24 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="GradleMigrationSettings" migrationVersion="1" />
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
+        <option name="delegatedBuild" value="false" />
+        <option name="testRunner" value="PLATFORM" />
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/anko-commons" />
-            <option value="$PROJECT_DIR$/anko-rx" />
-            <option value="$PROJECT_DIR$/commons" />
-            <option value="$PROJECT_DIR$/design-rx" />
-            <option value="$PROJECT_DIR$/noxml-test-app" />
-            <option value="$PROJECT_DIR$/recycler-rx" />
-            <option value="$PROJECT_DIR$/rx" />
+            <option value="$PROJECT_DIR$/library/anko/anko-core" />
+            <option value="$PROJECT_DIR$/library/anko/anko-coroutines" />
+            <option value="$PROJECT_DIR$/library/anko/anko-mvvm" />
+            <option value="$PROJECT_DIR$/library/anko/anko-rx" />
+            <option value="$PROJECT_DIR$/library/core/core" />
+            <option value="$PROJECT_DIR$/library/core/core-design" />
+            <option value="$PROJECT_DIR$/library/core/core-mvvm" />
+            <option value="$PROJECT_DIR$/library/core/core-recycler" />
+            <option value="$PROJECT_DIR$/library/coroutines/coroutines-core" />
+            <option value="$PROJECT_DIR$/library/coroutines/coroutines-design" />
+            <option value="$PROJECT_DIR$/library/coroutines/coroutines-recycler" />
+            <option value="$PROJECT_DIR$/library/rx/rx-core" />
+            <option value="$PROJECT_DIR$/library/rx/rx-design" />
+            <option value="$PROJECT_DIR$/library/rx/rx-mvvm" />
+            <option value="$PROJECT_DIR$/library/rx/rx-recycler" />
+            <option value="$PROJECT_DIR$/noxml-demo-app" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
-        <option name="testRunner" value="PLATFORM" />
       </GradleProjectSettings>
     </option>
   </component>

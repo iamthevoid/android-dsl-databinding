@@ -1,1 +1,40 @@
-include ':noxml-test-app', ':rx', ':anko-commons', ':recycler-rx', ':design-rx', ':commons', ':anko-rx'
+include ':noxml-demo-app',
+
+        ':anko-core',
+        ':anko-coroutines',
+        ':anko-mvvm',
+        ':anko-rx',
+
+        ':core',
+        ':core-design',
+        ':core-mvvm',
+        ':core-recycler',
+
+        ':rx-core',
+        ':rx-mvvm',
+        ':rx-recycler',
+        ':rx-design',
+
+        ':coroutines-core',
+        ':coroutines-design',
+        ':coroutines-recycler'
+
+
+project(':anko-core').projectDir = new File('library/anko/anko-core')
+project(':anko-coroutines').projectDir = new File('library/anko/anko-coroutines')
+project(':anko-mvvm').projectDir = new File('library/anko/anko-mvvm')
+project(':anko-rx').projectDir = new File('library/anko/anko-rx')
+
+project(':core').projectDir = new File('library/core/core')
+project(':core-design').projectDir = new File('library/core/core-design')
+project(':core-mvvm').projectDir = new File('library/core/core-mvvm')
+project(':core-recycler').projectDir = new File('library/core/core-recycler')
+
+project(':rx-core').projectDir = new File('library/rx/rx-core')
+project(':rx-mvvm').projectDir = new File('library/rx/rx-mvvm')
+project(':rx-recycler').projectDir = new File('library/rx/rx-recycler')
+project(':rx-design').projectDir = new File('library/rx/rx-design')
+
+project(':coroutines-core').projectDir = new File('library/coroutines/coroutines-core')
+project(':coroutines-design').projectDir = new File('library/coroutines/coroutines-design')
+project(':coroutines-recycler').projectDir = new File('library/coroutines/coroutines-recycler')

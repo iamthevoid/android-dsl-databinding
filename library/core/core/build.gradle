@@ -1,0 +1,61 @@
+apply plugin: 'com.android.library'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'com.novoda.bintray-release'
+
+repositories {
+
+}
+
+android {
+    compileSdkVersion compileApi
+
+    defaultConfig {
+        minSdkVersion libMinSdk
+        targetSdkVersion targetApi
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {}
+    }
+    compileOptions {
+        sourceCompatibility = '1.8'
+        targetCompatibility = '1.8'
+    }
+}
+
+publish {
+    artifactId = 'core'
+    desc = 'Core part of library. Abstract setter and observable listener, adapter bindings, delegates, adapters, extensions'
+    groupId = "$libGroupId"
+    publishVersion = "$libVersion"
+    licences = ["$libLicence"]
+    uploadName = "$libUploadName"
+    userOrg = "$libUserOrg"
+    website = "$libWebsite"
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+
+    implementation "androidx.appcompat:appcompat:$appcompat"
+
+    implementation "iam.thevoid.extensions:pure:$e"
+
+    testImplementation "junit:junit:$junit"
+    androidTestImplementation "androidx.test:runner:$runner"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$espresso"
+}
