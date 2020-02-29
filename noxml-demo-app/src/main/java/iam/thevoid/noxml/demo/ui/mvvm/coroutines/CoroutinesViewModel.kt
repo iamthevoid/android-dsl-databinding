@@ -2,31 +2,30 @@ package iam.thevoid.noxml.demo.ui.mvvm.coroutines
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.flow
+import iam.thevoid.noxml.coroutines.utils.repeatFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import iam.thevoid.noxml.demo.data.db.entity.Color
-import iam.thevoid.noxml.coroutines.share
+import iam.thevoid.noxml.coroutines.utils.share
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
 import kotlin.random.Random
+import kotlin.time.ExperimentalTime
+import kotlin.time.seconds
 
-class CoroutinesViewModel : ViewModel() {
+class CoroutinesViewModel : ViewModel(), CoroutineScope by CoroutineScope(IO) {
 
-    val flw = flow {
-
-        while (true) {
-            val color = Color(value = "#000000")
-            val red = Random.nextInt(0x100)
-            val green = Random.nextInt(0x100)
-            val blue = Random.nextInt(0x100)
-            val value =
-                "#${red.to2digitsString()}${green.to2digitsString()}${blue.to2digitsString()}"
-            color.value = value
-            emit(color)
-            delay(3000)
-        }
-    }.share(GlobalScope)
+    @UseExperimental(ExperimentalTime::class)
+    val flw = repeatFlow(delay = 3.seconds) {
+        val color = Color(value = "#000000")
+        val red = Random.nextInt(0x100)
+        val green = Random.nextInt(0x100)
+        val blue = Random.nextInt(0x100)
+        val value =
+            "#${red.to2digitsString()}${green.to2digitsString()}${blue.to2digitsString()}"
+        color.value = value
+        emit(color)
+    }.share(this)
         .onEach { Log.i("CoroutinesViewModel", "$it") }
         .map { it.value }
 

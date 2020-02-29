@@ -13,10 +13,12 @@ include ':noxml-demo-app',
         ':rx-core',
         ':rx-mvvm',
         ':rx-recycler',
+        ':rx-swiperefreshlayout',
         ':rx-design',
 
         ':coroutines-core',
         ':coroutines-design',
+        ':coroutines-swiperefreshlayout',
         ':coroutines-recycler'
 
 
@@ -34,7 +36,9 @@ project(':rx-core').projectDir = new File('library/rx/rx-core')
 project(':rx-mvvm').projectDir = new File('library/rx/rx-mvvm')
 project(':rx-recycler').projectDir = new File('library/rx/rx-recycler')
 project(':rx-design').projectDir = new File('library/rx/rx-design')
+project(':rx-swiperefreshlayout').projectDir = new File('library/rx/rx-swiperefreshlayout')
 
 project(':coroutines-core').projectDir = new File('library/coroutines/coroutines-core')
 project(':coroutines-design').projectDir = new File('library/coroutines/coroutines-design')
 project(':coroutines-recycler').projectDir = new File('library/coroutines/coroutines-recycler')
+project(':coroutines-swiperefreshlayout').projectDir = new File('library/coroutines/coroutines-swiperefreshlayout')

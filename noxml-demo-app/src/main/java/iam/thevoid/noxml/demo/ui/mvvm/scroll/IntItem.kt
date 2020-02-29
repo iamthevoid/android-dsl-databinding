@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import iam.thevoid.ae.setPaddings
 import iam.thevoid.noxml.anko.rx.AnkoRxLayout
 import org.jetbrains.anko.*
-import iam.thevoid.noxml.rx.ext.setText
+import iam.thevoid.noxml.rx.extensions.setText
 
 class IntItem(viewGroup: ViewGroup) : AnkoRxLayout<Integer>(viewGroup) {
     override fun createView(ui: AnkoContext<AnkoRxLayout<Integer>>): View =

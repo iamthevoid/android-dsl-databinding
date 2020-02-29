@@ -16,8 +16,8 @@ import iam.thevoid.noxml.adapterview.ItemBindings
 import iam.thevoid.noxml.demo.R
 import iam.thevoid.noxml.recycler.setItems
 import iam.thevoid.rxe.mapSelf
-import iam.thevoid.noxml.rx.ext.gone
-import iam.thevoid.noxml.rx.ext.setText
+import iam.thevoid.noxml.rx.extensions.gone
+import iam.thevoid.noxml.rx.extensions.setText
 
 class SelectActivity : AppCompatActivity() {
 

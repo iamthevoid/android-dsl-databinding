@@ -22,10 +22,12 @@
             <option value="$PROJECT_DIR$/library/coroutines/coroutines-core" />
             <option value="$PROJECT_DIR$/library/coroutines/coroutines-design" />
             <option value="$PROJECT_DIR$/library/coroutines/coroutines-recycler" />
+            <option value="$PROJECT_DIR$/library/coroutines/coroutines-swiperefreshlayout" />
             <option value="$PROJECT_DIR$/library/rx/rx-core" />
             <option value="$PROJECT_DIR$/library/rx/rx-design" />
             <option value="$PROJECT_DIR$/library/rx/rx-mvvm" />
             <option value="$PROJECT_DIR$/library/rx/rx-recycler" />
+            <option value="$PROJECT_DIR$/library/rx/rx-swiperefreshlayout" />
             <option value="$PROJECT_DIR$/noxml-demo-app" />
           </set>
         </option>

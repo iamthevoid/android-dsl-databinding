@@ -3,11 +3,11 @@ package iam.thevoid.noxml.demo.ui.mvvm.revolut
 import androidx.lifecycle.ViewModel
 import iam.thevoid.e.format
 import iam.thevoid.e.safeDouble
+import iam.thevoid.noxml.coroutines.data.CoroutineBoolean
+import iam.thevoid.noxml.coroutines.data.CoroutineString
+import iam.thevoid.noxml.coroutines.utils.repeatFlow
 import iam.thevoid.noxml.demo.data.api.RevolutApi
 import iam.thevoid.noxml.demo.data.api.model.CurrencyRate
-import iam.thevoid.noxml.coroutines.fields.CoroutineBoolean
-import iam.thevoid.noxml.coroutines.fields.CoroutineString
-import iam.thevoid.noxml.coroutines.repeatFlow
 import kotlin.time.ExperimentalTime
 import kotlin.time.milliseconds
 
@@ -15,10 +15,10 @@ class RevolutViewModel : ViewModel() {
 
     val current by lazy { CoroutineString(STARTER) }
 
-    val currentValue by lazy { CoroutineString("1") }
+    val currentValue = CoroutineString("1")
 
-    val loading : CoroutineBoolean = CoroutineBoolean(true)
-    val blocking : CoroutineBoolean = CoroutineBoolean()
+    val loading = CoroutineBoolean(true)
+    val blocking = CoroutineBoolean()
 
     @UseExperimental(ExperimentalTime::class)
     val data by lazy {
@@ -37,11 +37,8 @@ class RevolutViewModel : ViewModel() {
         }
     }
 
-    suspend fun resultValue(rate : Double, value : String) : String{
-        val opRate = rate
-        val opValue = value.safeDouble()
-        return (opRate * opValue).format(4)
-    }
+    suspend fun resultValue(rate : Double, value : String) : String =
+        (rate * value.safeDouble()).format(4)
 
     fun updateCurrent(rate : CurrencyRate) {
         blocking.set(true)

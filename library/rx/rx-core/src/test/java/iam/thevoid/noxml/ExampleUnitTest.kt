@@ -3,8 +3,7 @@ package iam.thevoid.noxml
 import org.junit.Test
 
 import org.junit.Assert.*
-import iam.thevoid.noxml.rx.adapter.RxPagerAdapter
-import iam.thevoid.noxml.rx.utils.key
+import iam.thevoid.noxml.adapterview.StandalonePagerAdapter
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -18,13 +17,8 @@ class ExampleUnitTest {
     }
 
     @Test
-    fun <T : Number> testStack() {
-        print(key())
-    }
-
-    @Test
     fun testMapper() {
-        val list = RxPagerAdapter.fromTitlesAndItems(listOf(1,2,3), listOf("One", "Two"))
+        val list = StandalonePagerAdapter.fromTitlesAndItems(listOf(1,2,3), listOf("One", "Two"))
         print(list)
     }
 }

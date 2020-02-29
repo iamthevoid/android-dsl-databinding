@@ -54,6 +54,8 @@ dependencies {
     implementation "androidx.appcompat:appcompat:$appcompat"
 
     implementation "iam.thevoid.extensions:pure:$e"
+    implementation "iam.thevoid.extensions:android:$e"
+
 
     testImplementation "junit:junit:$junit"
     androidTestImplementation "androidx.test:runner:$runner"

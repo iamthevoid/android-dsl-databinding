@@ -4,7 +4,7 @@ import android.view.View
 import android.view.ViewGroup
 import org.jetbrains.anko.AnkoComponent
 import org.jetbrains.anko.AnkoContext
-import iam.thevoid.noxml.rx.adapter.RxLayout
+import iam.thevoid.noxml.rx.adapterview.RxLayout
 
 
 abstract class AnkoRxLayout<T>(parent: ViewGroup) : RxLayout<T>(parent),

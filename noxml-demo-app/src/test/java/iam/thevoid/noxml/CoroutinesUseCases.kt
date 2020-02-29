@@ -20,6 +20,7 @@ class CoroutinesUseCases {
             println("Collecting")
             GlobalScope.launch { flow.collect { println("Caught #1 $it") } }
             GlobalScope.launch { flow.collect { println("Caught #2 $it") } }
+            delay(1000)
             channel.send(2)
             GlobalScope.launch { flow.collect { println("Caught #3 $it") } }
             delay(5000)

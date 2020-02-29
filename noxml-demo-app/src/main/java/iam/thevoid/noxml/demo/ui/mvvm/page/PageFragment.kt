@@ -4,7 +4,6 @@ import android.view.View
 import android.widget.EditText
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.constraintlayout.widget.ConstraintSet.PARENT_ID
-import androidx.core.view.doOnLayout
 import iam.thevoid.ae.resetFocus
 import iam.thevoid.noxml.core.mvvm.viewModel
 import org.jetbrains.anko.*
@@ -12,10 +11,10 @@ import org.jetbrains.anko.constraint.layout.ConstraintSetBuilder.Side.*
 import iam.thevoid.noxml.demo.ui.BaseFragment
 import iam.thevoid.noxml.anko.sparseConstraintLayout
 import iam.thevoid.noxml.demo.R
-import iam.thevoid.noxml.rx.ext.onFocusChange
-import iam.thevoid.noxml.rx.ext.onTextChanges
-import iam.thevoid.noxml.rx.ext.setRequestInput
-import iam.thevoid.noxml.rx.ext.setText
+import iam.thevoid.noxml.rx.extensions.onFocusChange
+import iam.thevoid.noxml.rx.extensions.onTextChanges
+import iam.thevoid.noxml.rx.extensions.setRequestInput
+import iam.thevoid.noxml.rx.extensions.setText
 import org.jetbrains.anko.constraint.layout.matchConstraint
 
 class PageFragment : BaseFragment() {

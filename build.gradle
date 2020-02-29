@@ -18,7 +18,7 @@ buildscript {
 ext {
 
     // publish
-    libVersion = '1.0.0-alpha01'
+    libVersion = '1.0.0-alpha02'
     libWebsite = 'https://github.com/iamthevoid/android-noxml-mvvm.git'
     libUserOrg = 'iamthevoid'
     libUploadName = 'android-noxml-mvvm'
@@ -46,6 +46,8 @@ ext {
     // rx
     rxJava = "2.2.7"
     rxAndroid = "2.1.1"
+    rxKotlin = "2.4.0"
+    rxReplayingShare = "2.1.1"
 
     // x
     appcompat = "1.1.0"

@@ -10,7 +10,7 @@ import io.reactivex.Single
 import iam.thevoid.noxml.rx.rxdata.fields.RxField
 import iam.thevoid.noxml.rx.rxdata.fields.RxInt
 import iam.thevoid.noxml.rx.rxdata.fields.RxList
-import iam.thevoid.noxml.rx.ext.addSetter
+import iam.thevoid.noxml.rx.extensions.addSetter
 
 fun <T : Any> RecyclerView.setItems(
     itemsFlowable: Flowable<out List<T>>,

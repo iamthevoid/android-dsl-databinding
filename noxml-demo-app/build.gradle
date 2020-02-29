@@ -57,6 +57,7 @@ dependencies {
 
     implementation project(':rx-recycler')
     implementation project(':rx-core')
+    implementation project(':rx-swiperefreshlayout')
     implementation project(':rx-mvvm')
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])

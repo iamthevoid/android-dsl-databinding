@@ -9,7 +9,7 @@ import iam.thevoid.ae.color
 import iam.thevoid.ae.string
 import io.reactivex.Flowable
 import iam.thevoid.noxml.rx.rxdata.fields.RxBoolean
-import iam.thevoid.noxml.rx.ext.addSetter
+import iam.thevoid.noxml.rx.extensions.addSetter
 import iam.thevoid.noxml.rx.utils.Internals
 
 

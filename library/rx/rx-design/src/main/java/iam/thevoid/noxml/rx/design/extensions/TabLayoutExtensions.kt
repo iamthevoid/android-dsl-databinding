@@ -6,7 +6,7 @@ import iam.thevoid.noxml.design.extensions.onTabSelectListener
 import io.reactivex.Flowable
 import iam.thevoid.noxml.rx.rxdata.fields.RxField
 import iam.thevoid.noxml.rx.rxdata.fields.RxItem
-import iam.thevoid.noxml.rx.ext.addSetter
+import iam.thevoid.noxml.rx.extensions.addSetter
 
 fun TabLayout.selectTab(tab: TabLayout.Tab?) {
     post { tab?.select() }

@@ -14,9 +14,9 @@ import org.jetbrains.anko.support.v4.swipeRefreshLayout
 import iam.thevoid.noxml.demo.data.api.butik.Product
 import iam.thevoid.noxml.demo.ui.BaseFragment
 import iam.thevoid.noxml.adapterview.ItemBindings
-import iam.thevoid.noxml.rx.ext.setRefreshing
 import iam.thevoid.rxe.mapSelf
-import iam.thevoid.noxml.rx.ext.setText
+import iam.thevoid.noxml.rx.extensions.setText
+import iam.thevoid.noxml.rx.swiperefreshlayout.setRefreshing
 
 class PaginationLoaderFragment : BaseFragment() {
 

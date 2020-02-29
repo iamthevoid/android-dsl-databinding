@@ -4,19 +4,19 @@
 package iam.thevoid.noxml.coroutines.extensions
 
 import android.graphics.drawable.Drawable
-import android.view.GestureDetector
-import android.view.MotionEvent
-import android.view.View
-import android.view.ViewGroup
+import android.os.Build
+import android.view.*
 import iam.thevoid.ae.*
-import iam.thevoid.noxml.coroutines.CoroutinesSetter
-import iam.thevoid.noxml.coroutines.fields.*
+import iam.thevoid.noxml.coroutines.utils.CoroutinesSetter
+import iam.thevoid.noxml.coroutines.data.*
 import iam.thevoid.noxml.extensions.gestureDetector
 import iam.thevoid.noxml.extensions.gestureDetectorCallback
 import iam.thevoid.noxml.extensions.observeListener
 import iam.thevoid.noxml.change.Margins
 import iam.thevoid.noxml.change.scroll.OnFling
 import iam.thevoid.noxml.change.scroll.OnScroll
+import iam.thevoid.noxml.containsInStackTrace
+import iam.thevoid.noxml.extensions.onGlobalLayoutDelegate
 import iam.thevoid.util.Optional
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
@@ -80,7 +80,6 @@ fun View.setMargins(
 fun View.hideUntilLoaded(loading: CoroutineBoolean) =
     addSetter(loading.observe()) { hide(it) }
 
-
 fun View.hideUntilLoaded(loading: CoroutineBoolean, vararg loadings: CoroutineBoolean) =
     addSetter(merge(*mutableListOf(loading).apply { addAll(loadings) }.map { it.observe() }.toTypedArray())) {
         hide(it)
@@ -127,15 +126,15 @@ fun View.hide(needHide: CoroutineBoolean) =
 fun View.setBackgroundColor(color: Flow<Int>) =
     addSetter(color) { setBackgroundColor(it) }
 
-fun View.setBackgroundColorResource(color: Flow<Int>) =
-    addSetter(color) { setBackgroundColor(color(it)) }
+fun View.setBackgroundColorResource(colorResource: Flow<Int>) =
+    addSetter(colorResource) { setBackgroundColor(color(it)) }
 
 @Suppress("DEPRECATION")
-fun View.setBackgroundDrawable(background: Flow<Drawable>) =
-    addSetter(background) { setBackgroundDrawable(it) }
+fun View.setBackgroundDrawable(backgroundDrawable: Flow<Drawable>) =
+    addSetter(backgroundDrawable) { setBackgroundDrawable(it) }
 
-fun View.setBackgroundResource(background: Flow<Int>) =
-    addSetter(background) { setBackgroundResource(it) }
+fun View.setBackgroundResource(backgroundResource: Flow<Int>) =
+    addSetter(backgroundResource) { setBackgroundResource(it) }
 
 /**
  * Alpha
@@ -150,9 +149,9 @@ fun View.setAlpha(alpha: CoroutineField<Float>) =
 fun View.setAlpha(alpha: CoroutineFloat) =
     setAlpha(alpha.observe())
 
-fun View.setAlpha(alphaFlowable: Flow<Float>) =
-    addSetter(alphaFlowable) {
-        alpha = when (it) {
+fun View.setAlpha(alpha: Flow<Float>) =
+    addSetter(alpha) {
+        this.alpha = when (it) {
             in 0.0..1.0 -> it
             else -> throw IllegalArgumentException("Alpha must be in 0..1f range, current value is $it")
         }
@@ -169,20 +168,82 @@ fun View.setOnclickListener(onClick: Flow<View.OnClickListener>) =
     }
 
 /**
+ * Focus
+ */
+
+
+fun View.onFocusChange(onFocusChange: CoroutineField<Boolean>) =
+    onFocusChange(onFocusChange) { it }
+
+fun View.onFocusChange(onFocusChange: CoroutineItem<Boolean>) =
+    onFocusChange(onFocusChange) { it }
+
+fun View.onFocusChange(onFocusChange: CoroutineBoolean) =
+    onFocusChange(onFocusChange) { it }
+
+fun <T : Any> View.onFocusChange(onFocusChange: CoroutineField<T>, mapper: (Boolean) -> T) {
+    onFocusChange.set(mapper(isFocused))
+    onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
+        onFocusChange.set(mapper(hasFocus))
+    }
+}
+
+fun View.onFocusChangeForceFalseOnClearFocus(onFocusChange: CoroutineBoolean) =
+    onFocusChangeForceFalseOnClearFocus(onFocusChange) { it }
+
+fun View.onFocusChangeForceFalseOnClearFocus(onFocusChange: CoroutineField<Boolean>) =
+    onFocusChangeForceFalseOnClearFocus(onFocusChange) { it }
+
+fun View.onFocusChangeForceFalseOnClearFocus(onFocusChange: CoroutineItem<Boolean>) =
+    onFocusChangeForceFalseOnClearFocus(onFocusChange) { it }
+
+fun <T : Any> View.onFocusChangeForceFalseOnClearFocus(
+    onFocusChange: CoroutineField<T>,
+    mapper: (Boolean) -> T
+) {
+    onFocusChange.set(mapper(isFocused))
+    onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
+        onFocusChange.set(
+            mapper(
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P && hasFocus) {
+                    if (containsInStackTrace("clearFocus")) false else hasFocus
+                } else hasFocus
+            )
+        )
+    }
+}
+
+
+/**
  * Transition
  */
 
-fun View.setTranslationY(rxTranslation: CoroutineField<Float>) =
-    setTranslationY(rxTranslation.observe())
+fun View.setTranslationY(translation: CoroutineField<Float>) =
+    setTranslationY(translation.observe())
 
-fun View.setTranslationY(rxTranslation: CoroutineItem<Float>) =
-    setTranslationY(rxTranslation.observe())
+fun View.setTranslationY(translation: CoroutineItem<Float>) =
+    setTranslationY(translation.observe())
 
-fun View.setTranslationY(rxTranslation: CoroutineFloat) =
-    setTranslationY(rxTranslation.observe())
+fun View.setTranslationY(translation: CoroutineFloat) =
+    setTranslationY(translation.observe())
 
-fun View.setTranslationY(rxTranslation: Flow<Float>) =
-    addSetter(rxTranslation) { translationY = it }
+fun View.setTranslationY(translation: Flow<Float>) =
+    addSetter(translation) { translationY = it }
+
+/**
+ * Height
+ */
+
+@Suppress("ObjectLiteralToLambda", "DEPRECATION")
+fun View.getHeight(field: CoroutineInt) {
+    onGlobalLayoutDelegate.addOnGlobalLayoutCallback(object :
+        ViewTreeObserver.OnGlobalLayoutListener {
+        override fun onGlobalLayout() {
+            field.set(measuredHeight)
+        }
+    })
+}
+
 
 /**
  * ON SCROLL

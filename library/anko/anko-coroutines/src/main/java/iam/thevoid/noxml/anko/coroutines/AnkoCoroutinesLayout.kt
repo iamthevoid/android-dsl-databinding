@@ -2,8 +2,7 @@ package iam.thevoid.noxml.anko.coroutines
 
 import android.view.View
 import android.view.ViewGroup
-import iam.thevoid.noxml.adapterview.Layout
-import iam.thevoid.noxml.coroutines.CoroutinesLayout
+import iam.thevoid.noxml.coroutines.adapterview.CoroutinesLayout
 import org.jetbrains.anko.AnkoComponent
 import org.jetbrains.anko.AnkoContext
 
