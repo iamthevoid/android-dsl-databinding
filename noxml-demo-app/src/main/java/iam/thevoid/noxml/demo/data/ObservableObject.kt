@@ -2,7 +2,7 @@ package iam.thevoid.noxml.demo.data
 
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
-import iam.thevoid.noxml.rx.rxdata.RxLoading
+import iam.thevoid.noxml.rx.data.RxLoading
 import java.util.*
 import java.util.concurrent.TimeUnit
 

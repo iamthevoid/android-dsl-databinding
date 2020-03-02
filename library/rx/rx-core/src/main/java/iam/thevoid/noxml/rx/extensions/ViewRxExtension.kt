@@ -9,15 +9,14 @@ import iam.thevoid.ae.*
 import iam.thevoid.noxml.change.scroll.OnFling
 import iam.thevoid.noxml.change.scroll.OnScroll
 import iam.thevoid.e.mergeWith
-import iam.thevoid.e.safe
 import iam.thevoid.util.Optional
 import io.reactivex.Flowable
 import io.reactivex.functions.Function4
-import iam.thevoid.noxml.extensions.*
+import iam.thevoid.noxml.rx.recycler.extensions.*
 import iam.thevoid.noxml.change.Margins
-import iam.thevoid.noxml.containsInStackTrace
-import iam.thevoid.noxml.rx.rxdata.RxLoading
-import iam.thevoid.noxml.rx.rxdata.fields.*
+import iam.thevoid.noxml.util.containsInStackTrace
+import iam.thevoid.noxml.rx.data.RxLoading
+import iam.thevoid.noxml.rx.data.fields.*
 import iam.thevoid.noxml.rx.utils.RxSetter
 
 fun <T : Any, V : View> V.addSetter(flowable: Flowable<T>, setter: V.(T) -> Unit = {}) {
@@ -102,7 +101,7 @@ fun View.gone(needGone: Flowable<Boolean>) =
     addSetter(needGone) { gone(it) }
 
 fun View.gone(needGone: RxField<Boolean>) =
-    addSetter(needGone.observe()) { gone(it.item.safe()) }
+    addSetter(needGone.onlyPresent()) { gone(it) }
 
 fun View.gone(needGone: RxItem<Boolean>) =
     addSetter(needGone.observe()) { gone(it) }
@@ -111,7 +110,7 @@ fun View.hide(needHide: Flowable<Boolean>) =
     addSetter(needHide) { hide(it) }
 
 fun View.hide(needHide: RxField<Boolean>) =
-    addSetter(needHide.observe()) { hide(it.item.safe()) }
+    addSetter(needHide.onlyPresent()) { hide(it) }
 
 fun View.hide(needHide: RxItem<Boolean>) =
     addSetter(needHide.observe()) { hide(it) }
@@ -132,6 +131,9 @@ fun View.setBackgroundResource(background: Flowable<Int>) =
 /**
  * Alpha
  */
+
+fun View.setAlpha(alpha: RxField<Float>) =
+    setAlpha(alpha.onlyPresent())
 
 fun View.setAlpha(alpha: RxItem<Float>) =
     setAlpha(alpha.observe())
@@ -204,6 +206,12 @@ fun <T : Any> View.onFocusChangeForceFalseOnClearFocus(
  * Transition
  */
 
+fun View.setTranslationY(translation: RxField<Float>) =
+    setTranslationY(translation.onlyPresent())
+
+fun View.setTranslationY(translation: RxItem<Float>) =
+    setTranslationY(translation.observe())
+
 fun View.setTranslationY(translation: RxFloat) =
     setTranslationY(translation.observe())
 
@@ -228,8 +236,6 @@ fun View.getHeight(height: RxInt) {
  * ON SCROLL
  */
 
-fun View.onScroll(onScroll: RxField<OnScroll>) = onScroll(onScroll) { it }
-
 fun <T : Any> View.onScroll(onScroll: RxField<T>, mapper: (OnScroll) -> T) {
     gestureDetectorCallback.addOnScrollCallback(object :
         GestureDetector.SimpleOnGestureListener() {
@@ -247,13 +253,12 @@ fun <T : Any> View.onScroll(onScroll: RxField<T>, mapper: (OnScroll) -> T) {
     setClickable()
 }
 
+fun View.onScroll(onScroll: RxField<OnScroll>) =
+    onScroll(onScroll) { it }
 
 /**
  * ON FLING
  */
-
-
-fun View.onFling(onFling: RxField<OnFling>) = onFling(onFling) { it }
 
 fun <T : Any> View.onFling(onFling: RxField<T>, mapper: (OnFling) -> T) {
     gestureDetectorCallback.addOnFlingCallback(object :
@@ -272,13 +277,12 @@ fun <T : Any> View.onFling(onFling: RxField<T>, mapper: (OnFling) -> T) {
     setClickable()
 }
 
+fun View.onFling(onFling: RxField<OnFling>) =
+    onFling(onFling) { it }
 
 /**
  * ON DOWN
  */
-
-
-fun View.onDown(onDown: RxField<Optional<MotionEvent>>) = onDown(onDown) { it }
 
 fun <T : Any> View.onDown(onDown: RxField<T>, mapper: (Optional<MotionEvent>) -> T) {
     gestureDetectorCallback.addOnDownCallback(object :
@@ -292,12 +296,12 @@ fun <T : Any> View.onDown(onDown: RxField<T>, mapper: (Optional<MotionEvent>) ->
     setClickable()
 }
 
+fun View.onDown(onDown: RxField<Optional<MotionEvent>>) =
+    onDown(onDown) { it }
+
 /**
  * ON SINGLE TAP UP
  */
-
-fun View.onSingleTapUp(onSingleTapUp: RxField<Optional<MotionEvent>>) =
-    onSingleTapUp(onSingleTapUp) { it }
 
 fun <T : Any> View.onSingleTapUp(
     onSingleTapUp: RxField<T>,
@@ -313,12 +317,12 @@ fun <T : Any> View.onSingleTapUp(
     setOnTouchListener { _, event -> gestureDetector.onTouchEvent(event) }
 }
 
+fun View.onSingleTapUp(onSingleTapUp: RxField<Optional<MotionEvent>>) =
+    onSingleTapUp(onSingleTapUp) { it }
+
 /**
  * ON SHOW PRESS
  */
-
-fun View.onShowPress(onShowPress: RxField<Optional<MotionEvent>>) =
-    onShowPress(onShowPress) { it }
 
 fun <T : Any> View.onShowPress(onShowPress: RxField<T>, mapper: (Optional<MotionEvent>) -> T) {
     gestureDetectorCallback.addOnShowPressCallback(object :
@@ -329,12 +333,12 @@ fun <T : Any> View.onShowPress(onShowPress: RxField<T>, mapper: (Optional<Motion
     setClickable()
 }
 
+fun View.onShowPress(onShowPress: RxField<Optional<MotionEvent>>) =
+    onShowPress(onShowPress) { it }
+
 /**
  * ON LONG PRESS
  */
-
-fun View.onLongPress(onLongPress: RxField<Optional<MotionEvent>>) =
-    onLongPress(onLongPress) { it }
 
 fun <T : Any> View.onLongPress(onLongPress: RxField<T>, mapper: (Optional<MotionEvent>) -> T) {
     gestureDetectorCallback.addOnShowPressCallback(object :
@@ -344,3 +348,6 @@ fun <T : Any> View.onLongPress(onLongPress: RxField<T>, mapper: (Optional<Motion
     setOnTouchListener { _, event -> gestureDetector.onTouchEvent(event) }
     setClickable()
 }
+
+fun View.onLongPress(onLongPress: RxField<Optional<MotionEvent>>) =
+    onLongPress(onLongPress) { it }

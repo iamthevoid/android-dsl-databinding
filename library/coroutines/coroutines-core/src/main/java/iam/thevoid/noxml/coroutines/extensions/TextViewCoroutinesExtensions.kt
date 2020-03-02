@@ -6,7 +6,8 @@ import iam.thevoid.ae.color
 import iam.thevoid.ae.setTextStrikeThru
 import iam.thevoid.ae.string
 import iam.thevoid.e.format
-import iam.thevoid.noxml.extensions.textWatcher
+import iam.thevoid.e.safe
+import iam.thevoid.noxml.rx.recycler.extensions.textWatcher
 import iam.thevoid.noxml.adapters.TextWatcherAdapter
 import iam.thevoid.noxml.change.textwatcher.BeforeEditTextChanges
 import iam.thevoid.noxml.change.textwatcher.OnEditTextChanges
@@ -57,39 +58,27 @@ fun TextView.setTextStrikeThru(strikeThru: Flow<Boolean>) =
  * GETTERS
  */
 
-fun TextView.afterTextChanges(afterTextChanges: CoroutineField<Editable>) =
-    afterTextChanges(afterTextChanges) { it }
 
-fun <T : Any> TextView.afterTextChanges(
-    afterTextChanges: CoroutineField<T>,
-    mapper: (Editable) -> T
-) =
+fun <T : Any> TextView.afterTextChanges(afterTextChanges: CoroutineField<T>, mapper: (Editable?) -> T) =
     textWatcher.addAfterTextChangedCallback(object : TextWatcherAdapter() {
         override fun afterTextChanged(s: Editable?) {
-            s?.also { afterTextChanges.set(mapper(it)) }
+            afterTextChanges.set(mapper(s))
+        }
+    })
+
+fun <T : Any> TextView.afterTextChanges(afterTextChanges: CoroutineItem<T>, mapper: (Editable?) -> T) =
+    textWatcher.addAfterTextChangedCallback(object : TextWatcherAdapter() {
+        override fun afterTextChanged(s: Editable?) {
+            afterTextChanges.set(mapper(s))
         }
     })
 
 fun TextView.afterTextChanges(afterTextChanges: CoroutineItem<String>) =
-    afterTextChanges(afterTextChanges) { "$it" }
-
-fun <T : Any> TextView.afterTextChanges(afterTextChanges: CoroutineItem<T>, mapper: (Editable) -> T) =
-    textWatcher.addAfterTextChangedCallback(object : TextWatcherAdapter() {
-        override fun afterTextChanged(s: Editable?) {
-            s?.also { afterTextChanges.set(mapper(it)) }
-        }
-    })
+    afterTextChanges(afterTextChanges) { "${it.safe()}" }
 
 fun TextView.afterTextChanges(afterTextChanges: CoroutineString) =
-    textWatcher.addAfterTextChangedCallback(object : TextWatcherAdapter() {
-        override fun afterTextChanged(s: Editable?) {
-            s?.also { afterTextChanges.set("$it") }
-        }
-    })
+    afterTextChanges(afterTextChanges) { "${it.safe()}" }
 
-
-fun TextView.beforeTextChanges(beforeTextChanges: CoroutineField<BeforeEditTextChanges>) =
-    beforeTextChanges(beforeTextChanges) { it }
 
 fun <T : Any> TextView.beforeTextChanges(
     beforeTextChanges: CoroutineField<T>,
@@ -102,8 +91,9 @@ fun <T : Any> TextView.beforeTextChanges(
     })
 }
 
-fun TextView.onTextChanges(beforeTextChanges: CoroutineField<OnEditTextChanges>) =
-    onTextChanges(beforeTextChanges) { it }
+fun TextView.beforeTextChanges(beforeTextChanges: CoroutineField<BeforeEditTextChanges>) =
+    beforeTextChanges(beforeTextChanges) { it }
+
 
 fun <T : Any> TextView.onTextChanges(
     beforeTextChanges: CoroutineField<T>,
@@ -115,3 +105,6 @@ fun <T : Any> TextView.onTextChanges(
         }
     })
 }
+
+fun TextView.onTextChanges(beforeTextChanges: CoroutineField<OnEditTextChanges>) =
+    onTextChanges(beforeTextChanges) { it }

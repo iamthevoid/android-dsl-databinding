@@ -12,7 +12,7 @@ import iam.thevoid.ae.screenHeight
 import iam.thevoid.ae.setPaddings
 import iam.thevoid.noxml.core.mvvm.viewModel
 import iam.thevoid.e.safe
-import iam.thevoid.noxml.extensions.setItems
+import iam.thevoid.noxml.rx.recycler.extensions.setItems
 import org.jetbrains.anko.*
 import org.jetbrains.anko.appcompat.v7.toolbar
 import org.jetbrains.anko.design.appBarLayout

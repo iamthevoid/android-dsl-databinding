@@ -5,9 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import iam.thevoid.noxml.anko.rx.AnkoRxLayout
 import iam.thevoid.noxml.core.mvvm.viewModel
-import iam.thevoid.noxml.extensions.resetEndlessScrollState
-import iam.thevoid.noxml.extensions.setItems
-import iam.thevoid.noxml.extensions.setLoadMore
+import iam.thevoid.noxml.rx.recycler.extensions.resetEndlessScrollState
+import iam.thevoid.noxml.rx.recycler.extensions.setItems
+import iam.thevoid.noxml.rx.recycler.extensions.setLoadMore
 import org.jetbrains.anko.*
 import org.jetbrains.anko.recyclerview.v7.recyclerView
 import org.jetbrains.anko.support.v4.swipeRefreshLayout

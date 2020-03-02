@@ -8,12 +8,12 @@ import androidx.viewpager.widget.ViewPager
 import iam.thevoid.noxml.adapters.OnPageChangeListenerAdapter
 import iam.thevoid.noxml.adapterview.ItemBindings
 import iam.thevoid.noxml.change.pager.OnPageScrolled
-import iam.thevoid.noxml.extensions.onPageChangeListener
-import iam.thevoid.noxml.extensions.setItems
-import iam.thevoid.noxml.rx.rxdata.fields.RxField
-import iam.thevoid.noxml.rx.rxdata.fields.RxInt
-import iam.thevoid.noxml.rx.rxdata.fields.RxItem
-import iam.thevoid.noxml.rx.rxdata.fields.RxList
+import iam.thevoid.noxml.rx.recycler.extensions.onPageChangeListener
+import iam.thevoid.noxml.rx.recycler.extensions.setItems
+import iam.thevoid.noxml.rx.data.fields.RxField
+import iam.thevoid.noxml.rx.data.fields.RxInt
+import iam.thevoid.noxml.rx.data.fields.RxItem
+import iam.thevoid.noxml.rx.data.fields.RxList
 import io.reactivex.Flowable
 import io.reactivex.rxkotlin.Flowables
 
@@ -105,10 +105,9 @@ fun <T : Any> ViewPager.setItems(
     setItems(fm, it.first, itemBindings, it.second)
 }
 
-// On Page Change Listener
-
-fun ViewPager.onPageSelect(onPageSelect: RxInt) =
-    onPageSelect(onPageSelect) { it }
+/**
+ * Getter
+ */
 
 fun <T : Any> ViewPager.onPageSelect(onPageSelect: RxField<T>, mapper: ((Int) -> T?)) {
     onPageChangeListener.addOnPageSelectedCallback(object : OnPageChangeListenerAdapter() {
@@ -126,8 +125,9 @@ fun <T : Any> ViewPager.onPageSelect(onPageSelect: RxItem<T>, mapper: ((Int) -> 
     })
 }
 
-fun ViewPager.onPageScrollStateChanged(onPageScrollStateChanged: RxInt) =
-    onPageScrollStateChanged(onPageScrollStateChanged) { it }
+fun ViewPager.onPageSelect(onPageSelect: RxInt) =
+    onPageSelect(onPageSelect) { it }
+
 
 fun <T : Any> ViewPager.onPageScrollStateChanged(onPageScrollStateChanged: RxField<T>, mapper: ((Int) -> T)) {
     onPageChangeListener.addOnPageScrollStateChanged(object : OnPageChangeListenerAdapter() {
@@ -145,8 +145,9 @@ fun <T : Any> ViewPager.onPageScrollStateChanged(onPageScrollStateChanged: RxIte
     })
 }
 
-fun ViewPager.onPageScrolled(onPageScrolled: RxField<OnPageScrolled>) =
-    onPageScrolled(onPageScrolled) { it }
+fun ViewPager.onPageScrollStateChanged(onPageScrollStateChanged: RxInt) =
+    onPageScrollStateChanged(onPageScrollStateChanged) { it }
+
 
 fun <T : Any> ViewPager.onPageScrolled(onPageScrolled: RxField<T>, mapper: ((OnPageScrolled) -> T)) {
     onPageChangeListener.addOnPageScrolledCallback(object : OnPageChangeListenerAdapter() {
@@ -155,3 +156,6 @@ fun <T : Any> ViewPager.onPageScrolled(onPageScrolled: RxField<T>, mapper: ((OnP
         }
     })
 }
+
+fun ViewPager.onPageScrolled(onPageScrolled: RxField<OnPageScrolled>) =
+    onPageScrolled(onPageScrolled) { it }

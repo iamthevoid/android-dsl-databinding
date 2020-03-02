@@ -21,10 +21,10 @@ abstract class CoroutinesLayout<T>(parent: ViewGroup) : Layout<T>(parent), Corou
     val item: CoroutineField<T> by lazy(itemFactory)
 
     val itemChanges: Flow<T> by lazy {
-        item.observe()
+        item.onlyPresent()
     }
 
-    fun changeItem(itemChange: T.() -> Unit) {
+    fun changeItem(itemChange: T?.() -> Unit) {
         launch {
             item.set(item.get().apply {
                 itemChange()

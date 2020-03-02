@@ -3,8 +3,8 @@ package iam.thevoid.noxml.rx.swiperefreshlayout
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import iam.thevoid.noxml.rx.extensions.addSetter
 import io.reactivex.Flowable
-import iam.thevoid.noxml.rx.rxdata.RxLoading
-import iam.thevoid.noxml.rx.rxdata.fields.RxBoolean
+import iam.thevoid.noxml.rx.data.RxLoading
+import iam.thevoid.noxml.rx.data.fields.RxBoolean
 import io.reactivex.rxkotlin.Flowables
 
 

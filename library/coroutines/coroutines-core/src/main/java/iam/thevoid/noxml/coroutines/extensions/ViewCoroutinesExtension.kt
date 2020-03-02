@@ -9,14 +9,14 @@ import android.view.*
 import iam.thevoid.ae.*
 import iam.thevoid.noxml.coroutines.utils.CoroutinesSetter
 import iam.thevoid.noxml.coroutines.data.*
-import iam.thevoid.noxml.extensions.gestureDetector
-import iam.thevoid.noxml.extensions.gestureDetectorCallback
-import iam.thevoid.noxml.extensions.observeListener
+import iam.thevoid.noxml.rx.recycler.extensions.gestureDetector
+import iam.thevoid.noxml.rx.recycler.extensions.gestureDetectorCallback
+import iam.thevoid.noxml.rx.recycler.extensions.observeListener
 import iam.thevoid.noxml.change.Margins
 import iam.thevoid.noxml.change.scroll.OnFling
 import iam.thevoid.noxml.change.scroll.OnScroll
-import iam.thevoid.noxml.containsInStackTrace
-import iam.thevoid.noxml.extensions.onGlobalLayoutDelegate
+import iam.thevoid.noxml.util.containsInStackTrace
+import iam.thevoid.noxml.rx.recycler.extensions.onGlobalLayoutDelegate
 import iam.thevoid.util.Optional
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
@@ -103,7 +103,7 @@ fun View.gone(needGone: Flow<Boolean>) =
     addSetter(needGone) { gone(it) }
 
 fun View.gone(needGone: CoroutineField<Boolean>) =
-    addSetter(needGone.observe()) { gone(it) }
+    addSetter(needGone.onlyPresent()) { gone(it) }
 
 fun View.gone(needGone: CoroutineItem<Boolean>) =
     addSetter(needGone.observe()) { gone(it) }
@@ -115,7 +115,7 @@ fun View.hide(needHide: Flow<Boolean>) =
     addSetter(needHide) { hide(it) }
 
 fun View.hide(needHide: CoroutineField<Boolean>) =
-    addSetter(needHide.observe()) { hide(it) }
+    addSetter(needHide.onlyPresent()) { hide(it) }
 
 fun View.hide(needHide: CoroutineItem<Boolean>) =
     addSetter(needHide.observe()) { hide(it) }
@@ -144,7 +144,7 @@ fun View.setAlpha(alpha: CoroutineItem<Float>) =
     setAlpha(alpha.observe())
 
 fun View.setAlpha(alpha: CoroutineField<Float>) =
-    setAlpha(alpha.observe())
+    setAlpha(alpha.onlyPresent())
 
 fun View.setAlpha(alpha: CoroutineFloat) =
     setAlpha(alpha.observe())
@@ -175,13 +175,17 @@ fun View.setOnclickListener(onClick: Flow<View.OnClickListener>) =
 fun View.onFocusChange(onFocusChange: CoroutineField<Boolean>) =
     onFocusChange(onFocusChange) { it }
 
-fun View.onFocusChange(onFocusChange: CoroutineItem<Boolean>) =
-    onFocusChange(onFocusChange) { it }
-
 fun View.onFocusChange(onFocusChange: CoroutineBoolean) =
     onFocusChange(onFocusChange) { it }
 
 fun <T : Any> View.onFocusChange(onFocusChange: CoroutineField<T>, mapper: (Boolean) -> T) {
+    onFocusChange.set(mapper(isFocused))
+    onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
+        onFocusChange.set(mapper(hasFocus))
+    }
+}
+
+fun <T : Any> View.onFocusChange(onFocusChange: CoroutineItem<T>, mapper: (Boolean) -> T) {
     onFocusChange.set(mapper(isFocused))
     onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
         onFocusChange.set(mapper(hasFocus))
@@ -213,13 +217,29 @@ fun <T : Any> View.onFocusChangeForceFalseOnClearFocus(
     }
 }
 
+fun <T : Any> View.onFocusChangeForceFalseOnClearFocus(
+    onFocusChange: CoroutineItem<T>,
+    mapper: (Boolean) -> T
+) {
+    onFocusChange.set(mapper(isFocused))
+    onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
+        onFocusChange.set(
+            mapper(
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P && hasFocus) {
+                    if (containsInStackTrace("clearFocus")) false else hasFocus
+                } else hasFocus
+            )
+        )
+    }
+}
+
 
 /**
  * Transition
  */
 
 fun View.setTranslationY(translation: CoroutineField<Float>) =
-    setTranslationY(translation.observe())
+    setTranslationY(translation.onlyPresent())
 
 fun View.setTranslationY(translation: CoroutineItem<Float>) =
     setTranslationY(translation.observe())
@@ -249,8 +269,6 @@ fun View.getHeight(field: CoroutineInt) {
  * ON SCROLL
  */
 
-fun View.onScroll(onScroll: CoroutineField<OnScroll>) = onScroll(onScroll) { it }
-
 fun <T : Any> View.onScroll(onScroll: CoroutineField<T>, mapper: (OnScroll) -> T) {
     gestureDetectorCallback.addOnScrollCallback(object :
         GestureDetector.SimpleOnGestureListener() {
@@ -268,13 +286,12 @@ fun <T : Any> View.onScroll(onScroll: CoroutineField<T>, mapper: (OnScroll) -> T
     setClickable()
 }
 
+fun View.onScroll(onScroll: CoroutineField<OnScroll>) =
+    onScroll(onScroll) { it }
 
 /**
  * ON FLING
  */
-
-
-fun View.onFling(onFling: CoroutineField<OnFling>) = onFling(onFling) { it }
 
 fun <T : Any> View.onFling(onFling: CoroutineField<T>, mapper: (OnFling) -> T) {
     gestureDetectorCallback.addOnFlingCallback(object :
@@ -293,13 +310,12 @@ fun <T : Any> View.onFling(onFling: CoroutineField<T>, mapper: (OnFling) -> T) {
     setClickable()
 }
 
+fun View.onFling(onFling: CoroutineField<OnFling>) =
+    onFling(onFling) { it }
 
 /**
  * ON DOWN
  */
-
-
-fun View.onDown(onDown: CoroutineField<Optional<MotionEvent>>) = onDown(onDown) { it }
 
 fun <T : Any> View.onDown(onDown: CoroutineField<T>, mapper: (Optional<MotionEvent>) -> T) {
     gestureDetectorCallback.addOnDownCallback(object :
@@ -313,12 +329,12 @@ fun <T : Any> View.onDown(onDown: CoroutineField<T>, mapper: (Optional<MotionEve
     setClickable()
 }
 
+fun View.onDown(onDown: CoroutineField<Optional<MotionEvent>>) =
+    onDown(onDown) { it }
+
 /**
  * ON SINGLE TAP UP
  */
-
-fun View.onSingleTapUp(onSingleTapUp: CoroutineField<Optional<MotionEvent>>) =
-    onSingleTapUp(onSingleTapUp) { it }
 
 fun <T : Any> View.onSingleTapUp(
     onSingleTapUp: CoroutineField<T>,
@@ -335,12 +351,12 @@ fun <T : Any> View.onSingleTapUp(
     setClickable()
 }
 
+fun View.onSingleTapUp(onSingleTapUp: CoroutineField<Optional<MotionEvent>>) =
+    onSingleTapUp(onSingleTapUp) { it }
+
 /**
  * ON SHOW PRESS
  */
-
-fun View.onShowPress(onShowPress: CoroutineField<Optional<MotionEvent>>) =
-    onShowPress(onShowPress) { it }
 
 fun <T : Any> View.onShowPress(
     onShowPress: CoroutineField<T>,
@@ -356,12 +372,12 @@ fun <T : Any> View.onShowPress(
     setClickable()
 }
 
+fun View.onShowPress(onShowPress: CoroutineField<Optional<MotionEvent>>) =
+    onShowPress(onShowPress) { it }
+
 /**
  * ON LONG PRESS
  */
-
-fun View.onLongPress(onLongPress: CoroutineField<Optional<MotionEvent>>) =
-    onLongPress(onLongPress) { it }
 
 fun <T : Any> View.onLongPress(
     onLongPress: CoroutineField<T>,
@@ -376,3 +392,6 @@ fun <T : Any> View.onLongPress(
     setOnTouchListener { _, event -> gestureDetector.onTouchEvent(event) }
     setClickable()
 }
+
+fun View.onLongPress(onLongPress: CoroutineField<Optional<MotionEvent>>) =
+    onLongPress(onLongPress) { it }

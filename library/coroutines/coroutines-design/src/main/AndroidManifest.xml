@@ -1,2 +1,2 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-        package="iam.thevoid.coroutines_design" />
+        package="iam.thevoid.noxml.coroutines.design" />

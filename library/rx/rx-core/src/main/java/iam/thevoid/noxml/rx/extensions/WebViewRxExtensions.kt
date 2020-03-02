@@ -2,9 +2,9 @@ package iam.thevoid.noxml.rx.extensions
 
 import android.webkit.WebView
 import iam.thevoid.noxml.delegate.WebChromeClientDelegate
-import iam.thevoid.noxml.extensions.chromeClient
+import iam.thevoid.noxml.rx.recycler.extensions.chromeClient
 import io.reactivex.Flowable
-import iam.thevoid.noxml.rx.rxdata.RxLoading
+import iam.thevoid.noxml.rx.data.RxLoading
 
 
 fun <T : CharSequence> WebView.setHtml(

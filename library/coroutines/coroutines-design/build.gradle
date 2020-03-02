@@ -26,8 +26,15 @@ android {
 }
 
 dependencies {
+
+    implementation project (":coroutines-core")
+    implementation project (':core-design')
+
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines"
+
     implementation "androidx.appcompat:appcompat:$appcompat"
     implementation "com.google.android.material:material:$material"
     implementation "androidx.core:core-ktx:$ktx"

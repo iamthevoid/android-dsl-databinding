@@ -1,17 +1,12 @@
 package iam.thevoid.noxml.rx.extensions
 
-import android.text.Editable
 import android.widget.EditText
 import iam.thevoid.ae.*
-import iam.thevoid.noxml.adapters.TextWatcherAdapter
-import iam.thevoid.noxml.change.textwatcher.BeforeEditTextChanges
-import iam.thevoid.noxml.change.textwatcher.OnEditTextChanges
 import iam.thevoid.e.format
-import iam.thevoid.noxml.extensions.setTextResourceSilent
-import iam.thevoid.noxml.extensions.setTextSilent
+import iam.thevoid.noxml.rx.recycler.extensions.setTextResourceSilent
+import iam.thevoid.noxml.rx.recycler.extensions.setTextSilent
 import io.reactivex.Flowable
-import iam.thevoid.noxml.extensions.textWatcher
-import iam.thevoid.noxml.rx.rxdata.fields.*
+import iam.thevoid.noxml.rx.data.fields.*
 
 /**
  * SETTER

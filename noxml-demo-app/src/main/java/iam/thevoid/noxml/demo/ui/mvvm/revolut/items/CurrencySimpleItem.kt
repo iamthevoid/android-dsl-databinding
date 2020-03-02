@@ -24,7 +24,7 @@ class CurrencySimpleItem(private val vm : RevolutViewModel, viewGroup: ViewGroup
 
             setRippleClickAnimation()
 
-            setOnClickListener { vm.updateCurrent(item.get()) }
+            setOnClickListener { item.get()?.also(vm::updateCurrent) }
 
             imageView {
                 setImageUrl(itemChanges.map { it.image })

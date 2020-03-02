@@ -4,7 +4,7 @@ import android.view.ViewGroup
 import com.jakewharton.rx.ReplayingShare
 import iam.thevoid.noxml.adapterview.Layout
 import io.reactivex.Flowable
-import iam.thevoid.noxml.rx.rxdata.fields.RxField
+import iam.thevoid.noxml.rx.data.fields.RxField
 
 abstract class RxLayout<T>( parent: ViewGroup) : Layout<T>(parent)  {
 

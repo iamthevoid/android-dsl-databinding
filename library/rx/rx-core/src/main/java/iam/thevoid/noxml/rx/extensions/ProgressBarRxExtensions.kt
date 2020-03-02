@@ -2,7 +2,7 @@ package iam.thevoid.noxml.rx.extensions
 
 import android.widget.ProgressBar
 import io.reactivex.Flowable
-import iam.thevoid.noxml.rx.rxdata.fields.RxInt
+import iam.thevoid.noxml.rx.data.fields.RxInt
 
 
 fun ProgressBar.setProgress(progress: RxInt) =

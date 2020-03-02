@@ -3,7 +3,7 @@
 package iam.thevoid.noxml.rx.utils
 
 import io.reactivex.*
-import iam.thevoid.noxml.rx.rxdata.RxLoading
+import iam.thevoid.noxml.rx.data.RxLoading
 
 fun Completable.loading(loading: RxLoading) = compose(loading.completable())
 

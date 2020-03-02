@@ -7,12 +7,13 @@ import iam.thevoid.ae.color
 import iam.thevoid.ae.setTextStrikeThru
 import iam.thevoid.ae.string
 import iam.thevoid.e.format
+import iam.thevoid.e.safe
 import iam.thevoid.noxml.adapters.TextWatcherAdapter
 import iam.thevoid.noxml.change.textwatcher.BeforeEditTextChanges
 import iam.thevoid.noxml.change.textwatcher.OnEditTextChanges
-import iam.thevoid.noxml.extensions.textWatcher
+import iam.thevoid.noxml.rx.recycler.extensions.textWatcher
 import io.reactivex.Flowable
-import iam.thevoid.noxml.rx.rxdata.fields.*
+import iam.thevoid.noxml.rx.data.fields.*
 
 fun <T : CharSequence> TextView.setText(text: Flowable<T>) =
     addSetter(text) { this.text = it }
@@ -60,16 +61,10 @@ fun TextView.setTextStrikeThru(strikeThru: Flowable<Boolean>) =
  * GETTER
  */
 
-fun EditText.afterTextChanges(afterTextChanges: RxField<Editable>) =
-    afterTextChanges(afterTextChanges) { it }
-
-fun EditText.afterTextChanges(afterTextChanges: RxItem<String>) =
-    afterTextChanges(afterTextChanges) { "$it" }
-
-fun <T : Any> EditText.afterTextChanges(afterTextChanges: RxField<T>, mapper: (Editable) -> T) {
+fun <T : Any> EditText.afterTextChanges(afterTextChanges: RxField<T>, mapper: (Editable?) -> T?) {
     textWatcher.addAfterTextChangedCallback(object : TextWatcherAdapter() {
         override fun afterTextChanged(s: Editable?) {
-            s?.apply { afterTextChanges.set(mapper(this)) }
+            afterTextChanges.set(mapper(s))
         }
     })
 }
@@ -82,16 +77,12 @@ fun <T : Any> EditText.afterTextChanges(afterTextChanges: RxItem<T>, mapper: (Ed
     })
 }
 
-fun EditText.afterTextChanges(afterTextChanges: RxString) {
-    textWatcher.addAfterTextChangedCallback(object : TextWatcherAdapter() {
-        override fun afterTextChanged(s: Editable?) {
-            s?.apply { afterTextChanges.set("$this") }
-        }
-    })
-}
+fun EditText.afterTextChanges(afterTextChanges: RxItem<String>) =
+    afterTextChanges(afterTextChanges) { "${it.safe()}" }
 
-fun EditText.beforeTextChanges(beforeTextChanges: RxField<BeforeEditTextChanges>) =
-    beforeTextChanges(beforeTextChanges) { it }
+fun EditText.afterTextChanges(afterTextChanges: RxString) =
+    afterTextChanges(afterTextChanges) { "${it.safe()}" }
+
 
 fun <T : Any> EditText.beforeTextChanges(
     beforeTextChanges: RxField<T>,
@@ -104,7 +95,9 @@ fun <T : Any> EditText.beforeTextChanges(
     })
 }
 
-fun EditText.onTextChanges(onTextChanges: RxField<OnEditTextChanges>) = onTextChanges(onTextChanges) { it }
+fun EditText.beforeTextChanges(beforeTextChanges: RxField<BeforeEditTextChanges>) =
+    beforeTextChanges(beforeTextChanges) { it }
+
 
 fun <T : Any> EditText.onTextChanges(onTextChanges: RxField<T>, mapper: (OnEditTextChanges) -> T) {
     textWatcher.addOnTextChangedCallback(object : TextWatcherAdapter() {
@@ -113,3 +106,6 @@ fun <T : Any> EditText.onTextChanges(onTextChanges: RxField<T>, mapper: (OnEditT
         }
     })
 }
+
+fun EditText.onTextChanges(onTextChanges: RxField<OnEditTextChanges>) =
+    onTextChanges(onTextChanges) { it }

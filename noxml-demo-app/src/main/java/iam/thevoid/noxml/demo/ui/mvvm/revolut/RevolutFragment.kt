@@ -11,7 +11,7 @@ import iam.thevoid.noxml.demo.ui.BaseFragment
 import iam.thevoid.noxml.demo.ui.mvvm.revolutBindings
 import iam.thevoid.noxml.coroutines.extensions.hideUntilLoaded
 import iam.thevoid.noxml.coroutines.extensions.hideWhenLoaded
-import iam.thevoid.noxml.coroutines.recycler.setItems
+import iam.thevoid.noxml.coroutines.recycler.extensions.setItems
 import org.jetbrains.anko.*
 
 class RevolutFragment : BaseFragment() {
