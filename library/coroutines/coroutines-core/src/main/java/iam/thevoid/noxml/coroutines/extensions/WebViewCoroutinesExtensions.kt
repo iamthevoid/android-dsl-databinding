@@ -30,7 +30,7 @@ fun WebView.onLoading(onLoading: CoroutineBoolean) {
 
         override fun onProgressChanged(view: WebView?, newProgress: Int) {
             super.onProgressChanged(view, newProgress)
-            if (loadingProgress == 0) {
+            if (loadingProgress <= 100 && !onLoading.get()) {
                 onLoading.set(true)
             }
 

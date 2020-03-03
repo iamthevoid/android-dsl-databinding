@@ -21,6 +21,12 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+        debug {
+            debuggable = true
+        }
+        releaseDebuggable {
+            debuggable = true
+        }
     }
 }
 
@@ -48,7 +54,6 @@ dependencies {
 
     implementation "iam.thevoid.extensions:android:$e"
     implementation "iam.thevoid.extensions:pure:$e"
-    implementation "iam.thevoid.extensions:rx:$e"
     implementation "iam.thevoid.util:util:$e"
 
     testImplementation "junit:junit:$junit"

@@ -7,17 +7,14 @@ import iam.thevoid.noxml.rx.data.RxLoading
 import iam.thevoid.noxml.rx.data.fields.RxBoolean
 import io.reactivex.rxkotlin.Flowables
 
+fun SwipeRefreshLayout.setRefreshing(refreshing : Flowable<Boolean>) =
+        addSetter(refreshing) { isRefreshing = it }
 
-fun SwipeRefreshLayout.setRefreshing(loading : RxLoading) =
-        addSetter(loading.observe()) { isRefreshing = it }
+fun SwipeRefreshLayout.setRefreshing(refreshing : RxLoading) =
+        setRefreshing(refreshing.observe())
 
-fun SwipeRefreshLayout.setRefreshing(loading1: RxLoading, loading2: RxLoading) =
-        addSetter(Flowables.combineLatest(loading1.observe(), loading2.observe())) { (f, s) ->
-                isRefreshing = f || s
-        }
+fun SwipeRefreshLayout.setRefreshing(refreshing : RxBoolean) =
+        setRefreshing(refreshing.observe())
 
-fun SwipeRefreshLayout.setRefreshing(loading : RxBoolean) =
-        addSetter(loading.observe()) { isRefreshing = it }
-
-fun SwipeRefreshLayout.setRefreshing(loading : Flowable<Boolean>) =
-        addSetter(loading) { isRefreshing = it }
+fun SwipeRefreshLayout.setRefreshing(refreshing1: RxLoading, refreshing2: RxLoading) =
+        setRefreshing(Flowables.combineLatest(refreshing1.observe(), refreshing2.observe()).map { (f, s) -> f || s })

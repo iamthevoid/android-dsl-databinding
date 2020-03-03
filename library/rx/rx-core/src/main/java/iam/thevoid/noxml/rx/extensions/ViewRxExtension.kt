@@ -73,47 +73,75 @@ fun View.setMargins(
  */
 
 
+fun View.hideUntilLoaded(loading: Flowable<Boolean>) =
+    addSetter(loading) { hide(it) }
+
+fun View.hideUntilLoaded(loading: RxBoolean) =
+    hideUntilLoaded(loading.observe())
+
 fun View.hideUntilLoaded(loading: RxLoading) =
-    addSetter(loading.observe()) { hide(it) }
+    hideUntilLoaded(loading.observe())
 
 fun View.hideUntilLoaded(loading: RxLoading, vararg loadings: RxLoading) =
-    addSetter(Flowable.merge(loading.observe().mergeWith(loadings.map { it.observe() }))) { hide(it) }
+    hideUntilLoaded(Flowable.merge(loading.observe().mergeWith(loadings.map { it.observe() })))
+
+fun View.hideWhenLoaded(loading: Flowable<Boolean>) =
+    addSetter(loading) { hide(!it) }
+
+fun View.hideWhenLoaded(loading: RxBoolean) =
+    hideWhenLoaded(loading.observe())
 
 fun View.hideWhenLoaded(loading: RxLoading) =
-    addSetter(loading.observe()) { hide(!it) }
+    hideWhenLoaded(loading.observe())
 
 fun View.hideWhenLoaded(loading: RxLoading, vararg loadings: RxLoading) =
-    addSetter(Flowable.merge(loading.observe().mergeWith(loadings.map { it.observe() }))) { hide(!it) }
+    hideWhenLoaded(Flowable.merge(loading.observe().mergeWith(loadings.map { it.observe() })))
+
+fun View.goneUntilLoaded(loading: Flowable<Boolean>) =
+    addSetter(loading) { gone(it) }
+
+fun View.goneUntilLoaded(loading: RxBoolean) =
+    goneUntilLoaded(loading.observe())
 
 fun View.goneUntilLoaded(loading: RxLoading) =
-    addSetter(loading.observe()) { gone(it) }
+    goneUntilLoaded(loading.observe())
 
 fun View.goneUntilLoaded(loading: RxLoading, vararg loadings: RxLoading) =
-    addSetter(Flowable.merge(loading.observe().mergeWith(loadings.map { it.observe() }))) { gone(it) }
+    goneUntilLoaded(Flowable.merge(loading.observe().mergeWith(loadings.map { it.observe() })))
+
+fun View.goneWhenLoaded(loading: Flowable<Boolean>) =
+    addSetter(loading) { gone(!it) }
+
+fun View.goneWhenLoaded(loading: RxBoolean) =
+    goneWhenLoaded(loading.observe())
 
 fun View.goneWhenLoaded(loading: RxLoading) =
-    addSetter(loading.observe()) { gone(!it) }
+    goneWhenLoaded(loading.observe())
 
 fun View.goneWhenLoaded(loading: RxLoading, vararg loadings: RxLoading) =
-    addSetter(Flowable.merge(loading.observe().mergeWith(loadings.map { it.observe() }))) { gone(!it) }
+    goneWhenLoaded(Flowable.merge(loading.observe().mergeWith(loadings.map { it.observe() })))
 
 fun View.gone(needGone: Flowable<Boolean>) =
     addSetter(needGone) { gone(it) }
 
 fun View.gone(needGone: RxField<Boolean>) =
-    addSetter(needGone.onlyPresent()) { gone(it) }
+    gone(needGone.onlyPresent())
 
 fun View.gone(needGone: RxItem<Boolean>) =
-    addSetter(needGone.observe()) { gone(it) }
+    gone(needGone.observe())
 
 fun View.hide(needHide: Flowable<Boolean>) =
     addSetter(needHide) { hide(it) }
 
 fun View.hide(needHide: RxField<Boolean>) =
-    addSetter(needHide.onlyPresent()) { hide(it) }
+    hide(needHide.onlyPresent())
 
 fun View.hide(needHide: RxItem<Boolean>) =
-    addSetter(needHide.observe()) { hide(it) }
+    hide(needHide.observe())
+
+/**
+ * Color
+ */
 
 fun View.setBackgroundColor(color: Flowable<Int>) =
     addSetter(color) { setBackgroundColor(it) }

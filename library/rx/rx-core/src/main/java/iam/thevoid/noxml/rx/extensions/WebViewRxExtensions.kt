@@ -4,7 +4,7 @@ import android.webkit.WebView
 import iam.thevoid.noxml.delegate.WebChromeClientDelegate
 import iam.thevoid.noxml.rx.recycler.extensions.chromeClient
 import io.reactivex.Flowable
-import iam.thevoid.noxml.rx.data.RxLoading
+import iam.thevoid.noxml.rx.data.fields.RxBoolean
 
 
 fun <T : CharSequence> WebView.setHtml(
@@ -24,19 +24,19 @@ fun <T : CharSequence> WebView.setHtml(
         )
     }
 
-fun WebView.onLoading(loading: RxLoading) {
+fun WebView.onLoading(onLoading: RxBoolean) {
     chromeClient = object : WebChromeClientDelegate(chromeClient) {
 
         var loadingProgress = 0
 
         override fun onProgressChanged(view: WebView?, newProgress: Int) {
             super.onProgressChanged(view, newProgress)
-            if (loadingProgress == 0) {
-                loading.inc()
+            if (loadingProgress <= 100 && !onLoading.get()) {
+                onLoading.set(true)
             }
 
             if (newProgress == 100) {
-                loading.dec()
+                onLoading.set(false)
             }
 
             // reset progress on finish

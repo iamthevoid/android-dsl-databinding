@@ -12,52 +12,40 @@ import androidx.annotation.RequiresApi
 open class WebChromeClientDelegate(private val client: WebChromeClient?) : WebChromeClient() {
 
     @CallSuper
-    override fun onProgressChanged(view: WebView?, newProgress: Int) {
-        super.onProgressChanged(view, newProgress)
-        client?.onProgressChanged(view, newProgress)
-    }
+    override fun onProgressChanged(view: WebView?, newProgress: Int) =
+        client?.onProgressChanged(view, newProgress) ?: super.onProgressChanged(view, newProgress)
 
     @CallSuper
-    override fun onReceivedTitle(view: WebView?, title: String?) {
-        super.onReceivedTitle(view, title)
-        client?.onReceivedTitle(view, title)
-    }
+    override fun onReceivedTitle(view: WebView?, title: String?) =
+        client?.onReceivedTitle(view, title) ?: super.onReceivedTitle(view, title)
 
     @CallSuper
-    override fun onReceivedIcon(view: WebView?, icon: Bitmap?) {
-        super.onReceivedIcon(view, icon)
-        client?.onReceivedIcon(view, icon)
-    }
+    override fun onReceivedIcon(view: WebView?, icon: Bitmap?) =
+        client?.onReceivedIcon(view, icon) ?: super.onReceivedIcon(view, icon)
 
     @CallSuper
-    override fun onReceivedTouchIconUrl(view: WebView?, url: String?, precomposed: Boolean) {
-        super.onReceivedTouchIconUrl(view, url, precomposed)
+    override fun onReceivedTouchIconUrl(view: WebView?, url: String?, precomposed: Boolean) =
         client?.onReceivedTouchIconUrl(view, url, precomposed)
-    }
+            ?: super.onReceivedTouchIconUrl(view, url, precomposed)
 
     @CallSuper
-    override fun onShowCustomView(view: View?, callback: CustomViewCallback?) {
-        super.onShowCustomView(view, callback)
-        client?.onShowCustomView(view, callback)
-    }
+    override fun onShowCustomView(view: View?, callback: CustomViewCallback?) =
+        client?.onShowCustomView(view, callback) ?: super.onShowCustomView(view, callback)
 
-    @CallSuper
     @Deprecated("Use 'onShowCustomView(view: View?, callback: CustomViewCallback?)' instead")
+    @CallSuper
     override fun onShowCustomView(
         view: View?,
         requestedOrientation: Int,
         callback: CustomViewCallback?
-    ) {
-        super.onShowCustomView(view, requestedOrientation, callback)
+    ) =
         client?.onShowCustomView(view, requestedOrientation, callback)
-    }
+            ?: super.onShowCustomView(view, requestedOrientation, callback)
 
     @CallSuper
-    override fun onHideCustomView() {
-        super.onHideCustomView()
-        client?.onHideCustomView()
-    }
+    override fun onHideCustomView() = client?.onHideCustomView() ?: super.onHideCustomView()
 
+    @CallSuper
     override fun onCreateWindow(
         view: WebView?,
         isDialog: Boolean,
@@ -67,17 +55,14 @@ open class WebChromeClientDelegate(private val client: WebChromeClient?) : WebCh
         ?: super.onCreateWindow(view, isDialog, isUserGesture, resultMsg)
 
     @CallSuper
-    override fun onRequestFocus(view: WebView?) {
-        super.onRequestFocus(view)
-        client?.onRequestFocus(view)
-    }
+    override fun onRequestFocus(view: WebView?) =
+        client?.onRequestFocus(view) ?: super.onRequestFocus(view)
 
     @CallSuper
-    override fun onCloseWindow(window: WebView?) {
-        super.onCloseWindow(window)
-        client?.onCloseWindow(window)
-    }
+    override fun onCloseWindow(window: WebView?) =
+        client?.onCloseWindow(window) ?: super.onCloseWindow(window)
 
+    @CallSuper
     override fun onJsAlert(
         view: WebView?,
         url: String?,
@@ -86,15 +71,16 @@ open class WebChromeClientDelegate(private val client: WebChromeClient?) : WebCh
     ): Boolean = client?.onJsAlert(view, url, message, result)
         ?: super.onJsAlert(view, url, message, result)
 
+    @CallSuper
     override fun onJsConfirm(
         view: WebView?,
         url: String?,
         message: String?,
         result: JsResult?
-    ): Boolean =
-        client?.onJsConfirm(view, url, message, result)
-            ?: super.onJsConfirm(view, url, message, result)
+    ): Boolean = client?.onJsConfirm(view, url, message, result)
+        ?: super.onJsConfirm(view, url, message, result)
 
+    @CallSuper
     override fun onJsPrompt(
         view: WebView?,
         url: String?,
@@ -104,6 +90,7 @@ open class WebChromeClientDelegate(private val client: WebChromeClient?) : WebCh
     ): Boolean = client?.onJsPrompt(view, url, message, defaultValue, result)
         ?: super.onJsPrompt(view, url, message, defaultValue, result)
 
+    @CallSuper
     override fun onJsBeforeUnload(
         view: WebView?,
         url: String?,
@@ -113,6 +100,7 @@ open class WebChromeClientDelegate(private val client: WebChromeClient?) : WebCh
         ?: super.onJsBeforeUnload(view, url, message, result)
 
     @Deprecated("")
+    @CallSuper
     override fun onExceededDatabaseQuota(
         url: String?,
         databaseIdentifier: String?,
@@ -121,14 +109,6 @@ open class WebChromeClientDelegate(private val client: WebChromeClient?) : WebCh
         totalQuota: Long,
         quotaUpdater: WebStorage.QuotaUpdater?
     ) {
-        super.onExceededDatabaseQuota(
-            url,
-            databaseIdentifier,
-            quota,
-            estimatedDatabaseSize,
-            totalQuota,
-            quotaUpdater
-        )
         client?.onExceededDatabaseQuota(
             url,
             databaseIdentifier,
@@ -137,6 +117,14 @@ open class WebChromeClientDelegate(private val client: WebChromeClient?) : WebCh
             totalQuota,
             quotaUpdater
         )
+            ?: super.onExceededDatabaseQuota(
+                url,
+                databaseIdentifier,
+                quota,
+                estimatedDatabaseSize,
+                totalQuota,
+                quotaUpdater
+            )
     }
 
     @Deprecated("")
@@ -145,72 +133,65 @@ open class WebChromeClientDelegate(private val client: WebChromeClient?) : WebCh
         requiredStorage: Long,
         quota: Long,
         quotaUpdater: WebStorage.QuotaUpdater?
-    ) {
-        super.onReachedMaxAppCacheSize(requiredStorage, quota, quotaUpdater)
+    ) =
         client?.onReachedMaxAppCacheSize(requiredStorage, quota, quotaUpdater)
-    }
+            ?: super.onReachedMaxAppCacheSize(requiredStorage, quota, quotaUpdater)
 
     @CallSuper
     override fun onGeolocationPermissionsShowPrompt(
         origin: String?,
         callback: GeolocationPermissions.Callback?
-    ) {
-        super.onGeolocationPermissionsShowPrompt(origin, callback)
+    ) =
         client?.onGeolocationPermissionsShowPrompt(origin, callback)
-    }
+            ?: super.onGeolocationPermissionsShowPrompt(origin, callback)
 
     @CallSuper
-    override fun onGeolocationPermissionsHidePrompt() {
-        super.onGeolocationPermissionsHidePrompt()
-        client?.onGeolocationPermissionsHidePrompt()
-    }
+    override fun onGeolocationPermissionsHidePrompt() =
+        client?.onGeolocationPermissionsHidePrompt() ?: super.onGeolocationPermissionsHidePrompt()
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     @CallSuper
     override fun onPermissionRequest(request: PermissionRequest?) {
-        super.onPermissionRequest(request)
-        client?.onPermissionRequest(request)
+        this.client?.onPermissionRequest(request) ?: super.onPermissionRequest(request)
     }
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     @CallSuper
-    override fun onPermissionRequestCanceled(request: PermissionRequest?) {
-        super.onPermissionRequestCanceled(request)
-        client?.onPermissionRequestCanceled(request)
-    }
+    override fun onPermissionRequestCanceled(request: PermissionRequest?) =
+        client?.onPermissionRequestCanceled(request) ?: super.onPermissionRequestCanceled(request)
 
     @Deprecated("")
+    @CallSuper
     override fun onJsTimeout(): Boolean = client?.onJsTimeout() ?: super.onJsTimeout()
 
     @Deprecated("")
     @CallSuper
-    override fun onConsoleMessage(message: String?, lineNumber: Int, sourceID: String?) {
-        super.onConsoleMessage(message, lineNumber, sourceID)
+    override fun onConsoleMessage(message: String?, lineNumber: Int, sourceID: String?) =
         client?.onConsoleMessage(message, lineNumber, sourceID)
-    }
+            ?: super.onConsoleMessage(message, lineNumber, sourceID)
 
+    @CallSuper
     override fun onConsoleMessage(consoleMessage: ConsoleMessage?): Boolean =
         client?.onConsoleMessage(consoleMessage) ?: super.onConsoleMessage(consoleMessage)
 
+    @CallSuper
     override fun getDefaultVideoPoster(): Bitmap? =
         client?.defaultVideoPoster ?: super.getDefaultVideoPoster()
 
+    @CallSuper
     override fun getVideoLoadingProgressView(): View? =
         client?.videoLoadingProgressView ?: super.getVideoLoadingProgressView()
 
     @CallSuper
-    override fun getVisitedHistory(callback: ValueCallback<Array<String>>?) {
-        super.getVisitedHistory(callback)
-        client?.getVisitedHistory(callback)
-    }
+    override fun getVisitedHistory(callback: ValueCallback<Array<String>>?) =
+        client?.getVisitedHistory(callback) ?: super.getVisitedHistory(callback)
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    @CallSuper
     override fun onShowFileChooser(
         webView: WebView?,
         filePathCallback: ValueCallback<Array<Uri>>?,
         fileChooserParams: FileChooserParams?
-    ): Boolean {
-        return client?.onShowFileChooser(webView, filePathCallback, fileChooserParams)
-            ?: super.onShowFileChooser(webView, filePathCallback, fileChooserParams)
-    }
+    ): Boolean = client?.onShowFileChooser(webView, filePathCallback, fileChooserParams)
+        ?: super.onShowFileChooser(webView, filePathCallback, fileChooserParams)
 }

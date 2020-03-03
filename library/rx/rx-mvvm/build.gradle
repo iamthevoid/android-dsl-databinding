@@ -3,6 +3,10 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.novoda.bintray-release'
 
+repositories {
+
+}
+
 android {
     compileSdkVersion compileApi
 
@@ -11,6 +15,7 @@ android {
         targetSdkVersion targetApi
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
@@ -20,6 +25,12 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            debuggable = true
+        }
+        releaseDebuggable {
+            debuggable = true
         }
     }
 }
@@ -40,6 +51,9 @@ dependencies {
     implementation project(':core-mvvm')
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation "com.android.support:multidex:$multidex"
+
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "androidx.appcompat:appcompat:$appcompat"
     implementation "androidx.core:core-ktx:$ktx"

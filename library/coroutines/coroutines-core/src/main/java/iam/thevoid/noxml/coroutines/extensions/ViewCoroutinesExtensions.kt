@@ -77,51 +77,69 @@ fun View.setMargins(
  */
 
 
+fun View.hideUntilLoaded(loading: Flow<Boolean>) =
+    addSetter(loading) { hide(it) }
+
 fun View.hideUntilLoaded(loading: CoroutineBoolean) =
-    addSetter(loading.observe()) { hide(it) }
+    hideUntilLoaded(loading.observe())
 
 fun View.hideUntilLoaded(loading: CoroutineBoolean, vararg loadings: CoroutineBoolean) =
-    addSetter(merge(*mutableListOf(loading).apply { addAll(loadings) }.map { it.observe() }.toTypedArray())) {
-        hide(it)
-    }
+    hideUntilLoaded(merge(*mutableListOf(loading).apply { addAll(loadings) }.map { it.observe() }.toTypedArray()))
+
+fun View.hideWhenLoaded(loading: Flow<Boolean>) =
+    addSetter(loading) { hide(!it) }
 
 fun View.hideWhenLoaded(loading: CoroutineBoolean) =
-    addSetter(loading.observe()) { hide(!it) }
+    hideWhenLoaded(loading.observe())
 
 fun View.hideWhenLoaded(loading: CoroutineBoolean, vararg loadings: CoroutineBoolean) =
-    addSetter(merge(*mutableListOf(loading).apply { addAll(loadings) }.map { it.observe() }.toTypedArray())) {
-        hide(!it)
-    }
+    hideWhenLoaded(merge(*mutableListOf(loading).apply { addAll(loadings) }.map { it.observe() }.toTypedArray()))
+
+fun View.goneUntilLoaded(loading: Flow<Boolean>) =
+    addSetter(loading) { gone(it) }
 
 fun View.goneUntilLoaded(loading: CoroutineBoolean) =
-    addSetter(loading.observe()) { gone(it) }
+    goneUntilLoaded(loading.observe())
+
+fun View.goneUntilLoaded(loading: CoroutineBoolean, vararg loadings: CoroutineBoolean) =
+    goneUntilLoaded(merge(*mutableListOf(loading).apply { addAll(loadings) }.map { it.observe() }.toTypedArray()))
+
+fun View.goneWhenLoaded(loading: Flow<Boolean>) =
+    addSetter(loading) { gone(!it) }
 
 fun View.goneWhenLoaded(loading: CoroutineBoolean) =
-    addSetter(loading.observe()) { gone(!it) }
+    goneWhenLoaded(loading.observe())
+
+fun View.goneWhenLoaded(loading: CoroutineBoolean, vararg loadings: CoroutineBoolean) =
+    goneWhenLoaded(merge(*mutableListOf(loading).apply { addAll(loadings) }.map { it.observe() }.toTypedArray()))
 
 fun View.gone(needGone: Flow<Boolean>) =
     addSetter(needGone) { gone(it) }
 
 fun View.gone(needGone: CoroutineField<Boolean>) =
-    addSetter(needGone.onlyPresent()) { gone(it) }
+    gone(needGone.onlyPresent())
 
 fun View.gone(needGone: CoroutineItem<Boolean>) =
-    addSetter(needGone.observe()) { gone(it) }
+    gone(needGone.observe())
 
 fun View.gone(needGone: CoroutineBoolean) =
-    addSetter(needGone.observe()) { gone(it) }
+    gone(needGone.observe())
 
 fun View.hide(needHide: Flow<Boolean>) =
     addSetter(needHide) { hide(it) }
 
 fun View.hide(needHide: CoroutineField<Boolean>) =
-    addSetter(needHide.onlyPresent()) { hide(it) }
+    hide(needHide.onlyPresent())
 
 fun View.hide(needHide: CoroutineItem<Boolean>) =
-    addSetter(needHide.observe()) { hide(it) }
+    hide(needHide.observe())
 
 fun View.hide(needHide: CoroutineBoolean) =
-    addSetter(needHide.observe()) { hide(it) }
+    hide(needHide.observe())
+
+/**
+ * Color
+ */
 
 fun View.setBackgroundColor(color: Flow<Int>) =
     addSetter(color) { setBackgroundColor(it) }

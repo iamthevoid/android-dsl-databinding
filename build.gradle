@@ -18,12 +18,12 @@ buildscript {
 ext {
 
     // publish
-    libVersion = '1.0.0-alpha03'
+    libVersion = '1.0.0-beta01'
     libWebsite = 'https://github.com/iamthevoid/android-noxml-mvvm.git'
     libUserOrg = 'iamthevoid'
     libUploadName = 'android-noxml-mvvm'
     libLicence = 'Apache-2.0'
-    libGroupId = 'thevoid.iam.components'
+    libGroupId = 'iam.thevoid.noxml'
 
     libMinSdk = 16
     compileApi = 28
@@ -56,6 +56,7 @@ ext {
     recycler = "1.1.0"
     ktx = "1.2.0"
     swipe = "1.0.0"
+    multidex = "1.0.2"
 
     // test
     espresso = "3.2.0"

@@ -5,18 +5,17 @@ package iam.thevoid.noxml.coroutines.swiperefreshlayout
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import iam.thevoid.noxml.coroutines.extensions.addSetter
 import iam.thevoid.noxml.coroutines.data.CoroutineBoolean
+import iam.thevoid.noxml.coroutines.utils.Coroutines
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
 
+fun SwipeRefreshLayout.setRefreshing(refreshing: Flow<Boolean>) =
+    addSetter(refreshing) { isRefreshing = it }
 
-fun SwipeRefreshLayout.setRefreshing(loading: CoroutineBoolean) =
-    addSetter(loading.observe()) { isRefreshing = it }
+fun SwipeRefreshLayout.setRefreshing(refreshing: CoroutineBoolean) =
+    setRefreshing(refreshing.observe())
 
-fun SwipeRefreshLayout.setRefreshing(loading1: CoroutineBoolean, loading2: CoroutineBoolean) =
-    addSetter(combine(loading1.observe(), loading2.observe()) { f, s -> Pair(f, s) }) { (f, s) ->
-        isRefreshing = f || s
-    }
-
-fun SwipeRefreshLayout.setRefreshing(loading: Flow<Boolean>) =
-    addSetter(loading) { isRefreshing = it }
+fun SwipeRefreshLayout.setRefreshing(refreshing1: CoroutineBoolean, refreshing2: CoroutineBoolean) =
+    setRefreshing(Coroutines.combine(refreshing1.observe(), refreshing2.observe()).map { (f,s) -> f || s })
