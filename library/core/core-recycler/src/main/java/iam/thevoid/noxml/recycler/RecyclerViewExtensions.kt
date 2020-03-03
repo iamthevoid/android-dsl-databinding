@@ -64,7 +64,7 @@ fun RecyclerView.setLoadMore(action: (Int) -> Unit) {
  * Spacing bindings
  */
 
-private val RecyclerView.startSpacing
+val RecyclerView.startSpacing
     get() = (getTag(R.id.recyclerStartSpacing) as? StartEndPaddingRecyclerDecoration)
         ?: StartEndPaddingRecyclerDecoration().also {
             addItemDecoration(it)
@@ -78,7 +78,7 @@ fun RecyclerView.setStartSpacing(spacing: Int) {
     addItemDecoration(decoration)
 }
 
-private val RecyclerView.endSpacing
+val RecyclerView.endSpacing
     get() = (getTag(R.id.recyclerEndSpacing) as? StartEndPaddingRecyclerDecoration)
         ?: StartEndPaddingRecyclerDecoration().also {
             addItemDecoration(it)
@@ -97,9 +97,10 @@ fun RecyclerView.setEndSpacing(spacing: Int) {
  * On RecyclerView scroll reverse binding
  */
 
-private val RecyclerView.onRecyclerScroll
-    get() = (getTag(R.id.recyclerScroll) as? iam.thevoid.noxml.recycler.delegate.OnRecyclerScrollDelegate) ?: iam.thevoid.noxml.recycler.delegate.OnRecyclerScrollDelegate()
-        .also {
-            setTag(R.id.recyclerScroll, it)
-            addOnScrollListener(it)
-        }
+val RecyclerView.onRecyclerScroll
+    get() = (getTag(R.id.recyclerScroll) as? iam.thevoid.noxml.recycler.delegate.OnRecyclerScrollDelegate)
+        ?: iam.thevoid.noxml.recycler.delegate.OnRecyclerScrollDelegate()
+            .also {
+                setTag(R.id.recyclerScroll, it)
+                addOnScrollListener(it)
+            }

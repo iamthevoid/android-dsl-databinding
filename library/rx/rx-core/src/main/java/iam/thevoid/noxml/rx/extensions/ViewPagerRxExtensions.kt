@@ -8,12 +8,12 @@ import androidx.viewpager.widget.ViewPager
 import iam.thevoid.noxml.adapters.OnPageChangeListenerAdapter
 import iam.thevoid.noxml.adapterview.ItemBindings
 import iam.thevoid.noxml.change.pager.OnPageScrolled
-import iam.thevoid.noxml.rx.recycler.extensions.onPageChangeListener
-import iam.thevoid.noxml.rx.recycler.extensions.setItems
 import iam.thevoid.noxml.rx.data.fields.RxField
 import iam.thevoid.noxml.rx.data.fields.RxInt
 import iam.thevoid.noxml.rx.data.fields.RxItem
 import iam.thevoid.noxml.rx.data.fields.RxList
+import iam.thevoid.noxml.rx.recycler.extensions.onPageChangeListener
+import iam.thevoid.noxml.rx.recycler.extensions.setItems
 import io.reactivex.Flowable
 import io.reactivex.rxkotlin.Flowables
 
@@ -48,15 +48,15 @@ fun <T : Any> ViewPager.setItems(
 }
 
 fun <T : Any> ViewPager.setItems(
-    itemsFlowable: Flowable<List<T>>,
+    items: Flowable<List<T>>,
     itemBindings: ItemBindings
-) = addSetter(itemsFlowable) { setItems(it, itemBindings) }
+) = addSetter(items) { setItems(it, itemBindings) }
 
 fun <T : Any> ViewPager.setItems(
-    itemsFlowable: Flowable<List<T>>,
-    titlesFlowable: Flowable<List<String>>,
+    items: Flowable<List<T>>,
+    titles: Flowable<List<String>>,
     itemBindings: ItemBindings
-) = addSetter(Flowables.combineLatest(itemsFlowable, titlesFlowable)) {
+) = addSetter(Flowables.combineLatest(items, titles)) {
     setItems(
         it.first,
         itemBindings,
@@ -92,16 +92,16 @@ fun <T : Any> ViewPager.setItems(
 
 fun <T : Any> ViewPager.setItems(
     fm: FragmentManager,
-    itemsFlowable: Flowable<List<T>>,
+    items: Flowable<List<T>>,
     itemBindings: ItemBindings
-) = addSetter(itemsFlowable) { setItems(fm, it, itemBindings) }
+) = addSetter(items) { setItems(fm, it, itemBindings) }
 
 fun <T : Any> ViewPager.setItems(
     fm: FragmentManager,
-    itemsFlowable: Flowable<List<T>>,
-    titlesFlowable: Flowable<List<String>>,
+    items: Flowable<List<T>>,
+    titles: Flowable<List<String>>,
     itemBindings: ItemBindings
-) = addSetter(Flowables.combineLatest(itemsFlowable, titlesFlowable)) {
+) = addSetter(Flowables.combineLatest(items, titles)) {
     setItems(fm, it.first, itemBindings, it.second)
 }
 

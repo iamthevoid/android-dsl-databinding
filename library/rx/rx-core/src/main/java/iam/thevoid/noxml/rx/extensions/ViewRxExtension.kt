@@ -6,18 +6,21 @@ import android.graphics.drawable.Drawable
 import android.os.Build
 import android.view.*
 import iam.thevoid.ae.*
+import iam.thevoid.e.mergeWith
+import iam.thevoid.noxml.change.Margins
 import iam.thevoid.noxml.change.scroll.OnFling
 import iam.thevoid.noxml.change.scroll.OnScroll
-import iam.thevoid.e.mergeWith
+import iam.thevoid.noxml.rx.data.RxLoading
+import iam.thevoid.noxml.rx.data.fields.*
+import iam.thevoid.noxml.rx.recycler.extensions.gestureDetector
+import iam.thevoid.noxml.rx.recycler.extensions.gestureDetectorCallback
+import iam.thevoid.noxml.rx.recycler.extensions.observeListener
+import iam.thevoid.noxml.rx.recycler.extensions.onGlobalLayoutDelegate
+import iam.thevoid.noxml.rx.utils.RxSetter
+import iam.thevoid.noxml.util.containsInStackTrace
 import iam.thevoid.util.Optional
 import io.reactivex.Flowable
 import io.reactivex.functions.Function4
-import iam.thevoid.noxml.rx.recycler.extensions.*
-import iam.thevoid.noxml.change.Margins
-import iam.thevoid.noxml.util.containsInStackTrace
-import iam.thevoid.noxml.rx.data.RxLoading
-import iam.thevoid.noxml.rx.data.fields.*
-import iam.thevoid.noxml.rx.utils.RxSetter
 
 fun <T : Any, V : View> V.addSetter(flowable: Flowable<T>, setter: V.(T) -> Unit = {}) {
     observeListener.apply {
@@ -178,7 +181,7 @@ fun View.setAlpha(alpha: Flowable<Float>) =
  * On click listener
  */
 
-fun View.setOnclickListener(onClick: Flowable<View.OnClickListener>) =
+fun View.setClickListener(onClick: Flowable<View.OnClickListener>) =
     addSetter(onClick) {
         setOnClickListener(null)
         setOnClickListener(it)
