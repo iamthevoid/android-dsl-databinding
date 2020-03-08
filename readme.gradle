@@ -44,8 +44,8 @@ fun ImageView.setImageUrl(image : Flowable<String>) =
     }
 ``` 
 
-and then use it in your DSL layout (JetBrains Anko in example, but `addSetter` is **<V : View>** extension, 
-so you can use it anywhere, even in ButterKnifed xml layouts)
+and then use it in your DSL layout (JetBrains Anko in example, but `addSetter` is extension for
+generic type **T : View**, so you can use it anywhere, even in ButterKnifed xml layouts)
 
 ```kotlin
 frameLayout {
