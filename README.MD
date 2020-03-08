@@ -4,7 +4,50 @@
 
 ###### Library for bind observable data with view from Android View Framework
 
-There is support for
+### Setter
+
+*Setter* is abstract type. There are its subclasses for RxJava Flowable and Kotlin Coroutines Flow.
+
+Setter assigns with Android View by extension method
+
+```
+fun VIEW.addSetter(FLOWABLE_TYPE<DATA>, VIEW.(DATA) -> Unit)
+```
+
+So we can add any realization for any data and any view. For example
+
+```
+fun <T : CharSequence> TextView.setText(text: Flowable<T>) =
+    addSetter(text) { this.text = it }
+```
+
+Under the hood there is ObserveListener object associated with each view. This object store flowable
+type and subscribe on data changes when view attachedToWindow and unsubscribe when view detaches from
+window.
+
+There are many default setters already defined in library (and many will be added in next releases)
+
+### Two Way Binding
+
+There is also support for Two-Way Data Binding
+
+It is representing by Fields and Items.
+
+*Field* is observable property, that emit Optional<T> element when element set to field. Allows 'null'.
+*Item* is observable property, that emit T element when element set to field. Allows 'non-null' only.
+
+for both, rx and coroutines provided base types
+
+- Rx(Coroutine)Field
+- Rx(Coroutine)Item
+- Rx(Coroutine)CharSequence
+- Rx(Coroutine)Boolean
+- Rx(Coroutine)Long
+- Rx(Coroutine)Int
+- Rx(Coroutine)Double
+- Rx(Coroutine)Float
+
+Implementation
 
 ### RxJava 2
 
