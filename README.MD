@@ -46,7 +46,7 @@ for both, rx and coroutines provided base types
 - Rx(Coroutine)Double
 - Rx(Coroutine)Float
 
-###### Implementation
+# Implementation
 
 ### RxJava 2
 
