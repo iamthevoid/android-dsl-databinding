@@ -48,6 +48,9 @@ fun EditText.setTextColorResource(colorResource: Flowable<Int>) =
 fun EditText.setRequestInput(boolean: RxBoolean) =
     setRequestInput(boolean.observe())
 
+fun EditText.setSelection(selection : Flow<Int>) =
+    addSetter(selection) { setSelection(it) }
+
 fun EditText.setRequestInput(requestInput: Flowable<Boolean>) =
     addSetter(requestInput) {
         val focusListener = onFocusChangeListener

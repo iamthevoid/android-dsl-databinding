@@ -56,6 +56,9 @@ fun EditText.setTextColorResource(colorResource: Flow<Int>) =
 fun EditText.setRequestInput(requestInput: CoroutineBoolean) =
     setRequestInput(requestInput.observe())
 
+fun EditText.setSelection(selection : Flow<Int>) =
+    addSetter(selection) { setSelection(it) }
+
 fun EditText.setRequestInput(requestInput: Flow<Boolean>) =
     addSetter(requestInput) {
         val focusListener = onFocusChangeListener

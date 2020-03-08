@@ -1,3 +1,4 @@
+
 <a href="https://bintray.com/beta/#/iamthevoid/maven/android-dsl-databinding"><img src="https://github.com/iamthevoid/android-dsl-databinding/blob/master/lib.svg"></a>
 
 # Android DSL Data Binding
@@ -51,47 +52,47 @@ for both, rx and coroutines provided base types
 ### RxJava 2
 
 ```
-implementation 'iam.thevoid.noxml:core:version.of.library'
-implementation 'iam.thevoid.noxml:rx-core:version.of.library'
+implementation 'iam.thevoid.noxml:core:1.0.0-beta01'
+implementation 'iam.thevoid.noxml:rx-core:1.0.0-beta01'
 ```
 
 Optional:
 - Recycler View
 ```
-implementation 'iam.thevoid.noxml:core-recycler:version.of.library'
-implementation 'iam.thevoid.noxml:rx-recycler:version.of.library'
+implementation 'iam.thevoid.noxml:core-recycler:1.0.0-beta01'
+implementation 'iam.thevoid.noxml:rx-recycler:1.0.0-beta01'
 ```
 - Swipe Refresh Layout
 ```
-implementation 'iam.thevoid.noxml:core-swiperefreshlayot:version.of.library'
-implementation 'iam.thevoid.noxml:rx-swiperefreshlayot:version.of.library'
+implementation 'iam.thevoid.noxml:core-swiperefreshlayot:1.0.0-beta01'
+implementation 'iam.thevoid.noxml:rx-swiperefreshlayot:1.0.0-beta01'
 ```
 - Material
 ```
-implementation 'iam.thevoid.noxml:core-design:version.of.library'
-implementation 'iam.thevoid.noxml:rx-design:version.of.library'
+implementation 'iam.thevoid.noxml:core-design:1.0.0-beta01'
+implementation 'iam.thevoid.noxml:rx-design:1.0.0-beta01'
 ```
 
 ### Kotlin Coroutines
 
 ```
-implementation 'iam.thevoid.noxml:core:version.of.library'
-implementation 'iam.thevoid.noxml:coroutines-core:version.of.library'
+implementation 'iam.thevoid.noxml:core:1.0.0-beta01'
+implementation 'iam.thevoid.noxml:coroutines-core:1.0.0-beta01'
 ```
 
 Optional:
 - Recycler View
 ```
-implementation 'iam.thevoid.noxml:core-recycler:version.of.library'
-implementation 'iam.thevoid.noxml:coroutines-recycler:version.of.library'
+implementation 'iam.thevoid.noxml:core-recycler:1.0.0-beta01'
+implementation 'iam.thevoid.noxml:coroutines-recycler:1.0.0-beta01'
 ```
 - Swipe Refresh Layout
 ```
-implementation 'iam.thevoid.noxml:core-swiperefreshlayot:version.of.library'
-implementation 'iam.thevoid.noxml:coroutines-swiperefreshlayot:version.of.library'
+implementation 'iam.thevoid.noxml:core-swiperefreshlayot:1.0.0-beta01'
+implementation 'iam.thevoid.noxml:coroutines-swiperefreshlayot:1.0.0-beta01'
 ```
 - Material
 ```
-implementation 'iam.thevoid.noxml:core-design:version.of.library'
-implementation 'iam.thevoid.noxml:coroutines-design:version.of.library'
+implementation 'iam.thevoid.noxml:core-design:1.0.0-beta01'
+implementation 'iam.thevoid.noxml:coroutines-design:1.0.0-beta01'
 ```
