@@ -21,9 +21,8 @@ fun <T : CharSequence> TextView.setText(text: Flowable<T>) =
     addSetter(text) { this.text = it }
 ```
 
-Under the hood there is ObserveListener object associated with each view. This object store flowable
-type and subscribe on data changes when view attachedToWindow and unsubscribe when view detaches from
-window.
+Under the hood there is ObserveListener object associated with each view. This object store flowables
+cache for view and subscribe on data changes when view `onViewAttachedToWindow` and unsubscribe when view `onViewDetachedFromWindow`.
 
 There are many default setters already defined in library (and many will be added in next releases)
 
@@ -47,7 +46,7 @@ for both, rx and coroutines provided base types
 - Rx(Coroutine)Double
 - Rx(Coroutine)Float
 
-Implementation
+###### Implementation
 
 ### RxJava 2
 
