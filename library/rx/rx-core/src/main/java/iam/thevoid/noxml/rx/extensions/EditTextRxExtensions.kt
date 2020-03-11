@@ -1,12 +1,14 @@
 package iam.thevoid.noxml.rx.extensions
 
 import android.widget.EditText
-import iam.thevoid.ae.*
+import iam.thevoid.ae.color
+import iam.thevoid.ae.requestSoftInput
+import iam.thevoid.ae.resetFocus
 import iam.thevoid.e.format
+import iam.thevoid.noxml.rx.data.fields.*
 import iam.thevoid.noxml.rx.recycler.extensions.setTextResourceSilent
 import iam.thevoid.noxml.rx.recycler.extensions.setTextSilent
 import io.reactivex.Flowable
-import iam.thevoid.noxml.rx.data.fields.*
 
 /**
  * SETTER
@@ -48,7 +50,7 @@ fun EditText.setTextColorResource(colorResource: Flowable<Int>) =
 fun EditText.setRequestInput(boolean: RxBoolean) =
     setRequestInput(boolean.observe())
 
-fun EditText.setSelection(selection : Flow<Int>) =
+fun EditText.setSelection(selection: Flowable<Int>) =
     addSetter(selection) { setSelection(it) }
 
 fun EditText.setRequestInput(requestInput: Flowable<Boolean>) =
