@@ -197,14 +197,12 @@ fun View.onFocusChange(onFocusChange: CoroutineBoolean) =
     onFocusChange(onFocusChange) { it }
 
 fun <T : Any> View.onFocusChange(onFocusChange: CoroutineField<T>, mapper: (Boolean) -> T) {
-    onFocusChange.set(mapper(isFocused))
     onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
         onFocusChange.set(mapper(hasFocus))
     }
 }
 
 fun <T : Any> View.onFocusChange(onFocusChange: CoroutineItem<T>, mapper: (Boolean) -> T) {
-    onFocusChange.set(mapper(isFocused))
     onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
         onFocusChange.set(mapper(hasFocus))
     }
@@ -223,7 +221,6 @@ fun <T : Any> View.onFocusChangeForceFalseOnClearFocus(
     onFocusChange: CoroutineField<T>,
     mapper: (Boolean) -> T
 ) {
-    onFocusChange.set(mapper(isFocused))
     onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
         onFocusChange.set(
             mapper(
@@ -239,7 +236,6 @@ fun <T : Any> View.onFocusChangeForceFalseOnClearFocus(
     onFocusChange: CoroutineItem<T>,
     mapper: (Boolean) -> T
 ) {
-    onFocusChange.set(mapper(isFocused))
     onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
         onFocusChange.set(
             mapper(

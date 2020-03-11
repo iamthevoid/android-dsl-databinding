@@ -198,14 +198,12 @@ fun View.onFocusChange(onFocusChange: RxField<Boolean>) =
     onFocusChange(onFocusChange) { it }
 
 fun <T : Any> View.onFocusChange(onFocusChange: RxField<T>, mapper: (Boolean) -> T?) {
-    onFocusChange.set(mapper(isFocused))
     onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
         onFocusChange.set(mapper(hasFocus))
     }
 }
 
 fun <T : Any> View.onFocusChange(onFocusChange: RxItem<T>, mapper: (Boolean) -> T) {
-    onFocusChange.set(mapper(isFocused))
     onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
         onFocusChange.set(mapper(hasFocus))
     }
@@ -221,7 +219,6 @@ fun <T : Any> View.onFocusChangeForceFalseOnClearFocus(
     onFocusChange: RxItem<T>,
     mapper: (Boolean) -> T
 ) {
-    onFocusChange.set(mapper(isFocused))
     onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
         onFocusChange.set(
             mapper(
