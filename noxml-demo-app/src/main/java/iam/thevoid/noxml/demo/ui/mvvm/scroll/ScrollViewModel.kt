@@ -2,7 +2,7 @@ package iam.thevoid.noxml.demo.ui.mvvm.scroll
 
 import androidx.lifecycle.ViewModel
 import iam.thevoid.noxml.adapterview.ItemBindings
-import iam.thevoid.noxml.rx.data.fields.RxList
+import iam.thevoid.noxml.rx2.data.fields.RxList
 
 class ScrollViewModel : ViewModel() {
 

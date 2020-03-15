@@ -55,10 +55,10 @@ dependencies {
     implementation project(':coroutines-core')
     implementation project(':coroutines-recycler')
 
-    implementation project(':rx-recycler')
-    implementation project(':rx-core')
-    implementation project(':rx-swiperefreshlayout')
-    implementation project(':rx-mvvm')
+    implementation project(':rx2-recycler')
+    implementation project(':rx2-core')
+    implementation project(':rx2-swiperefreshlayout')
+    implementation project(':rx2-mvvm')
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"

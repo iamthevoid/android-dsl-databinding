@@ -11,10 +11,10 @@ import org.jetbrains.anko.constraint.layout.ConstraintSetBuilder.Side.*
 import iam.thevoid.noxml.demo.ui.BaseFragment
 import iam.thevoid.noxml.anko.sparseConstraintLayout
 import iam.thevoid.noxml.demo.R
-import iam.thevoid.noxml.rx.extensions.onFocusChange
-import iam.thevoid.noxml.rx.extensions.onTextChanges
-import iam.thevoid.noxml.rx.extensions.setRequestInput
-import iam.thevoid.noxml.rx.extensions.setText
+import iam.thevoid.noxml.rx2.extensions.onFocusChange
+import iam.thevoid.noxml.rx2.extensions.onTextChanges
+import iam.thevoid.noxml.rx2.extensions.setRequestInput
+import iam.thevoid.noxml.rx2.extensions.setText
 import org.jetbrains.anko.constraint.layout.matchConstraint
 
 class PageFragment : BaseFragment() {

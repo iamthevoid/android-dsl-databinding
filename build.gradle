@@ -21,7 +21,7 @@ buildscript {
 ext {
 
     // publish
-    libVersion = '1.0.0-beta01'
+    libVersion = '1.0.0-beta02'
     libWebsite = 'https://github.com/iamthevoid/android-noxml-mvvm.git'
     libUserOrg = 'iamthevoid'
     libUploadName = 'android-dsl-databinding'

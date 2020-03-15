@@ -7,7 +7,7 @@ import iam.thevoid.ae.setTextStrikeThru
 import iam.thevoid.ae.string
 import iam.thevoid.e.format
 import iam.thevoid.e.safe
-import iam.thevoid.noxml.rx.recycler.extensions.textWatcher
+import iam.thevoid.noxml.rx2.recycler.extensions.textWatcher
 import iam.thevoid.noxml.adapters.TextWatcherAdapter
 import iam.thevoid.noxml.change.textwatcher.BeforeEditTextChanges
 import iam.thevoid.noxml.change.textwatcher.OnEditTextChanges

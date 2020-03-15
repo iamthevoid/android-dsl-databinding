@@ -5,7 +5,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import iam.thevoid.noxml.coroutines.extensions.addSetter
 import io.reactivex.Flowable
-import iam.thevoid.noxml.rx.extensions.addSetter
+import iam.thevoid.noxml.rx2.extensions.addSetter
 import kotlinx.coroutines.flow.Flow
 
 fun ImageView.setImageUrl(image : Flowable<String>) =

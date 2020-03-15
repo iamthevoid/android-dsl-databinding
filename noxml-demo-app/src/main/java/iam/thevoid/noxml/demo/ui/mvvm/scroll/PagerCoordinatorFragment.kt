@@ -12,7 +12,7 @@ import iam.thevoid.ae.screenHeight
 import iam.thevoid.ae.setPaddings
 import iam.thevoid.noxml.core.mvvm.viewModel
 import iam.thevoid.e.safe
-import iam.thevoid.noxml.rx.recycler.extensions.setItems
+import iam.thevoid.noxml.rx2.recycler.extensions.setItems
 import org.jetbrains.anko.*
 import org.jetbrains.anko.appcompat.v7.toolbar
 import org.jetbrains.anko.design.appBarLayout
@@ -22,7 +22,7 @@ import org.jetbrains.anko.recyclerview.v7.recyclerView
 import org.jetbrains.anko.support.v4.viewPager
 import iam.thevoid.noxml.demo.R
 import iam.thevoid.noxml.demo.ui.BaseFragment
-import iam.thevoid.noxml.rx.extensions.setItems
+import iam.thevoid.noxml.rx2.extensions.setItems
 import kotlin.math.absoluteValue
 
 class PagerCoordinatorFragment : BaseFragment(), AppBarLayout.OnOffsetChangedListener {

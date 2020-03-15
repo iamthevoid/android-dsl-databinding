@@ -1,10 +1,10 @@
 package iam.thevoid.noxml.demo.ui.mvvm.pagination
 
 import androidx.lifecycle.ViewModel
-import iam.thevoid.noxml.rx.recycler.pagination.PaginationLoader
+import iam.thevoid.noxml.rx2.recycler.pagination.PaginationLoader
 import iam.thevoid.noxml.demo.data.api.ButikApi
-import iam.thevoid.noxml.rx.data.RxLoading
-import iam.thevoid.noxml.rx.utils.loading
+import iam.thevoid.noxml.rx2.data.RxLoading
+import iam.thevoid.noxml.rx2.utils.loading
 
 class ButikViewModel : ViewModel() {
 

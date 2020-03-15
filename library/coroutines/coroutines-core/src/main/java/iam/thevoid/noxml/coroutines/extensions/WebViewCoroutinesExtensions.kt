@@ -3,7 +3,7 @@ package iam.thevoid.noxml.coroutines.extensions
 import android.webkit.WebView
 import iam.thevoid.noxml.coroutines.data.CoroutineBoolean
 import iam.thevoid.noxml.delegate.WebChromeClientDelegate
-import iam.thevoid.noxml.rx.recycler.extensions.chromeClient
+import iam.thevoid.noxml.rx2.recycler.extensions.chromeClient
 import kotlinx.coroutines.flow.Flow
 
 fun <T : CharSequence> WebView.setHtml(

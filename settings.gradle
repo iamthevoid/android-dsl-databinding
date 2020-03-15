@@ -10,11 +10,11 @@ include ':noxml-demo-app',
         ':core-mvvm',
         ':core-recycler',
 
-        ':rx-core',
-        ':rx-mvvm',
-        ':rx-recycler',
-        ':rx-swiperefreshlayout',
-        ':rx-design',
+        ':rx2-core',
+        ':rx2-design',
+        ':rx2-mvvm',
+        ':rx2-recycler',
+        ':rx2-swiperefreshlayout',
 
         ':coroutines-core',
         ':coroutines-design',
@@ -32,11 +32,11 @@ project(':core-design').projectDir = new File('library/core/core-design')
 project(':core-mvvm').projectDir = new File('library/core/core-mvvm')
 project(':core-recycler').projectDir = new File('library/core/core-recycler')
 
-project(':rx-core').projectDir = new File('library/rx/rx-core')
-project(':rx-mvvm').projectDir = new File('library/rx/rx-mvvm')
-project(':rx-recycler').projectDir = new File('library/rx/rx-recycler')
-project(':rx-design').projectDir = new File('library/rx/rx-design')
-project(':rx-swiperefreshlayout').projectDir = new File('library/rx/rx-swiperefreshlayout')
+project(':rx2-core').projectDir = new File('library/rxjava2/rx2-core')
+project(':rx2-design').projectDir = new File('library/rxjava2/rx2-design')
+project(':rx2-mvvm').projectDir = new File('library/rxjava2/rx2-mvvm')
+project(':rx2-recycler').projectDir = new File('library/rxjava2/rx2-recycler')
+project(':rx2-swiperefreshlayout').projectDir = new File('library/rxjava2/rx2-swiperefreshlayout')
 
 project(':coroutines-core').projectDir = new File('library/coroutines/coroutines-core')
 project(':coroutines-design').projectDir = new File('library/coroutines/coroutines-design')

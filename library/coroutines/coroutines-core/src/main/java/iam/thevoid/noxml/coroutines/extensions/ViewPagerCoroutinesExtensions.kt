@@ -12,8 +12,8 @@ import iam.thevoid.noxml.coroutines.data.CoroutineField
 import iam.thevoid.noxml.coroutines.data.CoroutineInt
 import iam.thevoid.noxml.coroutines.data.CoroutineItem
 import iam.thevoid.noxml.coroutines.data.CoroutineList
-import iam.thevoid.noxml.rx.recycler.extensions.onPageChangeListener
-import iam.thevoid.noxml.rx.recycler.extensions.setItems
+import iam.thevoid.noxml.rx2.recycler.extensions.onPageChangeListener
+import iam.thevoid.noxml.rx2.recycler.extensions.setItems
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOf

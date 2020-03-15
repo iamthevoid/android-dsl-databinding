@@ -4,8 +4,8 @@ import android.widget.EditText
 import iam.thevoid.ae.*
 import iam.thevoid.e.format
 import iam.thevoid.noxml.coroutines.data.*
-import iam.thevoid.noxml.rx.recycler.extensions.setTextResourceSilent
-import iam.thevoid.noxml.rx.recycler.extensions.setTextSilent
+import iam.thevoid.noxml.rx2.recycler.extensions.setTextResourceSilent
+import iam.thevoid.noxml.rx2.recycler.extensions.setTextSilent
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
