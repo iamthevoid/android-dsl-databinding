@@ -122,7 +122,7 @@ recyclerView {
     (itemAnimator as? SimpleItemAnimator)?.supportsChangeAnimations = false
     // Same as usualy - providing LayoutManager 
     layoutManager = LinearLayoutManager(context)
-    // Pay attention for line below, it will be desribed later
+    // Pay attention for line below, it will be described later
     setItems(vm.data, revolutBindings(vm))
     // Hide view based on observable boolean loading
     hideUntilLoaded(vm.loading)
@@ -212,24 +212,24 @@ inline fun <T : Any, reified A : StandaloneRecyclerAdapter<T>> RecyclerView.setI
 
 ```gradle
 implementation 'iam.thevoid.noxml:core:$libVersion'
-implementation 'iam.thevoid.noxml:rx-core:$libVersion'
+implementation 'iam.thevoid.noxml:rx2-core:$libVersion'
 ```
 
 Optional:
 - Recycler View
 ```gradle
 implementation 'iam.thevoid.noxml:core-recycler:$libVersion'
-implementation 'iam.thevoid.noxml:rx-recycler:$libVersion'
+implementation 'iam.thevoid.noxml:rx2-recycler:$libVersion'
 ```
 - Swipe Refresh Layout
 ```gradle
 implementation 'iam.thevoid.noxml:core-swiperefreshlayot:$libVersion'
-implementation 'iam.thevoid.noxml:rx-swiperefreshlayot:$libVersion'
+implementation 'iam.thevoid.noxml:rx2-swiperefreshlayot:$libVersion'
 ```
 - Material
 ```gradle
 implementation 'iam.thevoid.noxml:core-design:$libVersion'
-implementation 'iam.thevoid.noxml:rx-design:$libVersion'
+implementation 'iam.thevoid.noxml:rx2-design:$libVersion'
 ```
 
 ### Kotlin Coroutines

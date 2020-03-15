@@ -120,7 +120,7 @@ recyclerView {
     (itemAnimator as? SimpleItemAnimator)?.supportsChangeAnimations = false
     // Same as usualy - providing LayoutManager 
     layoutManager = LinearLayoutManager(context)
-    // Pay attention for line below, it will be desribed later
+    // Pay attention for line below, it will be described later
     setItems(vm.data, revolutBindings(vm))
     // Hide view based on observable boolean loading
     hideUntilLoaded(vm.loading)
@@ -209,47 +209,47 @@ inline fun <T : Any, reified A : StandaloneRecyclerAdapter<T>> RecyclerView.setI
 ### RxJava 2
 
 ```gradle
-implementation 'iam.thevoid.noxml:core:1.0.0-beta03'
-implementation 'iam.thevoid.noxml:rx-core:1.0.0-beta03'
+implementation 'iam.thevoid.noxml:core:1.0.0-beta04'
+implementation 'iam.thevoid.noxml:rx2-core:1.0.0-beta04'
 ```
 
 Optional:
 - Recycler View
 ```gradle
-implementation 'iam.thevoid.noxml:core-recycler:1.0.0-beta03'
-implementation 'iam.thevoid.noxml:rx-recycler:1.0.0-beta03'
+implementation 'iam.thevoid.noxml:core-recycler:1.0.0-beta04'
+implementation 'iam.thevoid.noxml:rx2-recycler:1.0.0-beta04'
 ```
 - Swipe Refresh Layout
 ```gradle
-implementation 'iam.thevoid.noxml:core-swiperefreshlayot:1.0.0-beta03'
-implementation 'iam.thevoid.noxml:rx-swiperefreshlayot:1.0.0-beta03'
+implementation 'iam.thevoid.noxml:core-swiperefreshlayot:1.0.0-beta04'
+implementation 'iam.thevoid.noxml:rx2-swiperefreshlayot:1.0.0-beta04'
 ```
 - Material
 ```gradle
-implementation 'iam.thevoid.noxml:core-design:1.0.0-beta03'
-implementation 'iam.thevoid.noxml:rx-design:1.0.0-beta03'
+implementation 'iam.thevoid.noxml:core-design:1.0.0-beta04'
+implementation 'iam.thevoid.noxml:rx2-design:1.0.0-beta04'
 ```
 
 ### Kotlin Coroutines
 
 ```gradle
-implementation 'iam.thevoid.noxml:core:1.0.0-beta03'
-implementation 'iam.thevoid.noxml:coroutines-core:1.0.0-beta03'
+implementation 'iam.thevoid.noxml:core:1.0.0-beta04'
+implementation 'iam.thevoid.noxml:coroutines-core:1.0.0-beta04'
 ```
 
 Optional:
 - Recycler View
 ```gradle
-implementation 'iam.thevoid.noxml:core-recycler:1.0.0-beta03'
-implementation 'iam.thevoid.noxml:coroutines-recycler:1.0.0-beta03'
+implementation 'iam.thevoid.noxml:core-recycler:1.0.0-beta04'
+implementation 'iam.thevoid.noxml:coroutines-recycler:1.0.0-beta04'
 ```
 - Swipe Refresh Layout
 ```gradle
-implementation 'iam.thevoid.noxml:core-swiperefreshlayot:1.0.0-beta03'
-implementation 'iam.thevoid.noxml:coroutines-swiperefreshlayot:1.0.0-beta03'
+implementation 'iam.thevoid.noxml:core-swiperefreshlayot:1.0.0-beta04'
+implementation 'iam.thevoid.noxml:coroutines-swiperefreshlayot:1.0.0-beta04'
 ```
 - Material
 ```gradle
-implementation 'iam.thevoid.noxml:core-design:1.0.0-beta03'
-implementation 'iam.thevoid.noxml:coroutines-design:1.0.0-beta03'
+implementation 'iam.thevoid.noxml:core-design:1.0.0-beta04'
+implementation 'iam.thevoid.noxml:coroutines-design:1.0.0-beta04'
 ```
