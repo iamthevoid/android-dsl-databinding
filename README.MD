@@ -73,6 +73,137 @@ for both, rx and coroutines provided base types
 - Rx(Coroutine)Double
 - Rx(Coroutine)Float
 
+### Recycler View
+
+`RecyclerView` part deserved own block. Just recall typical `RecyclerView` usage:
+
+1) Creating layout with `RecyclerView`
+2) Creating layouts for ALL `ViewHolders` (I saw up to 9 different holders in one Recycler, are you?)
+3) Creating Adapter, which handle `ViewHolders` logic
+4) Creating `ViewHolders`   
+5) Writing `ViewHolders` manipulating logic in `onBind` method
+
+This library reduce described complexity, but bit harder for first dive. So look carefully :)
+ 
+You just need:
+
+1) Create layout with `RecyclerView`
+2) Also create layouts for ALL `ViewHolders`
+3) Create binding between items types (classes) and `ViewHolders` layouts.
+4) Nothing. It is all
+
+In example below I used JetBrains Anko and `AnkoCoroutinesLayout` from this library. In this class I needs to override only View creation method. 
+
+But you can extend own `RxLayout` or `CoroutinesLayout` or even `Layout`. 
+
+`Layout` is not depend on any library and can be any and adapted to any DSL library and any data flow. It describes entity, that get item changes and provide method for creating View:
+
+```abstract fun createView(parent: ViewGroup): View```
+
+`RxLayout` and `CoroutinesLayout` are layouts that adapted for data flow concrete types. They both override on own manner:
+
+```fun set(item: T)``` 
+
+And both provide:
+- (observable) property `item` with type Rx(Coroutine)Field described above
+- property `itemChanges` that emits only non-null items 
+- `fun changeItem(itemChange: T?.() -> Unit)` lets you to change item with Recycler will be notified about item change automatically
+
+Example can be found [Here](https://github.com/iamthevoid/android-dsl-databinding/tree/master/noxml-demo-app/src/main/java/iam/thevoid/noxml/demo/ui/mvvm/revolut). One screen app, that receive currency rates every second, and represent it according to entered value. On top position of `RecyclerView` is base currency with editable field for it value, below fields with another currencies and values, based on base value, entered in header ViewHolder (rate * entered base value). Clicked rate becomes base rate. 
+
+Extractions here:
+
+Describing Recycler in DSL:
+```kotlin
+recyclerView {
+    // Just remove BlinkAnimation on items change
+    (itemAnimator as? SimpleItemAnimator)?.supportsChangeAnimations = false
+    // Same as usualy - providing LayoutManager 
+    layoutManager = LinearLayoutManager(context)
+    // Pay attention for line below, it will be desribed later
+    setItems(vm.data, revolutBindings(vm))
+    // Hide view based on observable boolean loading
+    hideUntilLoaded(vm.loading)
+}
+```
+
+Then layouts. Layouts must extends `Layout` class, and looks like this (left only important part, removed static data):
+
+```kotlin
+// Rates requests every second, that both of layouts will get holding item changes
+
+// This class extends Layout which generic type is 'String'. Pay attention
+class CurrencyHeaderItem(private val vm : RevolutViewModel, viewGroup: ViewGroup) : AnkoCoroutinesLayout<String>(viewGroup) {
+
+    override fun createView(ui: AnkoContext<AnkoCoroutinesLayout<String>>): View =
+        ui.frameLayout {
+            imageView {
+	        // custom setter for image view, if item've change - image also have change 
+                setImageUrl(itemChanges.map { toImageUrl(it) })
+            }
+            textView {
+                // AnkoCoroutinesLayout generic type is String, then 'itemChanges' property is observable String 
+                setText(itemChanges)
+            }
+            textView {
+                // We can also do any modiications with data
+                setText(itemChanges.flatMapConcat { flow { emit(codeToValue(it)) } })
+            }
+            editText {
+                // Seting text from ViewModel
+                setText(vm.currentValue)
+                // After text changes bind it to back to field
+                afterTextChanges(vm.currentValue)
+            }
+        }
+}
+```
+Second layout different, looks like very similar to this, but i wouldn't bring full listing. Just pay attention for generic type:
+```
+// Generic type is CurrencyRate differs from String in previous layout
+// so 'itemChanges' property is observable CurrencyRate 
+class CurrencySimpleItem(private val vm : RevolutViewModel, viewGroup: ViewGroup) : AnkoCoroutinesLayout<CurrencyRate>(viewGroup) 
+```
+It is all. One second... No! :) Just a little part, binding. Do you remember calling method 'setItems' on RecyclerView? Look to it:
+
+`setItems(vm.data, revolutBindings(vm))`
+
+`vm.data` is observable list of items, but we need bind it to recycler:
+
+```
+fun revolutBindings(vm : RevolutViewModel) =
+    ItemBindings
+        .of(String::class.java) { CurrencyHeaderItem(vm, it) }
+        .addBinding(CurrencyRate::class) { CurrencySimpleItem(vm, it) }
+```
+Now it is completely all. You can run example and look how recycler represents data and works without providing adapter, or view holder. 
+
+Full signature of `setItems` fun looks like this (Coroutines here, but also there is Rx port in library)
+```kotlin
+fun <T : Any> RecyclerView.setItems(  
+  // Observable data
+  items: Flow<List<T>>,  
+  
+  // Bindings
+  itemBindings: ItemBindings, 
+   
+  // Diff callback factory. You can use custom or default provided in library.
+  // Deault check if item is implements Diffable interface or compare by 'equals' calling
+  // So you can implement Diffable or use data classes from Kotlin
+  diffCallbackFactory: ((old: List<T>, new: List<T>) -> DiffCallback<T>) = diffCallback()  
+) = addSetter(items) { setItems(it, itemBindings, diffCallbackFactory) }  
+  
+inline fun <T : Any, reified A : StandaloneRecyclerAdapter<T>> RecyclerView.setItems(  
+  items: Flow<List<T>>,  
+  itemBindings: ItemBindings,  
+  
+  // Here you can provide Custom Adapter extends StandaloneRecyclerAdapter, if you purpose more       
+  // complex, than just adapter. 
+  crossinline adapterFactory: (List<T>) -> A? = { null },  
+  noinline diffCallbackFactory: ((old: List<T>, new: List<T>) -> DiffCallback<T>) = diffCallback()  
+) = addSetter(items) { setItems( it, itemBindings, adapterFactory, diffCallbackFactory) }
+``` 
+
 # Implementation
 
 ### RxJava 2
