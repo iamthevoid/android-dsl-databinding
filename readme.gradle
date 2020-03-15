@@ -77,7 +77,7 @@ for both, rx and coroutines provided base types
 
 ### Recycler View
 
-`RecyclerView` part deserved own block. Just recall typical `RecyclerView` usage:
+`RecyclerView` part deserves own block. Just recall typical `RecyclerView` usage:
 
 1) Creating layout with `RecyclerView`
 2) Creating layouts for ALL `ViewHolders` (I saw up to 9 different holders in one Recycler, are you?)
@@ -190,7 +190,7 @@ fun <T : Any> RecyclerView.setItems(
   itemBindings: ItemBindings, 
    
   // Diff callback factory. You can use custom or default provided in library.
-  // Deault check if item is implements Diffable interface or compare by 'equals' calling
+  // Default check if item is implements Diffable interface or compare by 'equals' calling
   // So you can implement Diffable or use data classes from Kotlin
   diffCallbackFactory: ((old: List<T>, new: List<T>) -> DiffCallback<T>) = diffCallback()  
 ) = addSetter(items) { setItems(it, itemBindings, diffCallbackFactory) }  
