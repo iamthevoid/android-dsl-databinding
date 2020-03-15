@@ -43,8 +43,8 @@ android {
 }
 
 publish {
-    artifactId = 'rx-core'
-    desc = 'Rx core. Setters, bindings, etc'
+    artifactId = 'rx2-core'
+    desc = 'RxJava2 core. Setters, bindings, etc'
     groupId = "$libGroupId"
     publishVersion = "$libVersion"
     licences = ["$libLicence"]

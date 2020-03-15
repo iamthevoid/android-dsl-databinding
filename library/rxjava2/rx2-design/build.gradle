@@ -37,8 +37,8 @@ android {
 }
 
 publish {
-    artifactId = 'rx-design'
-    desc = 'Rx design port. Setters, adapters'
+    artifactId = 'rx2-design'
+    desc = 'RxJava2 design port. Setters, adapters'
     groupId = "$libGroupId"
     publishVersion = "$libVersion"
     licences = ["$libLicence"]

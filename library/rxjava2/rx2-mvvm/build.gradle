@@ -36,8 +36,8 @@ android {
 }
 
 publish {
-    artifactId = 'rx-mvvm'
-    desc = 'Rx mvvm port. View model with composite disposable'
+    artifactId = 'rx2-mvvm'
+    desc = 'RxJava2 mvvm port. View model with composite disposable'
     groupId = "$libGroupId"
     publishVersion = "$libVersion"
     licences = ["$libLicence"]

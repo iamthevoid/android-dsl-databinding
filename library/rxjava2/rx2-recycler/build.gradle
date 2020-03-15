@@ -36,8 +36,8 @@ android {
 }
 
 publish {
-    artifactId = 'rx-recycler'
-    desc = 'Rx recycler port. Setters, adapters etc'
+    artifactId = 'rx2-recycler'
+    desc = 'RxJava2 recycler port. Setters, adapters etc'
     groupId = "$libGroupId"
     publishVersion = "$libVersion"
     licences = ["$libLicence"]

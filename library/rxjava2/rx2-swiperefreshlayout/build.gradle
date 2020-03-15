@@ -38,8 +38,8 @@ android {
 
 
 publish {
-    artifactId = 'rx-swiperefreshlayout'
-    desc = 'Rx SwipeRefreshLayout. Setters, bindings, etc'
+    artifactId = 'rx2-swiperefreshlayout'
+    desc = 'RxJava2 Swipe Refresh Layout. Setters, bindings, etc'
     groupId = "$libGroupId"
     publishVersion = "$libVersion"
     licences = ["$libLicence"]
