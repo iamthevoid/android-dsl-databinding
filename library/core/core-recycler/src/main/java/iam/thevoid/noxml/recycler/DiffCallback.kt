@@ -3,11 +3,15 @@ package iam.thevoid.noxml.recycler
 import androidx.recyclerview.widget.DiffUtil
 import iam.thevoid.e.safe
 
-abstract class DiffCallback<T>(private val oldItems: List<T>, private val newItems: List<T>) : DiffUtil.Callback() {
+abstract class DiffCallback<T>(private val oldItems: List<T>, private val newItems: List<T>) :
+    DiffUtil.Callback() {
 
     companion object {
         inline fun <reified T> pairOfNonNull(first: Any, second: Any) =
-            if (first !is T || second !is T) null else Pair(first as? T, second as? T).let { (f, s) ->
+            if (first !is T || second !is T) null else Pair(
+                first as? T,
+                second as? T
+            ).let { (f, s) ->
                 if (f != null && s != null) Pair(f, s) else null
             }
     }
@@ -48,13 +52,37 @@ abstract class DiffCallback<T>(private val oldItems: List<T>, private val newIte
 fun <T : Any> diffCallback(): ((List<T>, List<T>) -> DiffCallback<T>) = { old, new ->
     object : DiffCallback<T>(old, new) {
         override fun areItemsTheSame(oldItem: T, newItem: T): Boolean =
-            if (oldItem is Diffable && newItem is Diffable) oldItem.areItemsTheSame(newItem)
-            else (oldItem::class == newItem::class) && oldItem == newItem
+            areItemsTheSame(oldItem, newItem) { f, s -> f.areItemsTheSame(s) }
 
         override fun areContentsTheSame(oldItem: T, newItem: T): Boolean =
-            if (oldItem is Diffable && newItem is Diffable) oldItem.areContentsTheSame(newItem)
-            else (oldItem::class == newItem::class) && oldItem == newItem
+            areItemsContentsTheSame(oldItem, newItem)
     }
+}
+
+fun <T : Any> areListsTheSame(list1: List<T>?, list2: List<T>?) =
+    list1.safe().areListItemsContentsTheSame(list2.safe())
+
+fun <T : Any> areItemsContentsTheSame(item1: T?, item2: T?): Boolean =
+    areItemsTheSame(item1, item2) { f, s -> f.areContentsTheSame(s) }
+
+fun <T : Any> areItemsTheSame(
+    item1: T?,
+    item2: T?,
+    diffablePredicate: (DiffCallback.Diffable, Any) -> Boolean
+): Boolean {
+    if (item1 == null && item2 == null)
+        return true
+
+    if (item1 == null || item2 == null)
+        return false
+
+    if (item1 is DiffCallback.Diffable)
+        return diffablePredicate(item1, item2)
+
+    if (item2 is DiffCallback.Diffable)
+        return diffablePredicate(item2, item1)
+
+    return item1 == item2
 }
 
 fun <T : Any> List<T>.areListItemsContentsTheSame(list: List<T>): Boolean {
@@ -69,18 +97,8 @@ fun <T : Any> List<T>.areListItemsContentsTheSame(list: List<T>): Boolean {
 
     return when (first()) {
         is DiffCallback.Diffable ->
-            all { item ->
-                list.find {
-                    (it as? DiffCallback.Diffable)?.areContentsTheSame(item).safe()
-                } != null
-            } &&
-                    list.all { item ->
-                        find {
-                            (it as? DiffCallback.Diffable)?.areContentsTheSame(
-                                item
-                            ).safe()
-                        } != null
-                    }
+            all { item -> list.find { areItemsContentsTheSame(item, it) } != null } &&
+                    list.all { item -> find { areItemsContentsTheSame(item, it) } != null }
         else ->
             all { list.contains(it) } && list.all { contains(it) }
     }
