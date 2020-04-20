@@ -223,8 +223,8 @@ implementation 'iam.thevoid.noxml:rx2-recycler:$libVersion'
 ```
 - Swipe Refresh Layout
 ```gradle
-implementation 'iam.thevoid.noxml:core-swiperefreshlayot:$libVersion'
-implementation 'iam.thevoid.noxml:rx2-swiperefreshlayot:$libVersion'
+implementation 'iam.thevoid.noxml:core-swiperefreshlayout:$libVersion'
+implementation 'iam.thevoid.noxml:rx2-swiperefreshlayout:$libVersion'
 ```
 - Material
 ```gradle
@@ -247,8 +247,8 @@ implementation 'iam.thevoid.noxml:coroutines-recycler:$libVersion'
 ```
 - Swipe Refresh Layout
 ```gradle
-implementation 'iam.thevoid.noxml:core-swiperefreshlayot:$libVersion'
-implementation 'iam.thevoid.noxml:coroutines-swiperefreshlayot:$libVersion'
+implementation 'iam.thevoid.noxml:core-swiperefreshlayout:$libVersion'
+implementation 'iam.thevoid.noxml:coroutines-swiperefreshlayout:$libVersion'
 ```
 - Material
 ```gradle

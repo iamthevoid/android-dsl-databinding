@@ -8,7 +8,7 @@ import org.jetbrains.anko.frameLayout
 import org.jetbrains.anko.support.v4.viewPager
 import iam.thevoid.noxml.demo.ui.BaseFragment
 import iam.thevoid.noxml.demo.ui.mvvm.just.JustFragment
-import iam.thevoid.noxml.rx2.recycler.extensions.setUntitledFactories
+import iam.thevoid.noxml.extensions.viewpager.setUntitledFactories
 
 class PagerFragment : BaseFragment() {
 

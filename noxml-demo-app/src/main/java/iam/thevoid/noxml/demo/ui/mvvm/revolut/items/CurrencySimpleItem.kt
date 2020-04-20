@@ -10,7 +10,7 @@ import iam.thevoid.noxml.demo.ui.mvvm.revolut.RevolutViewModel
 import iam.thevoid.noxml.demo.util.codeToValue
 import iam.thevoid.noxml.demo.util.setImageUrl
 import iam.thevoid.noxml.anko.coroutines.AnkoCoroutinesLayout
-import iam.thevoid.noxml.coroutines.extensions.setText
+import iam.thevoid.noxml.coroutines.extensions.textview.setText
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.flow

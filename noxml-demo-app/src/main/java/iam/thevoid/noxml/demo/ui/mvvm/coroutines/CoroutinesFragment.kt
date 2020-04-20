@@ -7,7 +7,7 @@ import android.view.View
 import android.widget.FrameLayout
 import android.widget.TextView
 import iam.thevoid.noxml.core.mvvm.viewModel
-import iam.thevoid.noxml.coroutines.extensions.addSetter
+import iam.thevoid.noxml.coroutines.extensions.view.addSetter
 import kotlinx.coroutines.flow.*
 import org.jetbrains.anko.*
 import iam.thevoid.noxml.demo.R

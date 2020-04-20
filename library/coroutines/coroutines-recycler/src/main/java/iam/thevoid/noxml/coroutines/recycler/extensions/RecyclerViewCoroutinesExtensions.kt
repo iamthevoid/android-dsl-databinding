@@ -2,7 +2,7 @@ package iam.thevoid.noxml.coroutines.recycler.extensions
 
 import androidx.recyclerview.widget.RecyclerView
 import iam.thevoid.noxml.adapterview.ItemBindings
-import iam.thevoid.noxml.coroutines.extensions.addSetter
+import iam.thevoid.noxml.coroutines.extensions.view.addSetter
 import iam.thevoid.noxml.recycler.DiffCallback
 import iam.thevoid.noxml.recycler.StandaloneRecyclerAdapter
 import iam.thevoid.noxml.recycler.diffCallback

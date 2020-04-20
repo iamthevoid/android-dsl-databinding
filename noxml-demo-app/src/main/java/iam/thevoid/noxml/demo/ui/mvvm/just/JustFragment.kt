@@ -4,7 +4,7 @@ import android.view.View
 import iam.thevoid.noxml.anko.mvvm.AnkoMvvmFragment
 import iam.thevoid.noxml.core.mvvm.ViewModelBindingProvider
 import iam.thevoid.noxml.core.mvvm.createBinding
-import iam.thevoid.noxml.rx2.extensions.setBackgroundColor
+import iam.thevoid.noxml.rx2.extensions.view.setBackgroundColor
 import org.jetbrains.anko.AnkoContext
 import org.jetbrains.anko.dip
 import org.jetbrains.anko.frameLayout

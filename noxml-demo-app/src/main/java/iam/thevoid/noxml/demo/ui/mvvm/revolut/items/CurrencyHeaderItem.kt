@@ -5,8 +5,8 @@ import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import iam.thevoid.noxml.anko.coroutines.AnkoCoroutinesLayout
-import iam.thevoid.noxml.coroutines.extensions.afterTextChanges
-import iam.thevoid.noxml.coroutines.extensions.setText
+import iam.thevoid.noxml.coroutines.extensions.textview.afterTextChanges
+import iam.thevoid.noxml.coroutines.extensions.textview.setText
 import iam.thevoid.noxml.demo.R
 import iam.thevoid.noxml.demo.ui.mvvm.revolut.RevolutViewModel
 import iam.thevoid.noxml.demo.util.codeToValue

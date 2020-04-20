@@ -8,7 +8,7 @@ import iam.thevoid.noxml.recycler.change.OnScrolled
 import iam.thevoid.noxml.rx2.data.fields.RxField
 import iam.thevoid.noxml.rx2.data.fields.RxInt
 import iam.thevoid.noxml.rx2.data.fields.RxList
-import iam.thevoid.noxml.rx2.extensions.addSetter
+import iam.thevoid.noxml.rx2.extensions.view.addSetter
 import iam.thevoid.noxml.rx2.recycler.pagination.OldPaginationLoader
 import io.reactivex.Flowable
 import io.reactivex.Single
