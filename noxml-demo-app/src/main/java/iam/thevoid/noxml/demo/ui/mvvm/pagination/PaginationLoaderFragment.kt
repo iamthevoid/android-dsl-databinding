@@ -15,6 +15,7 @@ import iam.thevoid.noxml.recycler.resetEndlessScrollState
 import iam.thevoid.noxml.recycler.setLoadMore
 import iam.thevoid.rxe.mapSelf
 import iam.thevoid.noxml.rx2.extensions.textview.setText
+import iam.thevoid.noxml.rx2.recycler.extensions.setItems
 import iam.thevoid.noxml.rx2.swiperefreshlayout.setRefreshing
 
 class PaginationLoaderFragment : BaseFragment() {

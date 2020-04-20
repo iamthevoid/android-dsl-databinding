@@ -22,6 +22,7 @@ import org.jetbrains.anko.support.v4.viewPager
 import iam.thevoid.noxml.demo.R
 import iam.thevoid.noxml.demo.ui.BaseFragment
 import iam.thevoid.noxml.rx2.extensions.viewpager.setItems
+import iam.thevoid.noxml.rx2.recycler.extensions.setItems
 import kotlin.math.absoluteValue
 
 class PagerCoordinatorFragment : BaseFragment(), AppBarLayout.OnOffsetChangedListener {
