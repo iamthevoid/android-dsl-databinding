@@ -9,12 +9,11 @@ import iam.thevoid.noxml.adapterview.Layout
 open class StandaloneRecyclerAdapter<T : Any>(data: List<T> = emptyList()) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    var data = data.toMutableList()
+    var data = data.toList()
         set(items) {
             diffCallbackFactory(field, items).let { callback ->
                 DiffUtil.calculateDiff(callback).apply {
-                    field.clear()
-                    field.addAll(items)
+                    field = items
                     dispatchUpdatesTo(this@StandaloneRecyclerAdapter)
                 }
             }
