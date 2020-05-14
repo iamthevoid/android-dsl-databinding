@@ -42,7 +42,8 @@ open class StandaloneRecyclerAdapter<T : Any>(data: List<T> = emptyList()) :
         (holder as? Holder<T>)?.onBind(data[position])
     }
 
-    override fun getItemViewType(position: Int): Int = data[position].javaClass.name.hashCode()
+    override fun getItemViewType(position: Int): Int =
+        data.getOrNull(position)?.javaClass?.name.hashCode()
 
     override fun getItemCount(): Int = data.size
 
