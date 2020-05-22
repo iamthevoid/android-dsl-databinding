@@ -5,6 +5,7 @@ import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import iam.thevoid.noxml.anko.coroutines.AnkoCoroutinesLayout
+import iam.thevoid.noxml.coroutines.extensions.edittext.setText
 import iam.thevoid.noxml.coroutines.extensions.textview.afterTextChanges
 import iam.thevoid.noxml.coroutines.extensions.textview.setText
 import iam.thevoid.noxml.demo.R

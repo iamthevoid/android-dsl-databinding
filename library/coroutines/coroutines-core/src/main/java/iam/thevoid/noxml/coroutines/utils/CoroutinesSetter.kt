@@ -16,7 +16,7 @@ abstract class CoroutinesSetter<V : View, C>(view: V, private val flow: Flow<C>)
 
     private var job: Job? = null
 
-    @UseExperimental(InternalCoroutinesApi::class)
+    @OptIn(InternalCoroutinesApi::class)
     override fun subscribeChanges() {
         job?.cancel()
         job = launch { flow.collect(this@CoroutinesSetter) }
