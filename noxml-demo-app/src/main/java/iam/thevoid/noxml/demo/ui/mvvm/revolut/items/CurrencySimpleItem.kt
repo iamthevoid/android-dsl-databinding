@@ -11,14 +11,13 @@ import iam.thevoid.noxml.demo.util.codeToValue
 import iam.thevoid.noxml.demo.util.setImageUrl
 import iam.thevoid.noxml.anko.coroutines.AnkoCoroutinesLayout
 import iam.thevoid.noxml.coroutines.extensions.textview.setText
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.flatMapConcat
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.*
 import org.jetbrains.anko.*
 
 class CurrencySimpleItem(private val vm : RevolutViewModel, viewGroup: ViewGroup) : AnkoCoroutinesLayout<CurrencyRate>(viewGroup) {
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     override fun createView(ui: AnkoContext<AnkoCoroutinesLayout<CurrencyRate>>): View =
         ui.frameLayout {
 
@@ -44,7 +43,7 @@ class CurrencySimpleItem(private val vm : RevolutViewModel, viewGroup: ViewGroup
                 padding = dip(8)
                 textSizeDimen = R.dimen.text_medium
                 textColorResource = android.R.color.black
-                setText(itemChanges.map { it.code }.flatMapConcat { flow { emit(codeToValue(it)) } })
+                setText(itemChanges.map { codeToValue(it.code) }.onStart { emit("---") })
             }.lparams {
                 leftMargin = dip(96)
                 gravity = Gravity.CENTER_VERTICAL

@@ -1,6 +1,7 @@
 package iam.thevoid.noxml.adapterview
 
 import android.view.ViewGroup
+import iam.thevoid.noxml.adapterview.factory.LayoutFactory
 import kotlin.reflect.KClass
 import kotlin.reflect.full.isSubclassOf
 import kotlin.reflect.jvm.jvmName
@@ -21,12 +22,14 @@ class ItemBindings {
             ItemBindings().addBinding(binding)
     }
 
-    private val factories = mutableMapOf<KClass<*>, (ViewGroup) -> Layout<*>>()
+    private val factories = mutableMapOf<KClass<*>, LayoutFactory<*>>()
 
-    fun <T : Any> addBinding(binding: Pair<KClass<T>, (ViewGroup) -> Layout<T>>): ItemBindings {
-        factories[binding.first] = binding.second
-        return this
-    }
+    fun <T : Any> addBinding(binding: Pair<KClass<T>, (ViewGroup) -> Layout<T>>): ItemBindings =
+        apply {
+            factories[binding.first] = object  : LayoutFactory<T> {
+                override fun createLayout(viewGroup: ViewGroup): Layout<T> = binding.second(viewGroup)
+            }
+        }
 
     fun <T : Any> addBinding(cls: KClass<T>, layout: (ViewGroup) -> Layout<T>): ItemBindings =
         addBinding(cls to layout)
@@ -40,9 +43,9 @@ class ItemBindings {
             ?: throw IllegalArgumentException("View type not found"))
 
     @Suppress("UNCHECKED_CAST")
-    fun factory(viewType: Int): (ViewGroup) -> Layout<*> = factory(bindingClass(viewType))
+    fun factory(viewType: Int): LayoutFactory<*> = factory(bindingClass(viewType))
 
-    fun factory(cls: KClass<*>): (ViewGroup) -> Layout<*> =
+    internal fun factory(cls: KClass<*>): LayoutFactory<*> =
         factories[cls]
             ?: factories.filter { it.key.isSealed }.takeIf { it.isNotEmpty() }?.filter { cls.isSubclassOf(it.key) }?.values?.firstOrNull()
             ?: throw IllegalArgumentException("Type of provided factory is incorrect")

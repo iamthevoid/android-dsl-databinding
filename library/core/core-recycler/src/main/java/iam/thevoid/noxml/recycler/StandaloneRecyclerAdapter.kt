@@ -5,9 +5,10 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import iam.thevoid.noxml.adapterview.ItemBindings
 import iam.thevoid.noxml.adapterview.Layout
+import iam.thevoid.noxml.adapterview.factory.LayoutFactory
 
 open class StandaloneRecyclerAdapter<T : Any>(data: List<T> = emptyList()) :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    RecyclerView.Adapter<Holder<T>>() {
 
     var data = data.toList()
         set(items) {
@@ -24,22 +25,22 @@ open class StandaloneRecyclerAdapter<T : Any>(data: List<T> = emptyList()) :
     var diffCallbackFactory: ((old: List<T>, new: List<T>) -> DiffCallback<T>) =
         diffCallback()
 
-    private val layoutCache by lazy { mutableMapOf<Int, (ViewGroup) -> Layout<*>>() }
+    private val layoutCache by lazy { mutableMapOf<Int, LayoutFactory<*>>() }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder<T> =
         createLayout(viewType, parent)?.let(::Holder)
             ?: throw IllegalStateException("Binding not provided")
 
     @Suppress("UNCHECKED_CAST")
     private fun createLayout(viewType: Int, parent: ViewGroup) =
-        getLayoutFactory(viewType).invoke(parent) as? Layout<T>
+        getLayoutFactory(viewType).createLayout(parent) as? Layout<T>
 
     private fun getLayoutFactory(viewType: Int) =
         layoutCache[viewType] ?: (bindings.factory(viewType).also { layoutCache[viewType] = it })
 
     @Suppress("UNCHECKED_CAST")
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        (holder as? Holder<T>)?.onBind(data[position])
+    override fun onBindViewHolder(holder: Holder<T>, position: Int) {
+        holder.onBind(data[position])
     }
 
     override fun getItemViewType(position: Int): Int =

@@ -4,6 +4,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.IntDef
 import androidx.viewpager.widget.PagerAdapter
+import iam.thevoid.noxml.adapterview.factory.LayoutFactory
 import kotlin.reflect.KClass
 
 open class StandalonePagerAdapter<T : Any>(items: List<T>, titles: List<String> = emptyList()) : PagerAdapter() {
@@ -36,7 +37,7 @@ open class StandalonePagerAdapter<T : Any>(items: List<T>, titles: List<String> 
         notifyDataSetChanged()
     }
 
-    private val layoutCache by lazy { mutableMapOf<KClass<out T>, (ViewGroup) -> Layout<*>>() }
+    private val layoutCache by lazy { mutableMapOf<KClass<out T>, LayoutFactory<*>>() }
 
     override fun instantiateItem(container: ViewGroup, position: Int): View =
         data[position].let {item ->
@@ -50,7 +51,7 @@ open class StandalonePagerAdapter<T : Any>(items: List<T>, titles: List<String> 
         } ?: View(container.context)
 
     private fun createLayout(item : T, container: ViewGroup) =
-        getLayoutFactory(item).invoke(container) as? Layout<T>
+        getLayoutFactory(item).createLayout(container) as? Layout<T>
 
     private fun getLayoutFactory(item : T) =
         item::class.let { key -> (layoutCache[key] ?: (bindings.factory(key)).also { layoutCache[key] = it }) }

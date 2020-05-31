@@ -38,7 +38,7 @@ class StandaloneFragmentPagerAdapter<T : Any>(
 
     override fun getItem(position: Int) = StandalonePagerFragment().apply {
         factory = {
-            bindings?.factory(data[position]::class)?.invoke(it)?.let { layout ->
+            bindings?.factory(data[position]::class)?.createLayout(it)?.let { layout ->
                 (layout as? Layout<T>)?.run {
                     view.also {
                         set(data[position])

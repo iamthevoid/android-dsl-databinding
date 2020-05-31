@@ -39,6 +39,12 @@ android {
         sourceCompatibility = '1.8'
         targetCompatibility = '1.8'
     }
+    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+        kotlinOptions {
+            jvmTarget = "$kotlinJvmTarget"
+            freeCompilerArgs = ['-Xopt-in=kotlin.RequiresOptIn']
+        }
+    }
 }
 
 dependencies {
@@ -68,8 +74,12 @@ dependencies {
 
     implementation "androidx.appcompat:appcompat:$appcompat"
 
-    implementation "com.github.bumptech.glide:glide:$glide"
-    kapt "com.github.bumptech.glide:compiler:$glide"
+    implementation("com.louiscad.splitties:splitties-fun-pack-android-base:$splitties")
+
+    implementation("io.coil-kt:coil:$coil")
+
+//    implementation "com.github.bumptech.glide:glide:$glide"
+//    kapt "com.github.bumptech.glide:compiler:$glide"
 
     implementation "org.jetbrains.anko:anko-sdk25:$anko"
     implementation "org.jetbrains.anko:anko-appcompat-v7:$anko"
