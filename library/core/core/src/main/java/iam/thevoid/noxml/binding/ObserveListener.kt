@@ -1,5 +1,7 @@
 package iam.thevoid.noxml.binding
 
+import android.graphics.Rect
+import android.os.Build
 import android.view.View
 import iam.thevoid.e.safe
 import java.lang.reflect.ParameterizedType
@@ -21,6 +23,8 @@ class ObserveListener : View.OnAttachStateChangeListener {
             alreadyObservable?.unsubscribeChanges()
 
         observableSetters[tag] = setter
+
+        attached = setter.view?.isAttached().safe()
 
         if (attached)
             setter.subscribeChanges()
@@ -64,4 +68,11 @@ class ObserveListener : View.OnAttachStateChangeListener {
             )
         }
     }
+
+    private fun View.isAttached(): Boolean =
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            isAttachedToWindow
+        } else {
+            windowToken != null
+        }
 }
