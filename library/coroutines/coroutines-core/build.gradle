@@ -28,6 +28,12 @@ android {
             debuggable = true
         }
     }
+    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+        kotlinOptions {
+//            jvmTarget = "$kotlinJvmTarget"
+            freeCompilerArgs = ['-Xopt-in=kotlin.RequiresOptIn']
+        }
+    }
 }
 
 publish {

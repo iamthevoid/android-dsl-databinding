@@ -50,6 +50,7 @@ open class StandalonePagerAdapter<T : Any>(items: List<T>, titles: List<String> 
             }
         } ?: View(container.context)
 
+    @Suppress("UNCHECKED_CAST")
     private fun createLayout(item : T, container: ViewGroup) =
         getLayoutFactory(item).createLayout(container) as? Layout<T>
 

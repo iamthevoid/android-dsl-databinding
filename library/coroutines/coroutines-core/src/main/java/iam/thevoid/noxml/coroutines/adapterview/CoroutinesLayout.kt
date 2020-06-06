@@ -9,7 +9,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
-@UseExperimental(ExperimentalCoroutinesApi::class)
+@OptIn(ExperimentalCoroutinesApi::class)
 abstract class CoroutinesLayout<T>(parent: ViewGroup) : Layout<T>(parent), CoroutineScope by CoroutineScope(Dispatchers.IO)  {
 
     private val itemFactory: () -> CoroutineField<T> = { CoroutineField() }

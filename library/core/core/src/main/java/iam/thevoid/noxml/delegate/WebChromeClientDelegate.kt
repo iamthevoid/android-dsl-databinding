@@ -9,6 +9,7 @@ import android.webkit.*
 import androidx.annotation.CallSuper
 import androidx.annotation.RequiresApi
 
+@Suppress("DEPRECATION")
 open class WebChromeClientDelegate(private val client: WebChromeClient?) : WebChromeClient() {
 
     @CallSuper

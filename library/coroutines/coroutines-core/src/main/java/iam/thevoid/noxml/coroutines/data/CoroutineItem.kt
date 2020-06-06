@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package iam.thevoid.noxml.coroutines.data
 
 import iam.thevoid.e.safe
@@ -8,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.map
 
-@UseExperimental(ExperimentalCoroutinesApi::class, FlowPreview::class)
+@OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
 open class CoroutineItem<T>(item: T, private val onChange: (T) -> Unit = {}) {
 
     private val channel = ConflatedBroadcastChannel(item)
@@ -28,6 +30,7 @@ open class CoroutineItem<T>(item: T, private val onChange: (T) -> Unit = {}) {
 }
 
 
+@Suppress("UNCHECKED_CAST")
 open class CoroutineCharSequence<T : CharSequence>(initial: T = "" as T, onChange: (T) -> Unit = {}) :
     CoroutineItem<T>(initial, onChange)
 

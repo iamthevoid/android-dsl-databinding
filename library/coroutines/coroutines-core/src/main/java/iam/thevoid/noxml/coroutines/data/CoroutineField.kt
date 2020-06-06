@@ -1,6 +1,7 @@
+@file:Suppress("unused", "MemberVisibilityCanBePrivate")
+
 package iam.thevoid.noxml.coroutines.data
 
-import iam.thevoid.e.safe
 import iam.thevoid.util.Optional
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -10,10 +11,10 @@ import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
 
-@UseExperimental(ExperimentalCoroutinesApi::class, FlowPreview::class)
+@OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
 open class CoroutineField<T>(item: T? = null, private val onChange: (T?) -> Unit = {}) {
 
-    private val channel = ConflatedBroadcastChannel(Optional.of(item))
+    private val channel = ConflatedBroadcastChannel<Optional<T>>(Optional.of(item))
 
     fun set(item: T?) {
         channel.offer(Optional.of(item))

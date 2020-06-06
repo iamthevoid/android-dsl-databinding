@@ -1,8 +1,9 @@
-@file:UseExperimental(ExperimentalCoroutinesApi::class)
+@file:OptIn(ExperimentalCoroutinesApi::class)
 @file:Suppress("unused")
 
 package iam.thevoid.noxml.coroutines.extensions.view
 
+import android.annotation.SuppressLint
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.view.*
@@ -283,6 +284,7 @@ fun View.getHeight(field: CoroutineInt) {
  * ON SCROLL
  */
 
+@SuppressLint("ClickableViewAccessibility")
 fun <T : Any> View.onScroll(onScroll: CoroutineField<T>, mapper: (OnScroll) -> T) {
     gestureDetectorCallback.addOnScrollCallback(object :
         GestureDetector.SimpleOnGestureListener() {
@@ -307,6 +309,7 @@ fun View.onScroll(onScroll: CoroutineField<OnScroll>) =
  * ON FLING
  */
 
+@SuppressLint("ClickableViewAccessibility")
 fun <T : Any> View.onFling(onFling: CoroutineField<T>, mapper: (OnFling) -> T) {
     gestureDetectorCallback.addOnFlingCallback(object :
         GestureDetector.SimpleOnGestureListener() {
@@ -331,6 +334,7 @@ fun View.onFling(onFling: CoroutineField<OnFling>) =
  * ON DOWN
  */
 
+@SuppressLint("ClickableViewAccessibility")
 fun <T : Any> View.onDown(onDown: CoroutineField<T>, mapper: (Optional<MotionEvent>) -> T) {
     gestureDetectorCallback.addOnDownCallback(object :
         GestureDetector.SimpleOnGestureListener() {
@@ -350,6 +354,7 @@ fun View.onDown(onDown: CoroutineField<Optional<MotionEvent>>) =
  * ON SINGLE TAP UP
  */
 
+@SuppressLint("ClickableViewAccessibility")
 fun <T : Any> View.onSingleTapUp(
     onSingleTapUp: CoroutineField<T>,
     mapper: (Optional<MotionEvent>) -> T
@@ -372,6 +377,7 @@ fun View.onSingleTapUp(onSingleTapUp: CoroutineField<Optional<MotionEvent>>) =
  * ON SHOW PRESS
  */
 
+@SuppressLint("ClickableViewAccessibility")
 fun <T : Any> View.onShowPress(
     onShowPress: CoroutineField<T>,
     mapper: (Optional<MotionEvent>) -> T
@@ -393,6 +399,7 @@ fun View.onShowPress(onShowPress: CoroutineField<Optional<MotionEvent>>) =
  * ON LONG PRESS
  */
 
+@SuppressLint("ClickableViewAccessibility")
 fun <T : Any> View.onLongPress(
     onLongPress: CoroutineField<T>,
     mapper: (Optional<MotionEvent>) -> T

@@ -1,4 +1,5 @@
-@file:UseExperimental(ExperimentalCoroutinesApi::class)
+@file:OptIn(ExperimentalCoroutinesApi::class)
+@file:Suppress("unused")
 
 package iam.thevoid.noxml.coroutines.swiperefreshlayout
 

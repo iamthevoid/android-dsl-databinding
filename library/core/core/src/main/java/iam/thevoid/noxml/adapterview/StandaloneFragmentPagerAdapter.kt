@@ -36,6 +36,7 @@ class StandaloneFragmentPagerAdapter<T : Any>(
         notifyDataSetChanged()
     }
 
+    @Suppress("UNCHECKED_CAST")
     override fun getItem(position: Int) = StandalonePagerFragment().apply {
         factory = {
             bindings?.factory(data[position]::class)?.createLayout(it)?.let { layout ->

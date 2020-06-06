@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package iam.thevoid.noxml.core.mvvm.view
 
 import android.os.Bundle
@@ -11,6 +13,7 @@ import iam.thevoid.noxml.core.mvvm.vm.LifecycleTrackingViewModel
 
 abstract class MvvmFragment<VM : ViewModel> : Fragment(), MvvmView<VM> {
 
+    @Suppress("UNCHECKED_CAST")
     override val vm: VM by lazy {
         viewModels.values.mapNotNull { it as? VM }.firstOrNull()
             ?: throw IllegalArgumentException("View model not provided")
@@ -53,6 +56,7 @@ abstract class MvvmFragment<VM : ViewModel> : Fragment(), MvvmView<VM> {
 
                     onConfigureViewModel(viewModel)
 
+                    @Suppress("UNCHECKED_CAST")
                     (viewModel as? VM)?.let { vm -> onConfigureGenericViewModel(vm) }
                 }
             }
