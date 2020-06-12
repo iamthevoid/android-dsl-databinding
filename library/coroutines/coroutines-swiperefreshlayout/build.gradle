@@ -1,7 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-apply plugin: 'com.novoda.bintray-release'
 
 android {
     compileSdkVersion compileApi
@@ -36,15 +35,9 @@ android {
     }
 }
 
-publish {
-    artifactId = 'coroutines-swiperefreshlayout'
-    desc = 'Coroutines SwipeRefreshLayout. Setters, bindings, etc'
-    groupId = "$libGroupId"
-    publishVersion = "$libVersion"
-    licences = ["$libLicence"]
-    uploadName = "$libUploadName"
-    userOrg = "$libUserOrg"
-    website = "$libWebsite"
+ext {
+    libArtifactId = 'coroutines-swiperefreshlayout'
+    libDesc = 'Coroutines SwipeRefreshLayout. Setters, bindings, etc'
 }
 
 dependencies {
@@ -65,3 +58,7 @@ dependencies {
     androidTestImplementation "androidx.test:runner:$runner"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso"
 }
+
+apply from: "../../../ext.gradle"
+apply from: "../../../install.gradle"
+apply from: "../../../deploy.gradle"

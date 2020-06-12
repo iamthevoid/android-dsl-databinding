@@ -1,8 +1,5 @@
 apply plugin: 'com.android.library'
-
 apply plugin: 'kotlin-android'
-
-apply plugin: 'com.novoda.bintray-release'
 
 repositories {
 
@@ -39,15 +36,9 @@ android {
     }
 }
 
-publish {
-    artifactId = 'core'
-    desc = 'Core part of library. Abstract setter and observable listener, adapter bindings, delegates, adapters, extensions'
-    groupId = "$libGroupId"
-    publishVersion = "$libVersion"
-    licences = ["$libLicence"]
-    uploadName = "$libUploadName"
-    userOrg = "$libUserOrg"
-    website = "$libWebsite"
+ext {
+    libArtifactId = 'core'
+    libDesc = 'Core part of library. Abstract setter and observable listener, adapter bindings, delegates, adapters, extensions'
 }
 
 dependencies {
@@ -66,3 +57,7 @@ dependencies {
     androidTestImplementation "androidx.test:runner:$runner"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso"
 }
+
+apply from: "../../../ext.gradle"
+apply from: "../../../install.gradle"
+apply from: "../../../deploy.gradle"

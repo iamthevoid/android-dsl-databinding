@@ -3,12 +3,11 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion "29.0.2"
+    compileSdkVersion compileApi
 
     defaultConfig {
-        minSdkVersion 16
-        targetSdkVersion 29
+        minSdkVersion libMinSdk
+        targetSdkVersion targetApi
         versionCode 1
         versionName "1.0"
 
@@ -31,6 +30,11 @@ android {
 
 }
 
+ext {
+    libArtifactId = 'coroutines-design'
+    libDesc = 'Coroutines design port. Setters, adapters'
+}
+
 dependencies {
 
     implementation project (":coroutines-core")
@@ -49,3 +53,7 @@ dependencies {
     androidTestImplementation "androidx.test:runner:$runner"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso"
 }
+
+apply from: "../../../ext.gradle"
+apply from: "../../../install.gradle"
+apply from: "../../../deploy.gradle"

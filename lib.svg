@@ -25,10 +25,10 @@
             android-dsl-databinding
         </text>
         <text fill="#010101" x="156" fill-opacity=".3" y="15" class="tMove">
-            1.0.0-beta06
+            1.0.0-beta07
         </text>
         <text x="156" id="vText" y="14" class="tMove">
-            1.0.0-beta06
+            1.0.0-beta07
         </text>
     </g>
 </svg>

@@ -1,8 +1,5 @@
 apply plugin: 'com.android.library'
-
 apply plugin: 'kotlin-android'
-
-apply plugin: 'com.novoda.bintray-release'
 
 repositories {
 
@@ -39,15 +36,9 @@ android {
     }
 }
 
-publish {
-    artifactId = 'anko-rx'
-    desc = 'Anko rx port. Layout for adapter views'
-    groupId = "$libGroupId"
-    publishVersion = "$libVersion"
-    licences = ["$libLicence"]
-    uploadName = "$libUploadName"
-    userOrg = "$libUserOrg"
-    website = "$libWebsite"
+ext {
+    libArtifactId = 'anko-rx'
+    libDesc = 'Anko rx port. Layout for adapter views'
 }
 
 dependencies {
@@ -64,3 +55,7 @@ dependencies {
     androidTestImplementation "androidx.test:runner:$runner"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso"
 }
+
+apply from: "../../../ext.gradle"
+apply from: "../../../install.gradle"
+apply from: "../../../deploy.gradle"

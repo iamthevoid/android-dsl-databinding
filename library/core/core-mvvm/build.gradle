@@ -1,7 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-apply plugin: 'com.novoda.bintray-release'
 
 android {
     compileSdkVersion compileApi
@@ -30,15 +29,9 @@ android {
     }
 }
 
-publish {
-    artifactId = 'core-mvvm'
-    desc = 'Mvvm core. Lifecycle objects + view models.'
-    groupId = "$libGroupId"
-    publishVersion = "$libVersion"
-    licences = ["$libLicence"]
-    uploadName = "$libUploadName"
-    userOrg = "$libUserOrg"
-    website = "$libWebsite"
+ext {
+    libArtifactId = 'core-mvvm'
+    libDesc = 'Mvvm core. Lifecycle objects + view models.'
 }
 
 dependencies {
@@ -54,3 +47,7 @@ dependencies {
     androidTestImplementation "androidx.test:runner:$runner"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso"
 }
+
+apply from: "../../../ext.gradle"
+apply from: "../../../install.gradle"
+apply from: "../../../deploy.gradle"

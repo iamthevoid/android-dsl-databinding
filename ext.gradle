@@ -1,0 +1,69 @@
+def property(String key) {
+    Properties properties = new Properties()
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+    return properties.getProperty(key)
+}
+
+ext {
+
+    // publish
+    libBintrayUser = property("bintrayUser")
+    libBintrayApiKey = property("bintrayApiKey")
+
+    libVersion = '1.0.0-beta07'
+    libUploadName = 'android-dsl-databinding'
+    libUserOrg = 'iamthevoid'
+    libGroupId = 'iam.thevoid.noxml'
+
+    libGit = 'https://github.com/iamthevoid/battery-view-android.git'
+    libWebsite = 'https://github.com/iamthevoid/battery-view-android'
+
+    libDeveloperId = 'iamthevoid'
+    libDeveloperName = 'Alexander Tarabrin'
+    libDeveloperEmail = 'alesetar@gmail.com'
+
+    libLicenseName = 'The Apache Software License, Version 2.0'
+    libLicenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    libLicences = ['Apache-2.0']
+
+    libMinSdk = 16
+    compileApi = 29
+    targetApi = 29
+
+    e = "0.6.1"
+
+    anko = "0.10.8"
+    splitties = "3.0.0-alpha06"
+    coil = "0.11.0"
+    glide = "4.9.0"
+
+
+    coroutines = "1.3.7"
+
+    room = "2.2.4"
+    jsoup = "1.12.1"
+    gson = "2.8.5"
+    okhttp = "3.14.2"
+    retrofit = "2.6.0"
+
+    // rx
+    rxJava = "2.2.10"
+    rxAndroid = "2.1.1"
+    rxKotlin = "2.4.0"
+    rxReplayingShare = "2.1.1"
+
+    // x
+    appcompat = "1.1.0"
+    lifecycle = "2.2.0"
+    material = "1.1.0"
+    recycler = "1.1.0"
+    ktx = "1.3.0"
+    swipe = "1.0.0"
+    multidex = "1.0.2"
+
+    // test
+    espresso = "3.2.0"
+    junit = "4.12"
+    runner = "1.2.0"
+    ajunit = "1.1.1"
+}

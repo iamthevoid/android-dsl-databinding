@@ -1,7 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-apply plugin: 'com.novoda.bintray-release'
 
 android {
     compileSdkVersion compileApi
@@ -30,17 +29,10 @@ android {
     }
 }
 
-publish {
-    artifactId = 'anko-mvvm'
-    desc = 'Anko mvvm port. Activity and fragment adapters'
-    groupId = "$libGroupId"
-    publishVersion = "$libVersion"
-    licences = ["$libLicence"]
-    uploadName = "$libUploadName"
-    userOrg = "$libUserOrg"
-    website = "$libWebsite"
+ext {
+    libArtifactId = 'anko-mvvm'
+    libDesc = 'Anko mvvm port. Activity and fragment adapters'
 }
-
 
 dependencies {
 
@@ -63,3 +55,7 @@ dependencies {
     androidTestImplementation "androidx.test:runner:$runner"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso"
 }
+
+apply from: "../../../ext.gradle"
+apply from: "../../../install.gradle"
+apply from: "../../../deploy.gradle"

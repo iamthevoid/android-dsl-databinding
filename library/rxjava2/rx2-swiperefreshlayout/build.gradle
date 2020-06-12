@@ -1,11 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-apply plugin: 'com.novoda.bintray-release'
-
-repositories {
-
-}
 
 android {
     compileSdkVersion compileApi
@@ -33,19 +28,11 @@ android {
             debuggable = true
         }
     }
-
 }
 
-
-publish {
-    artifactId = 'rx2-swiperefreshlayout'
-    desc = 'RxJava2 Swipe Refresh Layout. Setters, bindings, etc'
-    groupId = "$libGroupId"
-    publishVersion = "$libVersion"
-    licences = ["$libLicence"]
-    uploadName = "$libUploadName"
-    userOrg = "$libUserOrg"
-    website = "$libWebsite"
+ext {
+    libArtifactId = 'rx2-swiperefreshlayout'
+    libDesc = 'RxJava2 Swipe Refresh Layout. Setters, bindings, etc'
 }
 
 dependencies {
@@ -72,3 +59,7 @@ dependencies {
     androidTestImplementation "androidx.test:runner:$runner"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso"
 }
+
+apply from: "../../../ext.gradle"
+apply from: "../../../install.gradle"
+apply from: "../../../deploy.gradle"

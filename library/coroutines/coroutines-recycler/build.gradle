@@ -1,10 +1,6 @@
 apply plugin: 'com.android.library'
-
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
-
-apply plugin: 'com.novoda.bintray-release'
 
 android {
     compileSdkVersion compileApi
@@ -31,18 +27,11 @@ android {
             debuggable = true
         }
     }
-
 }
 
-publish {
-    artifactId = 'coroutines-recycler'
-    desc = 'Coroutines recycler view bindings'
-    groupId = "$libGroupId"
-    publishVersion = "$libVersion"
-    licences = ["$libLicence"]
-    uploadName = "$libUploadName"
-    userOrg = "$libUserOrg"
-    website = "$libWebsite"
+ext {
+    libArtifactId = 'coroutines-recycler'
+    libDesc = 'Coroutines recycler view bindings'
 }
 
 dependencies {
@@ -66,3 +55,7 @@ dependencies {
     androidTestImplementation "androidx.test:runner:$runner"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso"
 }
+
+apply from: "../../../ext.gradle"
+apply from: "../../../install.gradle"
+apply from: "../../../deploy.gradle"

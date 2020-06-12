@@ -2,11 +2,11 @@ package iam.thevoid.noxml.demo.ui.mvvm.coroutines
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import iam.thevoid.noxml.coroutines.utils.repeatFlow
+import iam.thevoid.coroutines.repeatFlow
+import iam.thevoid.coroutines.share
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import iam.thevoid.noxml.demo.data.db.entity.Color
-import iam.thevoid.noxml.coroutines.utils.share
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlin.random.Random

@@ -1,11 +1,11 @@
 package iam.thevoid.noxml.demo.ui.mvvm.revolut
 
 import androidx.lifecycle.ViewModel
+import iam.thevoid.coroutines.repeatFlow
 import iam.thevoid.e.format
 import iam.thevoid.e.safeDouble
 import iam.thevoid.noxml.coroutines.data.CoroutineBoolean
 import iam.thevoid.noxml.coroutines.data.CoroutineString
-import iam.thevoid.noxml.coroutines.utils.repeatFlow
 import iam.thevoid.noxml.demo.data.api.RevolutApi
 import iam.thevoid.noxml.demo.data.api.model.CurrencyRate
 import kotlin.time.ExperimentalTime
