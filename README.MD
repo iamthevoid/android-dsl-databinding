@@ -209,47 +209,47 @@ inline fun <T : Any, reified A : StandaloneRecyclerAdapter<T>> RecyclerView.setI
 ### RxJava 2
 
 ```gradle
-implementation 'iam.thevoid.noxml:core:1.0.0-beta07'
-implementation 'iam.thevoid.noxml:rx2-core:1.0.0-beta07'
+implementation 'iam.thevoid.noxml:core:1.0.0-beta08'
+implementation 'iam.thevoid.noxml:rx2-core:1.0.0-beta08'
 ```
 
 Optional:
 - Recycler View
 ```gradle
-implementation 'iam.thevoid.noxml:core-recycler:1.0.0-beta07'
-implementation 'iam.thevoid.noxml:rx2-recycler:1.0.0-beta07'
+implementation 'iam.thevoid.noxml:core-recycler:1.0.0-beta08'
+implementation 'iam.thevoid.noxml:rx2-recycler:1.0.0-beta08'
 ```
 - Swipe Refresh Layout
 ```gradle
-implementation 'iam.thevoid.noxml:core-swiperefreshlayout:1.0.0-beta07'
-implementation 'iam.thevoid.noxml:rx2-swiperefreshlayout:1.0.0-beta07'
+implementation 'iam.thevoid.noxml:core-swiperefreshlayout:1.0.0-beta08'
+implementation 'iam.thevoid.noxml:rx2-swiperefreshlayout:1.0.0-beta08'
 ```
 - Material
 ```gradle
-implementation 'iam.thevoid.noxml:core-design:1.0.0-beta07'
-implementation 'iam.thevoid.noxml:rx2-design:1.0.0-beta07'
+implementation 'iam.thevoid.noxml:core-design:1.0.0-beta08'
+implementation 'iam.thevoid.noxml:rx2-design:1.0.0-beta08'
 ```
 
 ### Kotlin Coroutines
 
 ```gradle
-implementation 'iam.thevoid.noxml:core:1.0.0-beta07'
-implementation 'iam.thevoid.noxml:coroutines-core:1.0.0-beta07'
+implementation 'iam.thevoid.noxml:core:1.0.0-beta08'
+implementation 'iam.thevoid.noxml:coroutines-core:1.0.0-beta08'
 ```
 
 Optional:
 - Recycler View
 ```gradle
-implementation 'iam.thevoid.noxml:core-recycler:1.0.0-beta07'
-implementation 'iam.thevoid.noxml:coroutines-recycler:1.0.0-beta07'
+implementation 'iam.thevoid.noxml:core-recycler:1.0.0-beta08'
+implementation 'iam.thevoid.noxml:coroutines-recycler:1.0.0-beta08'
 ```
 - Swipe Refresh Layout
 ```gradle
-implementation 'iam.thevoid.noxml:core-swiperefreshlayout:1.0.0-beta07'
-implementation 'iam.thevoid.noxml:coroutines-swiperefreshlayout:1.0.0-beta07'
+implementation 'iam.thevoid.noxml:core-swiperefreshlayout:1.0.0-beta08'
+implementation 'iam.thevoid.noxml:coroutines-swiperefreshlayout:1.0.0-beta08'
 ```
 - Material
 ```gradle
-implementation 'iam.thevoid.noxml:core-design:1.0.0-beta07'
-implementation 'iam.thevoid.noxml:coroutines-design:1.0.0-beta07'
+implementation 'iam.thevoid.noxml:core-design:1.0.0-beta08'
+implementation 'iam.thevoid.noxml:coroutines-design:1.0.0-beta08'
 ```

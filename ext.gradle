@@ -10,7 +10,7 @@ ext {
     libBintrayUser = property("bintrayUser")
     libBintrayApiKey = property("bintrayApiKey")
 
-    libVersion = '1.0.0-beta07'
+    libVersion = '1.0.0-beta08'
     libUploadName = 'android-dsl-databinding'
     libUserOrg = 'iamthevoid'
     libGroupId = 'iam.thevoid.noxml'
