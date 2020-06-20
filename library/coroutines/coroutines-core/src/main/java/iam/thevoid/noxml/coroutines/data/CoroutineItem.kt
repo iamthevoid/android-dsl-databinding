@@ -56,6 +56,8 @@ class CoroutineString(string: String = "", onChange: (String) -> Unit = {}) :
 class CoroutineList<T>(initial: List<T> = emptyList(), onChange: (List<T>) -> Unit = {}) :
     CoroutineItem<List<T>>(initial, onChange) {
 
+    fun add(item: T) = set(get().toMutableList().apply { add(item) })
+
     fun add(items: List<T>) = set(get() + items)
 
     fun replace(predicate: (T) -> Boolean, item: T) {

@@ -8,26 +8,25 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import java.util.concurrent.atomic.AtomicBoolean
 
-abstract class CoroutinesPageLoaderImpl<PAGE, T>(
-        private val startPage: PAGE,
-        private val nextPage: (PAGE) -> PAGE,
-        private val loader: suspend (PAGE, refresh : Boolean) -> PageLoader.Response<PAGE, T>
-) : CoroutinesPageLoader<PAGE, T>, CoroutineScope by CoroutineScope(Dispatchers.IO) {
+abstract class CoroutinesPageLoaderImpl<PAGE_INDEX, T>(
+        private val startPage: PAGE_INDEX,
+        private val nextPage: (PAGE_INDEX) -> PAGE_INDEX,
+        private val loader: suspend (PAGE_INDEX, refresh : Boolean) -> PageLoader.Page<PAGE_INDEX, T>
+) : CoroutinesPageLoader<PAGE_INDEX, T>, CoroutineScope by CoroutineScope(Dispatchers.IO) {
 
     private val isLastPage: AtomicBoolean = AtomicBoolean()
 
     private var loadingJob: Job? = null
 
-    private val loaded: CoroutineList<T> = CoroutineList()
+    private val loaded: CoroutineList<PageLoader.Page<PAGE_INDEX, T>> = CoroutineList()
 
-    fun addItems(items: List<T>) = loaded.add(items)
+    fun addPage(page: PageLoader.Page<PAGE_INDEX, T>) = loaded.add(page)
 
-    fun setItems(items: List<T>) = loaded.set(items)
+    fun setPage(page: PageLoader.Page<PAGE_INDEX, T>) = loaded.set(listOf(page))
 
     /**
      * loading state
@@ -38,12 +37,12 @@ abstract class CoroutinesPageLoaderImpl<PAGE, T>(
      * Last loaded page
      */
 
-    override val currentPage: CoroutineItem<PAGE> = CoroutineItem(startPage)
+    override val currentPage: CoroutineItem<PAGE_INDEX> = CoroutineItem(startPage)
 
     /**
      * Received items
      */
-    override val items: Flow<List<T>> by lazy {
+    override val pages: Flow<List<PageLoader.Page<PAGE_INDEX, T>>> by lazy {
         loaded.observe().onStart {
             if (loaded.isEmpty()) {
                 load(startPage, false)
@@ -59,7 +58,7 @@ abstract class CoroutinesPageLoaderImpl<PAGE, T>(
         loadingJob = launch { load(nextPage(currentPage.get()), false) }
     }
 
-    private suspend fun load(page: PAGE, refresh: Boolean) {
+    private suspend fun load(page: PAGE_INDEX, refresh: Boolean) {
 
         if (!refresh && isLastPage.get())
             return
@@ -69,11 +68,11 @@ abstract class CoroutinesPageLoaderImpl<PAGE, T>(
         loading.set(false)
 
         when {
-            refresh -> setItems(response.items)
-            else -> addItems(response.items)
+            refresh -> setPage(response)
+            else -> addPage(response)
         }
 
-        currentPage.set(response.page)
+        currentPage.set(response.pageIndex)
         isLastPage.set(response.isLastPage)
     }
 }

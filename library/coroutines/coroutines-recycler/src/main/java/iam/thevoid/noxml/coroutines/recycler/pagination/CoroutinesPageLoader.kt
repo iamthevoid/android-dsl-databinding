@@ -5,7 +5,7 @@ import iam.thevoid.noxml.coroutines.data.CoroutineItem
 import iam.thevoid.noxml.recycler.paging.PageLoader
 import kotlinx.coroutines.flow.Flow
 
-interface CoroutinesPageLoader<PAGE, T> : PageLoader {
+interface CoroutinesPageLoader<PAGE_INDEX, T> : PageLoader {
 
     /**
      * Loading state
@@ -16,12 +16,12 @@ interface CoroutinesPageLoader<PAGE, T> : PageLoader {
      * Last loaded page
      */
 
-    val currentPage: CoroutineItem<PAGE>
+    val currentPage: CoroutineItem<PAGE_INDEX>
 
     /**
      * Received items
      */
-    val items: Flow<List<T>>
+    val pages: Flow<List<PageLoader.Page<PAGE_INDEX, T>>>
 
     /**
      * Triggers when needs to load more
