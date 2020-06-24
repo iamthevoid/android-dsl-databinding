@@ -20,7 +20,7 @@ fun <T : Any> RecyclerView.setItems(
 ) = addSetter(items) { setItems(it, itemBindings, diffCallbackFactory) }
 
 inline fun <T : Any, reified A : StandaloneRecyclerAdapter<T>> RecyclerView.setItems(
-    items: Flowable<List<T>>,
+    items: Flowable<out List<T>>,
     itemBindings: ItemBindings,
     crossinline adapterFactory: (List<T>) -> A? = { null },
     noinline diffCallbackFactory: ((old: List<T>, new: List<T>) -> DiffCallback<T>) = diffCallback()
