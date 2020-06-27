@@ -1,6 +1,5 @@
 package iam.thevoid.noxml.binding
 
-import android.graphics.Rect
 import android.os.Build
 import android.view.View
 import iam.thevoid.e.safe
@@ -24,7 +23,7 @@ class ObserveListener : View.OnAttachStateChangeListener {
 
         observableSetters[tag] = setter
 
-        attached = setter.view?.isAttached().safe()
+        attached = attached || setter.view?.isAttached().safe()
 
         if (attached)
             setter.subscribeChanges()

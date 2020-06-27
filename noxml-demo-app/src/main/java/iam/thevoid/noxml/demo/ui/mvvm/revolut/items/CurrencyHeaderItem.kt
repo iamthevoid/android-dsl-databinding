@@ -62,6 +62,4 @@ class CurrencyHeaderItem(private val vm : RevolutViewModel, viewGroup: ViewGroup
         }.apply {
             layoutParams = ViewGroup.LayoutParams(matchParent, wrapContent)
         }
-
-
 }

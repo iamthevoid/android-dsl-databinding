@@ -14,11 +14,14 @@ abstract class RxLayout<T>( parent: ViewGroup) : Layout<T>(parent)  {
         this.item.set(item)
     }
 
+    @Deprecated("Became private in next version, for get item use fun getItem() instead")
     val item: RxField<T> by lazy(itemFactory)
 
     val itemChanges: Flowable<T> by lazy {
         item.onlyPresent().compose(ReplayingShare.instance())
     }
+
+    fun getItem() : T? = item.get()
 
     fun changeItem(itemChange: T.() -> Unit) {
         item.set(item.get()?.apply {

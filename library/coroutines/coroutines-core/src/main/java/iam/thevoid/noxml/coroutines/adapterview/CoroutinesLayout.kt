@@ -18,11 +18,14 @@ abstract class CoroutinesLayout<T>(parent: ViewGroup) : Layout<T>(parent), Corou
         launch { this@CoroutinesLayout.item.set(item) }
     }
 
+    @Deprecated("Became private in next version, for get item use fun getItem() instead")
     val item: CoroutineField<T> by lazy(itemFactory)
 
     val itemChanges: Flow<T> by lazy {
         item.onlyPresent()
     }
+
+    fun getItem() : T? = item.get()
 
     fun changeItem(itemChange: T?.() -> Unit) {
         launch {

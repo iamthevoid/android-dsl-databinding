@@ -22,10 +22,7 @@ import iam.thevoid.util.Optional
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 
-fun <T : Any, V : View> V.addSetter(
-    flow: Flow<T>,
-    setter: V.(T) -> Unit = {}
-) {
+fun <T : Any, V : View> V.addSetter(flow: Flow<T>, setter: V.(T) -> Unit = {}) {
     observeListener.apply {
         subscribeSetter(object : CoroutinesSetter<V, T>(this@addSetter, flow) {
             override fun set(view: V?, component: T) {
