@@ -1,6 +1,9 @@
 def property(String key) {
     Properties properties = new Properties()
-    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+    try {
+        properties.load(project.rootProject.file('local.properties').newDataInputStream())
+    } catch (Exception e) {
+    }
     return properties.getProperty(key)
 }
 
