@@ -17,6 +17,7 @@ internal fun isCallingFromMatcher() =
 
 internal fun View.onItAndChildrenTree(action: View.() -> Unit) {
     if (this is ViewGroup) {
+        action()
         for (i in 0 until childCount)
             getChildAt(i).onItAndChildrenTree(action)
     } else {
