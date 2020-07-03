@@ -39,15 +39,20 @@ class ObserveListener : View.OnAttachStateChangeListener {
         observableSetters.values.forEach { it.subscribeChanges() }
     }
 
+    fun bindDataImmediate(v: View?) {
+        observableSetters.values.forEach { it.applyChanges() }
+    }
+
     private fun key(): String = with(Thread.currentThread().stackTrace) {
 
         buildString {
             for (i in size - 1 downTo DEPTH + 1)
                 append(this@with[i].methodName).append("_")
 
-            append(if (size < DEPTH + 1) "" else with(this@with[DEPTH]) {
-                Class.forName(className).methods.find { it.name == methodName }
-            }
+            append(
+                if (size < DEPTH + 1) "" else with(this@with[DEPTH]) {
+                    Class.forName(className).methods.find { it.name == methodName }
+                }
                 ?.let {
                     if (it.genericParameterTypes.size > 1) {
                         "${it.name}_${(it.genericParameterTypes.component2() as? ParameterizedType)?.actualTypeArguments?.let { types ->

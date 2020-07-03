@@ -27,6 +27,9 @@ val View.observeListener: ObserveListener
             addOnAttachStateChangeListener(it)
         })
 
+fun View.bindDataImmediate() =
+    observeListener.bindDataImmediate(this)
+
 fun View.fakeAttachToWindow() =
     observeListener.onViewAttachedToWindow(this)
 

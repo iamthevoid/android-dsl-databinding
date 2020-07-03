@@ -12,6 +12,8 @@ abstract class Setter<V : View, C>(view: V) {
     val view
         get() = viewRef.get()
 
+    abstract fun applyChanges()
+
     abstract fun subscribeChanges()
 
     abstract fun unsubscribeChanges()
