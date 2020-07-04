@@ -40,7 +40,7 @@ class ObserveListener : View.OnAttachStateChangeListener {
     }
 
     fun bindDataImmediate(v: View?) {
-        observableSetters.values.forEach { it.applyChanges() }
+        observableSetters.values.forEach { it.applyFirstChangeBlocking() }
     }
 
     private fun key(): String = with(Thread.currentThread().stackTrace) {

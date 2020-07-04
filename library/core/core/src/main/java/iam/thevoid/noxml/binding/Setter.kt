@@ -12,7 +12,10 @@ abstract class Setter<V : View, C>(view: V) {
     val view
         get() = viewRef.get()
 
-    abstract fun applyChanges()
+    /**
+     * Blocking awaiting of first element. Here use
+     */
+    abstract fun applyFirstChangeBlocking()
 
     abstract fun subscribeChanges()
 

@@ -14,8 +14,8 @@ abstract class RxSetter<V : View, C>(
 
     private var disposable: Disposable? = null
 
-    override fun applyChanges() {
-        set(viewRef.get(), flowable.blockingLatest().first())
+    override fun applyFirstChangeBlocking() {
+        set(view, flowable.blockingLatest().first())
     }
 
     override fun subscribeChanges() {

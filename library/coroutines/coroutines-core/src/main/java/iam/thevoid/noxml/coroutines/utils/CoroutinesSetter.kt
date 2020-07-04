@@ -27,9 +27,9 @@ abstract class CoroutinesSetter<V : View, C>(view: V, private val flow: Flow<C>)
         job?.cancel()
     }
 
-    override fun applyChanges() {
+    override fun applyFirstChangeBlocking() {
         runBlocking {
-            set(viewRef.get(), flow.first())
+            set(view, flow.first())
         }
     }
 
