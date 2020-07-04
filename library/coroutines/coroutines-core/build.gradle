@@ -54,6 +54,7 @@ dependencies {
     implementation "iam.thevoid.extensions:android:$e"
     implementation "iam.thevoid.extensions:pure:$e"
     implementation "iam.thevoid.util:util:$e"
+    implementation "iam.thevoid.util:coroutines:$e"
 
     testImplementation "junit:junit:$junit"
     androidTestImplementation "androidx.test.ext:junit:$ajunit"

@@ -3,13 +3,9 @@ package iam.thevoid.noxml.coroutines.utils
 import android.view.View
 import iam.thevoid.e.safe
 import iam.thevoid.noxml.binding.Setter
-import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.Main
-import kotlinx.coroutines.InternalCoroutinesApi
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.FlowCollector
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.*
 
 abstract class CoroutinesSetter<V : View, C>(view: V, private val flow: Flow<C>) :
     Setter<V, C>(view), CoroutineScope by CoroutineScope(Main), FlowCollector<C> {
@@ -29,6 +25,12 @@ abstract class CoroutinesSetter<V : View, C>(view: V, private val flow: Flow<C>)
 
     override fun unsubscribeChanges() {
         job?.cancel()
+    }
+
+    override fun applyChanges() {
+        runBlocking {
+            set(viewRef.get(), flow.first())
+        }
     }
 
     override fun theSameAs(setter: Setter<*, *>): Boolean =
