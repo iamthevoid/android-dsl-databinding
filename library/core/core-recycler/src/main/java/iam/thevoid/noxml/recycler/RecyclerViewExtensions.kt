@@ -5,7 +5,7 @@ package iam.thevoid.noxml.recycler
 import androidx.recyclerview.widget.RecyclerView
 import iam.thevoid.noxml.adapterview.ItemBindings
 
-@Suppress("UNCHECKED_CAST")
+@Suppress("UNCHECKED_CAST", "NON_PUBLIC_CALL_FROM_PUBLIC_INLINE")
 fun <T : Any> RecyclerView.setItems(
     items: List<T>,
     bindings: ItemBindings,
@@ -20,9 +20,10 @@ fun <T : Any> RecyclerView.setItems(
             adapter = this
         }
     }
+    triggerEndlessScroll()
 }
 
-@Suppress("UNCHECKED_CAST")
+@Suppress("UNCHECKED_CAST", "NON_PUBLIC_CALL_FROM_PUBLIC_INLINE")
 inline fun <T : Any, reified A : StandaloneRecyclerAdapter<T>> RecyclerView.setItems(
     items: List<T>,
     itemBindings: ItemBindings,
@@ -38,8 +39,16 @@ inline fun <T : Any, reified A : StandaloneRecyclerAdapter<T>> RecyclerView.setI
             adapter = this
         }
     }
+
+    triggerEndlessScroll()
 }
 
+// Duct tape around paging. Line do effectively nothing, just trigger endless scroll listener
+// for case when it doesn't triggers automatically (page is small and items not cover screen full
+// height)
+internal fun RecyclerView.triggerEndlessScroll() {
+    endlessScrollDelegate.onScrolled(this, 0, 0)
+}
 
 private val RecyclerView.endlessScrollDelegate
     get() = getTag(R.id.recyclerEndlessScroll) as? iam.thevoid.noxml.recycler.delegate.EndlessScrollDelegate
