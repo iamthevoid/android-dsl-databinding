@@ -6,6 +6,9 @@ import iam.thevoid.noxml.extensions.webview.chromeClient
 import io.reactivex.Flowable
 import iam.thevoid.noxml.rx2.data.fields.RxBoolean
 import iam.thevoid.noxml.rx2.extensions.view.addSetter
+import io.reactivex.BackpressureStrategy
+import io.reactivex.processors.FlowableProcessor
+import io.reactivex.processors.PublishProcessor
 
 
 fun <T : CharSequence> WebView.setHtml(
@@ -25,6 +28,7 @@ fun <T : CharSequence> WebView.setHtml(
         )
     }
 
+@Deprecated("Fields and Items will be removed in major version, use realization with FlowableProcessor instead")
 fun WebView.onLoading(onLoading: RxBoolean) {
     chromeClient = object : WebChromeClientDelegate(chromeClient) {
 
@@ -44,4 +48,23 @@ fun WebView.onLoading(onLoading: RxBoolean) {
             loadingProgress = (if (loadingProgress < 100) newProgress else 0)
         }
     }
+}
+
+fun WebView.onLoading(onLoading: FlowableProcessor<Boolean>) {
+    addSetter(Flowable.create<Boolean>({
+        val oldChromeClient = chromeClient
+        chromeClient = object : WebChromeClientDelegate(oldChromeClient) {
+            override fun onProgressChanged(view: WebView?, newProgress: Int) {
+                super.onProgressChanged(view, newProgress)
+                if (newProgress < 100) {
+                    it.onNext(true)
+                }
+
+                if (newProgress == 100) {
+                    it.onNext(false)
+                }
+            }
+        }
+        it.setCancellable { chromeClient = oldChromeClient }
+    }, BackpressureStrategy.LATEST).doOnNext(onLoading::onNext))
 }

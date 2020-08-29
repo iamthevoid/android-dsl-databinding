@@ -14,5 +14,5 @@ abstract class Layout<T>(private val parent: ViewGroup) {
     abstract fun set(item : T)
 
     abstract fun createView(parent: ViewGroup): View
-
 }
+

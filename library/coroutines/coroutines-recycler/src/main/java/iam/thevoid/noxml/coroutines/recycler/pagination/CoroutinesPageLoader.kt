@@ -5,31 +5,31 @@ import iam.thevoid.noxml.coroutines.data.CoroutineItem
 import iam.thevoid.noxml.recycler.paging.PageLoader
 import kotlinx.coroutines.flow.Flow
 
-interface CoroutinesPageLoader<PAGE_INDEX, T> : PageLoader {
+abstract class CoroutinesPageLoader<PAGE_INDEX, T> : PageLoader {
 
     /**
      * Loading state
      */
-    val loading: CoroutineBoolean
+    protected abstract val loading: CoroutineBoolean
 
     /**
      * Last loaded page
      */
 
-    val currentPage: CoroutineItem<PAGE_INDEX>
+    protected abstract val currentPage: CoroutineItem<PAGE_INDEX>
 
     /**
      * Received items
      */
-    val pages: Flow<List<PageLoader.Page<PAGE_INDEX, T>>>
+    abstract val pages: Flow<List<PageLoader.Page<PAGE_INDEX, T>>>
 
     /**
      * Triggers when needs to load more
      */
-    fun loadMore()
+    abstract fun loadMore()
 
     /**
      * Triggers when need to reload
      */
-    fun refresh()
+    abstract fun refresh()
 }

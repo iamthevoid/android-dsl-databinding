@@ -5,12 +5,12 @@ import androidx.annotation.StringRes
 import iam.thevoid.ae.moveCursorToEnd
 import iam.thevoid.ae.requestSoftInput
 import iam.thevoid.ae.string
-import iam.thevoid.noxml.extensions.textview.textWatcher
+import iam.thevoid.noxml.extensions.textview.textWatcherDelegate
 
 fun EditText.setTextSilent(text: CharSequence, moveCursorToEnd: Boolean = true) {
     if (text.toString() == this.text.toString())
         return
-    val watcher = textWatcher
+    val watcher = textWatcherDelegate
     removeTextChangedListener(watcher)
     setText(text)
     addTextChangedListener(watcher)
@@ -25,7 +25,7 @@ fun EditText.setTextSilent(text: CharSequence, moveCursorToEnd: Boolean = true) 
 fun EditText.setTextResourceSilent(@StringRes text: Int, moveCursorToEnd: Boolean = true) {
     if (string(text) == "${this.text}")
         return
-    val watcher = textWatcher
+    val watcher = textWatcherDelegate
     removeTextChangedListener(watcher)
     setText(text)
     addTextChangedListener(watcher)

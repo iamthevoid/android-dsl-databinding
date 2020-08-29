@@ -10,8 +10,10 @@ import iam.thevoid.noxml.rx2.data.fields.RxInt
 import iam.thevoid.noxml.rx2.data.fields.RxList
 import iam.thevoid.noxml.rx2.extensions.view.addSetter
 import iam.thevoid.noxml.rx2.recycler.pagination.OldPaginationLoader
+import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 import io.reactivex.Single
+import io.reactivex.processors.FlowableProcessor
 
 fun <T : Any> RecyclerView.setItems(
     items: Flowable<out List<T>>,
@@ -53,7 +55,8 @@ fun <T : Any> RecyclerView.setPaginationLoader(
     OldPaginationLoader(
         firstPage,
         loader
-    ), itemBindings, diffCallbackFactory)
+    ), itemBindings, diffCallbackFactory
+)
 
 @Deprecated("")
 fun <T : Any> RecyclerView.setPaginationLoader(
@@ -98,21 +101,42 @@ fun RecyclerView.setEndSpacing(spacing: Flowable<Int>) =
  * On RecyclerView scroll reverse binding
  */
 
+@Deprecated("Fields and Items will be removed in major version, use realization with FlowableProcessor instead")
 fun RecyclerView.onRecyclerScrolled(rxOnScroll: RxField<OnScrolled>) =
     onRecyclerScrolled(rxOnScroll) { it }
 
-fun <T : Any> RecyclerView.onRecyclerScrolled(onScroll: RxField<T>, mapper: (OnScrolled) -> T) {
-    onRecyclerScroll.addOnScrolled(object : RecyclerView.OnScrollListener() {
-        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-            onScroll.set(mapper(OnScrolled(recyclerView, dx, dy)))
+@Deprecated("Fields and Items will be removed in major version, use realization with FlowableProcessor instead")
+fun <T : Any> RecyclerView.onRecyclerScrolled(onScroll: RxField<T>, mapper: (OnScrolled) -> T) =
+    addSetter(Flowable.create<T>({
+        val listener = object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                it.onNext(mapper(OnScrolled(recyclerView, dx, dy)))
+            }
         }
-    })
-}
+        onRecyclerScroll.addOnScrolled(listener)
+        it.setCancellable { onRecyclerScroll.removeScrolled(listener) }
+    }, BackpressureStrategy.LATEST).doOnNext(onScroll::set))
+
+fun RecyclerView.onRecyclerScrolled(onScroll: FlowableProcessor<OnScrolled>) =
+    onRecyclerScrolled(onScroll, mapper = { it })
+
+fun <T : Any> RecyclerView.onRecyclerScrolled(onScroll: FlowableProcessor<T>, mapper: (OnScrolled) -> T) =
+    addSetter(Flowable.create<T>({
+        val listener = object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                it.onNext(mapper(OnScrolled(recyclerView, dx, dy)))
+            }
+        }
+        onRecyclerScroll.addOnScrolled(listener)
+        it.setCancellable { onRecyclerScroll.removeScrolled(listener) }
+    }, BackpressureStrategy.LATEST).doOnNext(onScroll::onNext))
 
 
+@Deprecated("Fields and Items will be removed in major version, use realization with FlowableProcessor instead")
 fun RecyclerView.onScrollStateChanged(rxOnScroll: RxField<OnScrollStateChanged>) =
     onRecyclerScrollStateChanged(rxOnScroll) { it }
 
+@Deprecated("Fields and Items will be removed in major version, use realization with FlowableProcessor instead")
 fun <T : Any> RecyclerView.onRecyclerScrollStateChanged(
     onScroll: RxField<T>,
     mapper: (OnScrollStateChanged) -> T
@@ -123,3 +147,17 @@ fun <T : Any> RecyclerView.onRecyclerScrollStateChanged(
         }
     })
 }
+
+fun RecyclerView.onScrollStateChanged(onScrollStateChanged: FlowableProcessor<OnScrollStateChanged>) =
+    onScrollStateChanged(onScrollStateChanged, mapper = { it })
+
+fun <T : Any> RecyclerView.onScrollStateChanged(onScroll: FlowableProcessor<T>, mapper: (OnScrollStateChanged) -> T) =
+    addSetter(Flowable.create<T>({
+        val listener = object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                it.onNext(mapper(OnScrollStateChanged(recyclerView, newState)))
+            }
+        }
+        onRecyclerScroll.addOnScrollStateChanged(listener)
+        it.setCancellable { onRecyclerScroll.addOnScrollStateChanged(listener) }
+    }, BackpressureStrategy.LATEST).doOnNext(onScroll::onNext))

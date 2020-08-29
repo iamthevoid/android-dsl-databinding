@@ -7,7 +7,7 @@ import iam.thevoid.ae.setTextStrikeThru
 import iam.thevoid.ae.string
 import iam.thevoid.e.format
 import iam.thevoid.e.safe
-import iam.thevoid.noxml.extensions.textview.textWatcher
+import iam.thevoid.noxml.extensions.textview.textWatcherDelegate
 import iam.thevoid.noxml.adapters.TextWatcherAdapter
 import iam.thevoid.noxml.change.textwatcher.BeforeEditTextChanges
 import iam.thevoid.noxml.change.textwatcher.OnEditTextChanges
@@ -61,14 +61,14 @@ fun TextView.setTextStrikeThru(strikeThru: Flow<Boolean>) =
 
 
 fun <T : Any> TextView.afterTextChanges(afterTextChanges: CoroutineField<T>, mapper: (Editable?) -> T) =
-    textWatcher.addAfterTextChangedCallback(object : TextWatcherAdapter() {
+    textWatcherDelegate.addAfterTextChangedCallback(object : TextWatcherAdapter() {
         override fun afterTextChanged(s: Editable?) {
             afterTextChanges.set(mapper(s))
         }
     })
 
 fun <T : Any> TextView.afterTextChanges(afterTextChanges: CoroutineItem<T>, mapper: (Editable?) -> T) =
-    textWatcher.addAfterTextChangedCallback(object : TextWatcherAdapter() {
+    textWatcherDelegate.addAfterTextChangedCallback(object : TextWatcherAdapter() {
         override fun afterTextChanged(s: Editable?) {
             afterTextChanges.set(mapper(s))
         }
@@ -85,7 +85,7 @@ fun <T : Any> TextView.beforeTextChanges(
     beforeTextChanges: CoroutineField<T>,
     mapper: (BeforeEditTextChanges) -> T
 ) {
-    textWatcher.addBeforeTextChangedCallback(object : TextWatcherAdapter() {
+    textWatcherDelegate.addBeforeTextChangedCallback(object : TextWatcherAdapter() {
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             beforeTextChanges.set(mapper(BeforeEditTextChanges(s, start, count, after)))
         }
@@ -100,7 +100,7 @@ fun <T : Any> TextView.onTextChanges(
     beforeTextChanges: CoroutineField<T>,
     mapper: (OnEditTextChanges) -> T
 ) {
-    textWatcher.addOnTextChangedCallback(object : TextWatcherAdapter() {
+    textWatcherDelegate.addOnTextChangedCallback(object : TextWatcherAdapter() {
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             beforeTextChanges.set(mapper(OnEditTextChanges(s, start, before, count)))
         }

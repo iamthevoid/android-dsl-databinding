@@ -22,3 +22,4 @@ inline fun <T : Any, reified A : StandaloneRecyclerAdapter<T>> RecyclerView.setI
     crossinline adapterFactory: (List<T>) -> A? = { null },
     noinline diffCallbackFactory: ((old: List<T>, new: List<T>) -> DiffCallback<T>) = diffCallback()
 ) = addSetter(items) { setItems( it, itemBindings, adapterFactory, diffCallbackFactory) }
+

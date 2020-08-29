@@ -16,7 +16,7 @@ abstract class CoroutinesPageLoaderImpl<PAGE_INDEX, T>(
         private val startPage: PAGE_INDEX,
         private val nextPage: (PAGE_INDEX) -> PAGE_INDEX,
         private val loader: suspend (PAGE_INDEX, refresh : Boolean) -> PageLoader.Page<PAGE_INDEX, T>
-) : CoroutinesPageLoader<PAGE_INDEX, T>, CoroutineScope by CoroutineScope(Dispatchers.IO) {
+) : CoroutinesPageLoader<PAGE_INDEX, T>(), CoroutineScope by CoroutineScope(Dispatchers.IO) {
 
     private val isLastPage: AtomicBoolean = AtomicBoolean()
 
@@ -24,9 +24,9 @@ abstract class CoroutinesPageLoaderImpl<PAGE_INDEX, T>(
 
     private val loaded: CoroutineList<PageLoader.Page<PAGE_INDEX, T>> = CoroutineList()
 
-    fun addPage(page: PageLoader.Page<PAGE_INDEX, T>) = loaded.add(page)
+    private fun addPage(page: PageLoader.Page<PAGE_INDEX, T>) = loaded.add(page)
 
-    fun setPage(page: PageLoader.Page<PAGE_INDEX, T>) = loaded.set(listOf(page))
+    private fun setPage(page: PageLoader.Page<PAGE_INDEX, T>) = loaded.set(listOf(page))
 
     /**
      * loading state

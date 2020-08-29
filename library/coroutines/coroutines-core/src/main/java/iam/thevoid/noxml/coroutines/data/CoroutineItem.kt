@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.map
 
+@Deprecated("Items will be removed in major version, use realization with FlowableProcessor instead")
 @OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
 open class CoroutineItem<T>(item: T, private val onChange: (T) -> Unit = {}) {
 
@@ -29,30 +30,37 @@ open class CoroutineItem<T>(item: T, private val onChange: (T) -> Unit = {}) {
     fun <E> mapSelf(mapper: T.() -> E): Flow<E> = observe().map { it.mapper() }
 }
 
-
+@Deprecated("Items will be removed in major version, use realization with FlowableProcessor instead")
 @Suppress("UNCHECKED_CAST")
 open class CoroutineCharSequence<T : CharSequence>(initial: T = "" as T, onChange: (T) -> Unit = {}) :
     CoroutineItem<T>(initial, onChange)
 
+@Deprecated("Items will be removed in major version, use realization with FlowableProcessor instead")
 class CoroutineBoolean(initial: Boolean = false, onChange: (Boolean) -> Unit = {}) :
     CoroutineItem<Boolean>(initial, onChange) {
 
     fun not() = observe().map { !it }
 }
 
+@Deprecated("Items will be removed in major version, use realization with FlowableProcessor instead")
 class CoroutineFloat(initial: Float = 0f, onChange: (Float) -> Unit = {}) :
     CoroutineItem<Float>(initial, onChange)
 
+@Deprecated("Items will be removed in major version, use realization with FlowableProcessor instead")
 class CoroutineDouble(initial: Double = .0, onChange: (Double) -> Unit = {}) :
     CoroutineItem<Double>(initial, onChange)
 
+@Deprecated("Items will be removed in major version, use realization with FlowableProcessor instead")
 class CoroutineInt(initial: Int = 0, onChange: (Int) -> Unit = {}) : CoroutineItem<Int>(initial, onChange)
 
+@Deprecated("Items will be removed in major version, use realization with FlowableProcessor instead")
 class CoroutineLong(initial: Long = 0L, onChange: (Long) -> Unit = {}) : CoroutineItem<Long>(initial, onChange)
 
+@Deprecated("Items will be removed in major version, use realization with FlowableProcessor instead")
 class CoroutineString(string: String = "", onChange: (String) -> Unit = {}) :
     CoroutineCharSequence<String>(string, onChange)
 
+@Deprecated("Items will be removed in major version, use realization with FlowableProcessor instead")
 class CoroutineList<T>(initial: List<T> = emptyList(), onChange: (List<T>) -> Unit = {}) :
     CoroutineItem<List<T>>(initial, onChange) {
 

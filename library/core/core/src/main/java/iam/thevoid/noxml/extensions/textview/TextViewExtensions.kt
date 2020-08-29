@@ -36,7 +36,7 @@ var TextView.safeLineHeight: Int
     }
 
 
-val TextView.textWatcher: TextWatcherDelegate
+val TextView.textWatcherDelegate: TextWatcherDelegate
     get() = ((getTag(R.id.textWatcher) as? TextWatcherDelegate)
         ?: TextWatcherDelegate().also {
             setTag(R.id.textWatcher, it)

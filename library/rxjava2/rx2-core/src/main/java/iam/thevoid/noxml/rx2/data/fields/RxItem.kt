@@ -5,6 +5,7 @@ import iam.thevoid.rxe.canPublish
 import io.reactivex.Flowable
 import io.reactivex.processors.BehaviorProcessor
 
+@Deprecated("Items will be removed in major version, use realization with FlowableProcessor instead")
 open class RxItem<T>(initial: T, private val onChange: (T) -> Unit = {}) {
 
     private val subject = BehaviorProcessor.createDefault(initial)
@@ -24,28 +25,36 @@ open class RxItem<T>(initial: T, private val onChange: (T) -> Unit = {}) {
     fun <E> mapSelf(mapper: T.() -> E): Flowable<E> = observe().map { it.mapper() }
 }
 
+@Deprecated("Items will be removed in major version, use realization with FlowableProcessor instead")
 open class RxCharSequence<T : CharSequence>(initial: T = "" as T, onChange: (T) -> Unit = {}) :
     RxItem<T>(initial, onChange)
 
+@Deprecated("Items will be removed in major version, use realization with FlowableProcessor instead")
 class RxBoolean(initial: Boolean = false, onChange: (Boolean) -> Unit = {}) :
     RxItem<Boolean>(initial, onChange) {
 
     fun not() = observe().map { !it }
 }
 
+@Deprecated("Items will be removed in major version, use realization with FlowableProcessor instead")
 class RxFloat(initial: Float = 0f, onChange: (Float) -> Unit = {}) :
     RxItem<Float>(initial, onChange)
 
+@Deprecated("Items will be removed in major version, use realization with FlowableProcessor instead")
 class RxDouble(initial: Double = .0, onChange: (Double) -> Unit = {}) :
     RxItem<Double>(initial, onChange)
 
+@Deprecated("Items will be removed in major version, use realization with FlowableProcessor instead")
 class RxInt(initial: Int = 0, onChange: (Int) -> Unit = {}) : RxItem<Int>(initial, onChange)
 
+@Deprecated("Items will be removed in major version, use realization with FlowableProcessor instead")
 class RxLong(initial: Long = 0L, onChange: (Long) -> Unit = {}) : RxItem<Long>(initial, onChange)
 
+@Deprecated("Items will be removed in major version, use realization with FlowableProcessor instead")
 class RxString(string: String = "", onChange: (String) -> Unit = {}) :
     RxCharSequence<String>(string, onChange)
 
+@Deprecated("Items will be removed in major version, use realization with FlowableProcessor instead")
 class RxList<T>(initial: List<T> = emptyList(), onChange: (List<T>) -> Unit = {}) :
     RxItem<List<T>>(initial, onChange) {
 
