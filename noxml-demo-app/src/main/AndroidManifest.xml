@@ -29,7 +29,6 @@
             </intent-filter>
 
         </activity>
-        <activity android:name="iam.thevoid.noxml.demo.ui.mvvm.pagination.PaginationLoaderFragment" />
     </application>
 
 </manifest>
