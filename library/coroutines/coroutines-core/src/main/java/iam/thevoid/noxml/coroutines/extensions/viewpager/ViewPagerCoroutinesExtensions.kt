@@ -5,15 +5,15 @@ package iam.thevoid.noxml.coroutines.extensions.viewpager
 
 import androidx.fragment.app.FragmentManager
 import androidx.viewpager.widget.ViewPager
-import iam.thevoid.noxml.adapters.OnPageChangeListenerAdapter
+import iam.thevoid.noxml.core.local.adapters.OnPageChangeListenerAdapter
 import iam.thevoid.noxml.adapterview.ItemBindings
 import iam.thevoid.noxml.change.pager.OnPageScrolled
+import iam.thevoid.noxml.core.local.extensions.viewpager.onPageChangeListener
 import iam.thevoid.noxml.coroutines.data.CoroutineField
 import iam.thevoid.noxml.coroutines.data.CoroutineInt
 import iam.thevoid.noxml.coroutines.data.CoroutineItem
 import iam.thevoid.noxml.coroutines.data.CoroutineList
 import iam.thevoid.noxml.coroutines.extensions.view.addSetter
-import iam.thevoid.noxml.extensions.viewpager.onPageChangeListener
 import iam.thevoid.noxml.extensions.viewpager.setItems
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine

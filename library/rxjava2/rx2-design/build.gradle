@@ -39,6 +39,7 @@ dependencies {
 
     implementation project (':rx2-core')
     implementation project (':core-design')
+    implementation project (':local-design')
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 

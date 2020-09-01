@@ -1,7 +1,7 @@
 package iam.thevoid.noxml.rx2.utils
 
 import android.view.View
-import iam.thevoid.noxml.binding.Setter
+import iam.thevoid.noxml.core.local.binding.Setter
 import iam.thevoid.rxe.subscribeSafe
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers

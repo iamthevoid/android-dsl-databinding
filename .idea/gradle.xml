@@ -23,6 +23,9 @@
             <option value="$PROJECT_DIR$/library/coroutines/coroutines-design" />
             <option value="$PROJECT_DIR$/library/coroutines/coroutines-recycler" />
             <option value="$PROJECT_DIR$/library/coroutines/coroutines-swiperefreshlayout" />
+            <option value="$PROJECT_DIR$/library/local/local-core" />
+            <option value="$PROJECT_DIR$/library/local/local-design" />
+            <option value="$PROJECT_DIR$/library/local/local-recycler" />
             <option value="$PROJECT_DIR$/library/rxjava2/rx2-core" />
             <option value="$PROJECT_DIR$/library/rxjava2/rx2-design" />
             <option value="$PROJECT_DIR$/library/rxjava2/rx2-mvvm" />

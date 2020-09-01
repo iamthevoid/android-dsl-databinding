@@ -8,8 +8,6 @@ import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import iam.thevoid.ae.asAppCompatActivity
-import iam.thevoid.noxml.R
-import iam.thevoid.noxml.delegate.OnPageChangeDelegate
 import iam.thevoid.noxml.adapterview.ItemBindings
 import iam.thevoid.noxml.adapterview.StandalonePagerAdapter
 import iam.thevoid.noxml.adapterview.SimpleFragmentPagerAdapter
@@ -82,12 +80,3 @@ fun ViewPager.setTitledFactories(
             behavior
         )
 }
-
-// On Page Change Listener
-
-val ViewPager.onPageChangeListener: OnPageChangeDelegate
-    get() = ((getTag(R.id.onPageChangeListener) as? OnPageChangeDelegate)
-        ?: OnPageChangeDelegate().also {
-            setTag(R.id.onPageChangeListener, it)
-            addOnPageChangeListener(it)
-        })

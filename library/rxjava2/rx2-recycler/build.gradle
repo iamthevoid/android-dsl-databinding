@@ -40,6 +40,8 @@ dependencies {
 
     implementation project(':core-recycler')
 
+    implementation project(':local-recycler')
+
     implementation project(':rx2-core')
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])

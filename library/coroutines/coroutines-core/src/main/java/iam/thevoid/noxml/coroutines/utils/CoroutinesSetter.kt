@@ -2,7 +2,7 @@ package iam.thevoid.noxml.coroutines.utils
 
 import android.view.View
 import iam.thevoid.e.safe
-import iam.thevoid.noxml.binding.Setter
+import iam.thevoid.noxml.core.local.binding.Setter
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.flow.*

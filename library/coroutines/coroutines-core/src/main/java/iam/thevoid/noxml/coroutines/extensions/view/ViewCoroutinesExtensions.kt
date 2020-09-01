@@ -10,20 +10,20 @@ import android.view.*
 import iam.thevoid.ae.*
 import iam.thevoid.noxml.coroutines.utils.CoroutinesSetter
 import iam.thevoid.noxml.coroutines.data.*
-import iam.thevoid.noxml.extensions.view.gestureDetector
-import iam.thevoid.noxml.extensions.view.gestureDetectorCallback
-import iam.thevoid.noxml.extensions.view.observeListener
 import iam.thevoid.noxml.change.Margins
 import iam.thevoid.noxml.change.scroll.OnFling
 import iam.thevoid.noxml.change.scroll.OnScroll
+import iam.thevoid.noxml.core.local.extensions.view.gestureDetector
+import iam.thevoid.noxml.core.local.extensions.view.gestureDetectorCallback
+import iam.thevoid.noxml.core.local.extensions.view.settersCache
+import iam.thevoid.noxml.core.local.extensions.view.onGlobalLayoutDelegate
 import iam.thevoid.noxml.util.containsInStackTrace
-import iam.thevoid.noxml.extensions.view.onGlobalLayoutDelegate
 import iam.thevoid.util.Optional
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 
 fun <T : Any, V : View> V.addSetter(flow: Flow<T>, setter: V.(T) -> Unit = {}) {
-    observeListener.apply {
+    settersCache.apply {
         subscribeSetter(object : CoroutinesSetter<V, T>(this@addSetter, flow) {
             override fun set(view: V?, component: T) {
                 view?.apply { setter(this, component) }

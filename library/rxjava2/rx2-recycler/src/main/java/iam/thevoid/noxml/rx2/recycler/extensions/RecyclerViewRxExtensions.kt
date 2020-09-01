@@ -5,15 +5,21 @@ import iam.thevoid.noxml.adapterview.ItemBindings
 import iam.thevoid.noxml.recycler.*
 import iam.thevoid.noxml.recycler.change.OnScrollStateChanged
 import iam.thevoid.noxml.recycler.change.OnScrolled
+import iam.thevoid.noxml.recycler.local.onRecyclerScroll
 import iam.thevoid.noxml.rx2.data.fields.RxField
 import iam.thevoid.noxml.rx2.data.fields.RxInt
 import iam.thevoid.noxml.rx2.data.fields.RxList
 import iam.thevoid.noxml.rx2.extensions.view.addSetter
+import iam.thevoid.noxml.rx2.recycler.R
 import iam.thevoid.noxml.rx2.recycler.pagination.OldPaginationLoader
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 import io.reactivex.Single
 import io.reactivex.processors.FlowableProcessor
+
+private var RecyclerView.oldPaginationLoader
+    private set(loader) = setTag(R.id.recyclerPaginatedLoader, loader)
+    get() = (getTag(R.id.recyclerPaginatedLoader) as? OldPaginationLoader<*>)
 
 fun <T : Any> RecyclerView.setItems(
     items: Flowable<out List<T>>,
@@ -41,10 +47,6 @@ inline fun <T : Any, reified A : StandaloneRecyclerAdapter<T>> RecyclerView.setI
     noinline diffCallbackFactory: ((old: List<T>, new: List<T>) -> DiffCallback<T>) = diffCallback()
 ) = addSetter(items.observe()) { setItems(it, itemBindings, adapterFactory, diffCallbackFactory) }
 
-private var RecyclerView.paginationLoader
-    private set(loader) = setTag(R.id.recyclerPaginatedLoader, loader)
-    get() = (getTag(R.id.recyclerPaginatedLoader) as? OldPaginationLoader<*>)
-
 @Deprecated("")
 fun <T : Any> RecyclerView.setPaginationLoader(
     firstPage: Int,
@@ -64,11 +66,11 @@ fun <T : Any> RecyclerView.setPaginationLoader(
     itemBindings: ItemBindings,
     diffCallbackFactory: ((old: List<T>, new: List<T>) -> DiffCallback<T>) = diffCallback()
 ) {
-    if (paginationLoader != null)
+    if (oldPaginationLoader != null)
         return
     setItems(pageLoader.observe(), itemBindings, diffCallbackFactory).also {
         addOnScrollListener(pageLoader)
-        paginationLoader = pageLoader
+        oldPaginationLoader = pageLoader
     }
 }
 
@@ -78,7 +80,7 @@ fun RecyclerView.reloadFirstPage(trigger: Flowable<Any>) =
 
 @Deprecated("")
 fun RecyclerView.reloadFirstPage() {
-    paginationLoader?.loadFirst()
+    oldPaginationLoader?.loadFirst()
 }
 
 /**
@@ -159,5 +161,5 @@ fun <T : Any> RecyclerView.onScrollStateChanged(onScroll: FlowableProcessor<T>, 
             }
         }
         onRecyclerScroll.addOnScrollStateChanged(listener)
-        it.setCancellable { onRecyclerScroll.addOnScrollStateChanged(listener) }
+        it.setCancellable { onRecyclerScroll.removeOnScrollStateChanged(listener) }
     }, BackpressureStrategy.LATEST).doOnNext(onScroll::onNext))

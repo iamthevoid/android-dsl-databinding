@@ -1,8 +1,6 @@
 package iam.thevoid.noxml.design.extensions.appbarlayout
 
 import com.google.android.material.appbar.AppBarLayout
-import iam.thevoid.noxml.design.R
-import iam.thevoid.noxml.design.delegate.OnOffsetChangeListenerDelegate
 
 val scrollFlagScroll
     get() = AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL
@@ -21,10 +19,3 @@ val scrollFlagEnterAlwaysCollapsed
 
 val scrollFlagExitUntilCollapsed
     get() = AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED
-
-val AppBarLayout.onOffsetChangedListener
-    get() = (getTag(R.id.onOffsetChangedListenerDelegate) as? OnOffsetChangeListenerDelegate) ?:
-    OnOffsetChangeListenerDelegate().also {
-        setTag(R.id.onOffsetChangedListenerDelegate, this)
-        addOnOffsetChangedListener(it)
-    }

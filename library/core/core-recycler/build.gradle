@@ -36,6 +36,8 @@ ext {
 
 dependencies {
 
+    implementation project(':local-recycler')
+    implementation project(':local-core')
     api project(':core')
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])

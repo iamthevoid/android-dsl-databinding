@@ -10,10 +10,10 @@ import iam.thevoid.e.mergeWith
 import iam.thevoid.noxml.change.Margins
 import iam.thevoid.noxml.change.scroll.OnFling
 import iam.thevoid.noxml.change.scroll.OnScroll
-import iam.thevoid.noxml.extensions.view.gestureDetector
-import iam.thevoid.noxml.extensions.view.gestureDetectorCallback
-import iam.thevoid.noxml.extensions.view.observeListener
-import iam.thevoid.noxml.extensions.view.onGlobalLayoutDelegate
+import iam.thevoid.noxml.core.local.extensions.view.gestureDetector
+import iam.thevoid.noxml.core.local.extensions.view.gestureDetectorCallback
+import iam.thevoid.noxml.core.local.extensions.view.settersCache
+import iam.thevoid.noxml.core.local.extensions.view.onGlobalLayoutDelegate
 import iam.thevoid.noxml.rx2.data.RxLoading
 import iam.thevoid.noxml.rx2.data.fields.*
 import iam.thevoid.noxml.rx2.utils.RxSetter
@@ -24,7 +24,7 @@ import io.reactivex.Flowable
 import io.reactivex.processors.FlowableProcessor
 
 fun <T : Any, V : View> V.addSetter(flowable: Flowable<T>, setter: V.(T) -> Unit = {}) {
-    observeListener.apply {
+    settersCache.apply {
         subscribeSetter(object : RxSetter<V, T>(this@addSetter, flowable) {
             override fun set(view: V?, component: T) {
                 view?.apply { setter(this, component) }

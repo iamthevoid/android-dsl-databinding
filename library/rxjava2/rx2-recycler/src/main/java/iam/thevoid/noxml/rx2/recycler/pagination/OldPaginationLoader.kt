@@ -4,7 +4,7 @@ import android.annotation.SuppressLint
 import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 import iam.thevoid.e.safe
-import iam.thevoid.noxml.recycler.EndlessScrollListener
+import iam.thevoid.noxml.recycler.local.EndlessScrollListener
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers

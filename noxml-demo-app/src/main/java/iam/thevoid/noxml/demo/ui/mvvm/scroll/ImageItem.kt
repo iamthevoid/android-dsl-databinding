@@ -10,7 +10,7 @@ class ImageItem(viewGroup: ViewGroup) : AnkoRxLayout<String>(viewGroup) {
     override fun createView(ui: AnkoContext<AnkoRxLayout<String>>): View =
         ui.frameLayout {
             imageView {
-                setImageUrl(item.onlyPresent())
+                setImageUrl(itemChanges)
             }.lparams(matchParent, wrapContent)
         }.apply {
             layoutParams = ViewGroup.LayoutParams(matchParent, wrapContent)

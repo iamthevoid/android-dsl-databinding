@@ -51,7 +51,7 @@ class SelectActivity : AppCompatActivity() {
                     setRippleClickAnimation()
                     padding = dip(16)
                     setText(itemChanges.mapSelf { title })
-                    setOnClickListener { item.get()?.also(onItemClick) }
+                    setOnClickListener { getItem()?.also(onItemClick) }
                 }
 
                 view {

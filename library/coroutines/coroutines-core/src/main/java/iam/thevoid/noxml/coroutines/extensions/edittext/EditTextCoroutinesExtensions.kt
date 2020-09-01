@@ -5,8 +5,8 @@ import iam.thevoid.ae.*
 import iam.thevoid.e.format
 import iam.thevoid.noxml.coroutines.data.*
 import iam.thevoid.noxml.coroutines.extensions.view.addSetter
-import iam.thevoid.noxml.extensions.edittext.setTextResourceSilent
-import iam.thevoid.noxml.extensions.edittext.setTextSilent
+import iam.thevoid.noxml.core.local.extensions.edittext.setTextResourceSilent
+import iam.thevoid.noxml.core.local.extensions.edittext.setTextSilent
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 

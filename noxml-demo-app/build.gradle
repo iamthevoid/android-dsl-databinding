@@ -49,22 +49,22 @@ android {
 
 dependencies {
 
-    implementation project(':anko-core')
-    implementation project(':anko-coroutines')
-    implementation project(':anko-rx')
-    implementation project(':anko-mvvm')
+    api project(':anko-core')
+    api project(':anko-coroutines')
+    api project(':anko-rx')
+    api project(':anko-mvvm')
 
-    implementation project(':core')
-    implementation project(':core-recycler')
-    implementation project(':core-mvvm')
+    api project(':core')
+    api project(':core-recycler')
+    api project(':core-mvvm')
 
-    implementation project(':coroutines-core')
-    implementation project(':coroutines-recycler')
+    api project(':coroutines-core')
+    api project(':coroutines-recycler')
 
-    implementation project(':rx2-recycler')
-    implementation project(':rx2-core')
-    implementation project(':rx2-swiperefreshlayout')
-    implementation project(':rx2-mvvm')
+    api project(':rx2-recycler')
+    api project(':rx2-core')
+    api project(':rx2-swiperefreshlayout')
+    api project(':rx2-mvvm')
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"

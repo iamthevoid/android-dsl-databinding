@@ -5,6 +5,10 @@ include ':noxml-demo-app',
         ':anko-mvvm',
         ':anko-rx',
 
+        ':local-core',
+        ':local-design',
+        ':local-recycler',
+
         ':core',
         ':core-design',
         ':core-mvvm',
@@ -26,6 +30,10 @@ project(':anko-core').projectDir = new File('library/anko/anko-core')
 project(':anko-coroutines').projectDir = new File('library/anko/anko-coroutines')
 project(':anko-mvvm').projectDir = new File('library/anko/anko-mvvm')
 project(':anko-rx').projectDir = new File('library/anko/anko-rx')
+
+project(':local-core').projectDir = new File('library/local/local-core')
+project(':local-design').projectDir = new File('library/local/local-design')
+project(':local-recycler').projectDir = new File('library/local/local-recycler')
 
 project(':core').projectDir = new File('library/core/core')
 project(':core-design').projectDir = new File('library/core/core-design')

@@ -2,7 +2,7 @@ package iam.thevoid.noxml.rx2.design.extensions.tablayout
 
 import com.google.android.material.tabs.TabLayout
 import iam.thevoid.noxml.design.adapter.OnTabSelectedListenerAdapter
-import iam.thevoid.noxml.design.extensions.tablayout.onTabSelectListener
+import iam.thevoid.noxml.design.local.extensions.tablayout.onTabSelectListener
 import io.reactivex.Flowable
 import iam.thevoid.noxml.rx2.data.fields.RxField
 import iam.thevoid.noxml.rx2.data.fields.RxItem

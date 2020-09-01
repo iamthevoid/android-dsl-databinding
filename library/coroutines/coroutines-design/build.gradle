@@ -37,6 +37,8 @@ ext {
 
 dependencies {
 
+    implementation project (":local-design")
+
     implementation project (":coroutines-core")
     implementation project (':core-design')
 

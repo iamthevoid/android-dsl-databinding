@@ -5,7 +5,7 @@ import iam.thevoid.noxml.coroutines.data.CoroutineField
 import iam.thevoid.noxml.coroutines.data.CoroutineItem
 import iam.thevoid.noxml.coroutines.extensions.view.addSetter
 import iam.thevoid.noxml.design.adapter.OnTabSelectedListenerAdapter
-import iam.thevoid.noxml.design.extensions.tablayout.onTabSelectListener
+import iam.thevoid.noxml.design.local.extensions.tablayout.onTabSelectListener
 import kotlinx.coroutines.flow.Flow
 
 fun TabLayout.selectTab(tab: TabLayout.Tab?) {

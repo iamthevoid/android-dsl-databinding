@@ -7,10 +7,10 @@ import iam.thevoid.ae.setTextStrikeThru
 import iam.thevoid.ae.string
 import iam.thevoid.e.format
 import iam.thevoid.e.safe
-import iam.thevoid.noxml.extensions.textview.textWatcherDelegate
-import iam.thevoid.noxml.adapters.TextWatcherAdapter
+import iam.thevoid.noxml.core.local.adapters.TextWatcherAdapter
 import iam.thevoid.noxml.change.textwatcher.BeforeEditTextChanges
 import iam.thevoid.noxml.change.textwatcher.OnEditTextChanges
+import iam.thevoid.noxml.core.local.extensions.textview.textWatcherDelegate
 import iam.thevoid.noxml.coroutines.data.*
 import iam.thevoid.noxml.coroutines.extensions.view.addSetter
 import kotlinx.coroutines.flow.Flow

@@ -6,8 +6,8 @@ import iam.thevoid.ae.requestSoftInput
 import iam.thevoid.ae.resetFocus
 import iam.thevoid.e.format
 import iam.thevoid.noxml.rx2.data.fields.*
-import iam.thevoid.noxml.extensions.edittext.setTextResourceSilent
-import iam.thevoid.noxml.extensions.edittext.setTextSilent
+import iam.thevoid.noxml.core.local.extensions.edittext.setTextResourceSilent
+import iam.thevoid.noxml.core.local.extensions.edittext.setTextSilent
 import iam.thevoid.noxml.rx2.extensions.view.addSetter
 import io.reactivex.Flowable
 

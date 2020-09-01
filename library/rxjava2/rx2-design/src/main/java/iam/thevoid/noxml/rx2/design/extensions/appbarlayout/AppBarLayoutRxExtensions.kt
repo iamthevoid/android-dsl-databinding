@@ -2,7 +2,7 @@ package iam.thevoid.noxml.rx2.design.extensions.appbarlayout
 
 import com.google.android.material.appbar.AppBarLayout
 import iam.thevoid.noxml.design.change.OnOffsetChange
-import iam.thevoid.noxml.design.extensions.appbarlayout.onOffsetChangedListener
+import iam.thevoid.noxml.design.local.extensions.appbarlayout.onOffsetChangedListener
 import iam.thevoid.noxml.rx2.data.fields.RxField
 
 fun  AppBarLayout.onOffsetChange(onOffsetChange : RxField<OnOffsetChange>) =
