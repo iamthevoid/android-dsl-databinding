@@ -79,7 +79,7 @@ fun View.setMargins(
 fun View.hideUntilLoaded(loading: Flowable<Boolean>) =
     addSetter(loading) { hide(it) }
 
-@Deprecated("Fields and Items will be removed in major version, use realization with Flowable instead")
+@Deprecated("Fields and Items will be removed in release version, use realization with Flowable instead")
 fun View.hideUntilLoaded(loading: RxBoolean) =
     hideUntilLoaded(loading.observe())
 
@@ -92,7 +92,7 @@ fun View.hideUntilLoaded(loading: RxLoading, vararg loadings: RxLoading) =
 fun View.hideWhenLoaded(loading: Flowable<Boolean>) =
     addSetter(loading) { hide(!it) }
 
-@Deprecated("Fields and Items will be removed in major version, use realization with Flowable instead")
+@Deprecated("Fields and Items will be removed in release version, use realization with Flowable instead")
 fun View.hideWhenLoaded(loading: RxBoolean) =
     hideWhenLoaded(loading.observe())
 
@@ -105,7 +105,7 @@ fun View.hideWhenLoaded(loading: RxLoading, vararg loadings: RxLoading) =
 fun View.goneUntilLoaded(loading: Flowable<Boolean>) =
     addSetter(loading) { gone(it) }
 
-@Deprecated("Fields and Items will be removed in major version, use realization with Flowable instead")
+@Deprecated("Fields and Items will be removed in release version, use realization with Flowable instead")
 fun View.goneUntilLoaded(loading: RxBoolean) =
     goneUntilLoaded(loading.observe())
 
@@ -118,7 +118,7 @@ fun View.goneUntilLoaded(loading: RxLoading, vararg loadings: RxLoading) =
 fun View.goneWhenLoaded(loading: Flowable<Boolean>) =
     addSetter(loading) { gone(!it) }
 
-@Deprecated("Fields and Items will be removed in major version, use realization with Flowable instead")
+@Deprecated("Fields and Items will be removed in release version, use realization with Flowable instead")
 fun View.goneWhenLoaded(loading: RxBoolean) =
     goneWhenLoaded(loading.observe())
 
@@ -131,22 +131,22 @@ fun View.goneWhenLoaded(loading: RxLoading, vararg loadings: RxLoading) =
 fun View.gone(needGone: Flowable<Boolean>) =
     addSetter(needGone) { gone(it) }
 
-@Deprecated("Fields and Items will be removed in major version, use realization with Flowable instead")
+@Deprecated("Fields and Items will be removed in release version, use realization with Flowable instead")
 fun View.gone(needGone: RxField<Boolean>) =
     gone(needGone.onlyPresent())
 
-@Deprecated("Fields and Items will be removed in major version, use realization with Flowable instead")
+@Deprecated("Fields and Items will be removed in release version, use realization with Flowable instead")
 fun View.gone(needGone: RxItem<Boolean>) =
     gone(needGone.observe())
 
 fun View.hide(needHide: Flowable<Boolean>) =
     addSetter(needHide) { hide(it) }
 
-@Deprecated("Fields and Items will be removed in major version, use realization with Flowable instead")
+@Deprecated("Fields and Items will be removed in release version, use realization with Flowable instead")
 fun View.hide(needHide: RxField<Boolean>) =
     hide(needHide.onlyPresent())
 
-@Deprecated("Fields and Items will be removed in major version, use realization with Flowable instead")
+@Deprecated("Fields and Items will be removed in release version, use realization with Flowable instead")
 fun View.hide(needHide: RxItem<Boolean>) =
     hide(needHide.observe())
 
@@ -199,22 +199,22 @@ fun View.setClickListener(onClick: Flowable<View.OnClickListener>) =
  * Focus
  */
 
-@Deprecated("Fields and Items will be removed in major version, use realization with FlowableProcessor instead")
+@Deprecated("Fields and Items will be removed in release version, use realization with FlowableProcessor instead")
 fun View.onFocusChange(onFocusChange: RxItem<Boolean>) =
     onFocusChange(onFocusChange) { it }
 
-@Deprecated("Fields and Items will be removed in major version, use realization with FlowableProcessor instead")
+@Deprecated("Fields and Items will be removed in release version, use realization with FlowableProcessor instead")
 fun View.onFocusChange(onFocusChange: RxField<Boolean>) =
     onFocusChange(onFocusChange) { it }
 
-@Deprecated("Fields and Items will be removed in major version, use realization with FlowableProcessor instead")
+@Deprecated("Fields and Items will be removed in release version, use realization with FlowableProcessor instead")
 fun <T : Any> View.onFocusChange(onFocusChange: RxField<T>, mapper: (Boolean) -> T?) {
     onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
         onFocusChange.set(mapper(hasFocus))
     }
 }
 
-@Deprecated("Fields and Items will be removed in major version, use realization with FlowableProcessor instead")
+@Deprecated("Fields and Items will be removed in release version, use realization with FlowableProcessor instead")
 fun <T : Any> View.onFocusChange(onFocusChange: RxItem<T>, mapper: (Boolean) -> T) {
     onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
         onFocusChange.set(mapper(hasFocus))
@@ -233,15 +233,15 @@ fun <T : Any> View.onFocusChange(onFocusChange: FlowableProcessor<T>, mapper: (B
     }, BackpressureStrategy.LATEST).doOnNext(onFocusChange::onNext))
 }
 
-@Deprecated("Fields and Items will be removed in major version, use realization with FlowableProcessor instead")
+@Deprecated("Fields and Items will be removed in release version, use realization with FlowableProcessor instead")
 fun View.onFocusChangeForceFalseOnClearFocus(onFocusChange: RxBoolean) =
     onFocusChangeForceFalseOnClearFocus(onFocusChange) { it }
 
-@Deprecated("Fields and Items will be removed in major version, use realization with FlowableProcessor instead")
+@Deprecated("Fields and Items will be removed in release version, use realization with FlowableProcessor instead")
 fun View.onFocusChangeForceFalseOnClearFocus(onFocusChange: RxItem<Boolean>) =
     onFocusChangeForceFalseOnClearFocus(onFocusChange) { it }
 
-@Deprecated("Fields and Items will be removed in major version, use realization with FlowableProcessor instead")
+@Deprecated("Fields and Items will be removed in release version, use realization with FlowableProcessor instead")
 fun <T : Any> View.onFocusChangeForceFalseOnClearFocus(
     onFocusChange: RxItem<T>,
     mapper: (Boolean) -> T
@@ -279,15 +279,15 @@ fun <T : Any> View.onFocusChangeForceFalseOnClearFocus(
  * Transition
  */
 
-@Deprecated("Fields and Items will be removed in major version, use realization with Flowable instead")
+@Deprecated("Fields and Items will be removed in release version, use realization with Flowable instead")
 fun View.setTranslationY(translation: RxField<Float>) =
     setTranslationY(translation.onlyPresent())
 
-@Deprecated("Fields and Items will be removed in major version, use realization with Flowable instead")
+@Deprecated("Fields and Items will be removed in release version, use realization with Flowable instead")
 fun View.setTranslationY(translation: RxItem<Float>) =
     setTranslationY(translation.observe())
 
-@Deprecated("Fields and Items will be removed in major version, use realization with Flowable instead")
+@Deprecated("Fields and Items will be removed in release version, use realization with Flowable instead")
 fun View.setTranslationY(translation: RxFloat) =
     setTranslationY(translation.observe())
 
@@ -298,7 +298,7 @@ fun View.setTranslationY(translation: Flowable<Float>) =
  * Height
  */
 
-@Deprecated("Fields and Items will be removed in major version, use realization with FlowableProcessor instead")
+@Deprecated("Fields and Items will be removed in release version, use realization with FlowableProcessor instead")
 @Suppress("ObjectLiteralToLambda", "DEPRECATION")
 fun View.getHeight(height: RxInt) {
     onGlobalLayoutDelegate.addOnGlobalLayoutCallback(object :
@@ -321,7 +321,7 @@ fun View.getHeight(height: FlowableProcessor<Int>) {
  * ON SCROLL
  */
 
-@Deprecated("Fields and Items will be removed in major version, use realization with FlowableProcessor instead")
+@Deprecated("Fields and Items will be removed in release version, use realization with FlowableProcessor instead")
 fun <T : Any> View.onScroll(onScroll: RxField<T>, mapper: (OnScroll) -> T) {
     gestureDetectorCallback.addOnScrollCallback(object :
         GestureDetector.SimpleOnGestureListener() {
@@ -339,7 +339,7 @@ fun <T : Any> View.onScroll(onScroll: RxField<T>, mapper: (OnScroll) -> T) {
     setClickable()
 }
 
-@Deprecated("Fields and Items will be removed in major version, use realization with FlowableProcessor instead")
+@Deprecated("Fields and Items will be removed in release version, use realization with FlowableProcessor instead")
 fun View.onScroll(onScroll: RxField<OnScroll>) =
     onScroll(onScroll) { it }
 
@@ -371,7 +371,7 @@ fun View.onScroll(onScroll: FlowableProcessor<OnScroll>) =
  * ON FLING
  */
 
-@Deprecated("Fields and Items will be removed in major version, use realization with FlowableProcessor instead")
+@Deprecated("Fields and Items will be removed in release version, use realization with FlowableProcessor instead")
 fun <T : Any> View.onFling(onFling: RxField<T>, mapper: (OnFling) -> T) {
     gestureDetectorCallback.addOnFlingCallback(object :
         GestureDetector.SimpleOnGestureListener() {
@@ -389,7 +389,7 @@ fun <T : Any> View.onFling(onFling: RxField<T>, mapper: (OnFling) -> T) {
     setClickable()
 }
 
-@Deprecated("Fields and Items will be removed in major version, use realization with FlowableProcessor instead")
+@Deprecated("Fields and Items will be removed in release version, use realization with FlowableProcessor instead")
 fun View.onFling(onFling: RxField<OnFling>) =
     onFling(onFling) { it }
 
@@ -421,7 +421,7 @@ fun View.onFling(onFling: FlowableProcessor<OnFling>) =
  * ON DOWN
  */
 
-@Deprecated("Fields and Items will be removed in major version, use realization with FlowableProcessor instead")
+@Deprecated("Fields and Items will be removed in release version, use realization with FlowableProcessor instead")
 fun <T : Any> View.onDown(onDown: RxField<T>, mapper: (Optional<MotionEvent>) -> T) {
     gestureDetectorCallback.addOnDownCallback(object :
         GestureDetector.SimpleOnGestureListener() {
@@ -434,7 +434,7 @@ fun <T : Any> View.onDown(onDown: RxField<T>, mapper: (Optional<MotionEvent>) ->
     setClickable()
 }
 
-@Deprecated("Fields and Items will be removed in major version, use realization with FlowableProcessor instead")
+@Deprecated("Fields and Items will be removed in release version, use realization with FlowableProcessor instead")
 fun View.onDown(onDown: RxField<Optional<MotionEvent>>) =
     onDown(onDown) { it }
 
@@ -461,7 +461,7 @@ fun View.onDown(onDown: FlowableProcessor<Optional<MotionEvent>>) =
  * ON SINGLE TAP UP
  */
 
-@Deprecated("Fields and Items will be removed in major version, use realization with FlowableProcessor instead")
+@Deprecated("Fields and Items will be removed in release version, use realization with FlowableProcessor instead")
 fun <T : Any> View.onSingleTapUp(
     onSingleTapUp: RxField<T>,
     mapper: (Optional<MotionEvent>) -> T
@@ -476,7 +476,7 @@ fun <T : Any> View.onSingleTapUp(
     setOnTouchListener { _, event -> gestureDetector.onTouchEvent(event) }
 }
 
-@Deprecated("Fields and Items will be removed in major version, use realization with FlowableProcessor instead")
+@Deprecated("Fields and Items will be removed in release version, use realization with FlowableProcessor instead")
 fun View.onSingleTapUp(onSingleTapUp: RxField<Optional<MotionEvent>>) =
     onSingleTapUp(onSingleTapUp) { it }
 
@@ -506,7 +506,7 @@ fun View.onSingleTapUp(onSingleTapUp: FlowableProcessor<Optional<MotionEvent>>) 
  * ON SHOW PRESS
  */
 
-@Deprecated("Fields and Items will be removed in major version, use realization with FlowableProcessor instead")
+@Deprecated("Fields and Items will be removed in release version, use realization with FlowableProcessor instead")
 fun <T : Any> View.onShowPress(onShowPress: RxField<T>, mapper: (Optional<MotionEvent>) -> T) {
     gestureDetectorCallback.addOnShowPressCallback(object :
         GestureDetector.SimpleOnGestureListener() {
@@ -516,7 +516,7 @@ fun <T : Any> View.onShowPress(onShowPress: RxField<T>, mapper: (Optional<Motion
     setClickable()
 }
 
-@Deprecated("Fields and Items will be removed in major version, use realization with FlowableProcessor instead")
+@Deprecated("Fields and Items will be removed in release version, use realization with FlowableProcessor instead")
 fun View.onShowPress(onShowPress: RxField<Optional<MotionEvent>>) =
     onShowPress(onShowPress) { it }
 
@@ -542,7 +542,7 @@ fun View.onShowPress(onShowPress: FlowableProcessor<Optional<MotionEvent>>) =
  * ON LONG PRESS
  */
 
-@Deprecated("Fields and Items will be removed in major version, use realization with FlowableProcessor instead")
+@Deprecated("Fields and Items will be removed in release version, use realization with FlowableProcessor instead")
 fun <T : Any> View.onLongPress(onLongPress: RxField<T>, mapper: (Optional<MotionEvent>) -> T) {
     gestureDetectorCallback.addOnShowPressCallback(object :
         GestureDetector.SimpleOnGestureListener() {
@@ -552,7 +552,7 @@ fun <T : Any> View.onLongPress(onLongPress: RxField<T>, mapper: (Optional<Motion
     setClickable()
 }
 
-@Deprecated("Fields and Items will be removed in major version, use realization with FlowableProcessor instead")
+@Deprecated("Fields and Items will be removed in release version, use realization with FlowableProcessor instead")
 fun View.onLongPress(onLongPress: RxField<Optional<MotionEvent>>) =
     onLongPress(onLongPress) { it }
 

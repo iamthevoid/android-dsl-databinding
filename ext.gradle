@@ -33,7 +33,7 @@ ext {
     compileApi = 29
     targetApi = 29
 
-    e = "0.6.5"
+    e = "0.6.6"
 
     anko = "0.10.8"
     splitties = "3.0.0-alpha06"

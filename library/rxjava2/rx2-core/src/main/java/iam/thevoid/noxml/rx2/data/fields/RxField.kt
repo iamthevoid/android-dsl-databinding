@@ -5,7 +5,7 @@ import iam.thevoid.util.Optional
 import io.reactivex.Flowable
 import io.reactivex.processors.BehaviorProcessor
 
-@Deprecated("Fields will be removed in major version, use realization with FlowableProcessor instead")
+@Deprecated("Fields will be removed in release version, use realization with FlowableProcessor instead")
 class RxField<T>(initial: T? = null, private val onChange: (T?) -> Unit = {})  {
 
     private val subject = BehaviorProcessor.createDefault(Optional.of(initial))

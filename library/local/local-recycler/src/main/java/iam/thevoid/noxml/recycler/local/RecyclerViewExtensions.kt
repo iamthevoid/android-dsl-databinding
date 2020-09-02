@@ -3,23 +3,20 @@
 package iam.thevoid.noxml.recycler.local
 
 import androidx.recyclerview.widget.RecyclerView
-import iam.thevoid.noxml.recycler.local.delegate.OnRecyclerScrollDelegate
+import iam.thevoid.noxml.core.local.tools.lazyDelegate
 import iam.thevoid.noxml.recycler.local.delegate.EndlessScrollDelegate
+import iam.thevoid.noxml.recycler.local.delegate.OnRecyclerScrollDelegate
 
 
 // Duct tape around paging. Line do effectively nothing, just trigger endless scroll listener
 // for case when it doesn't triggers automatically (page is small and items not cover screen full
 // height)
+val RecyclerView.endlessScrollDelegate
+    get() = lazyDelegate(R.id.recyclerEndlessScroll, ::EndlessScrollDelegate, ::addOnScrollListener)
+
 fun RecyclerView.triggerEndlessScroll() {
     endlessScrollDelegate.onScrolled(this, 0, 0)
 }
-
-val RecyclerView.endlessScrollDelegate
-    get() = getTag(R.id.recyclerEndlessScroll) as? EndlessScrollDelegate
-        ?: EndlessScrollDelegate().also {
-            setTag(R.id.recyclerEndlessScroll, it)
-            addOnScrollListener(it)
-        }
 
 fun RecyclerView.resetEndlessScrollState() {
     endlessScrollDelegate.resetListeners()
@@ -38,11 +35,11 @@ fun RecyclerView.setLoadMore(action: (Int) -> Unit) {
  */
 
 val RecyclerView.startSpacing
-    get() = (getTag(R.id.recyclerStartSpacing) as? StartEndPaddingRecyclerDecoration)
-        ?: StartEndPaddingRecyclerDecoration().also {
-            addItemDecoration(it)
-            setTag(R.id.recyclerStartSpacing, it)
-        }
+    get() = lazyDelegate(
+        R.id.recyclerStartSpacing,
+        ::StartEndPaddingRecyclerDecoration,
+        ::addItemDecoration
+    )
 
 fun RecyclerView.setStartSpacing(spacing: Int) {
     val decoration = startSpacing
@@ -52,11 +49,11 @@ fun RecyclerView.setStartSpacing(spacing: Int) {
 }
 
 val RecyclerView.endSpacing
-    get() = (getTag(R.id.recyclerEndSpacing) as? StartEndPaddingRecyclerDecoration)
-        ?: StartEndPaddingRecyclerDecoration().also {
-            addItemDecoration(it)
-            setTag(R.id.recyclerEndSpacing, it)
-        }
+    get() = lazyDelegate(
+        R.id.recyclerEndSpacing,
+        ::StartEndPaddingRecyclerDecoration,
+        ::addItemDecoration
+    )
 
 fun RecyclerView.setEndSpacing(spacing: Int) {
     val decoration = endSpacing
@@ -71,9 +68,4 @@ fun RecyclerView.setEndSpacing(spacing: Int) {
  */
 
 val RecyclerView.onRecyclerScroll
-    get() = (getTag(R.id.recyclerScroll) as? OnRecyclerScrollDelegate)
-        ?: OnRecyclerScrollDelegate()
-            .also {
-                setTag(R.id.recyclerScroll, it)
-                addOnScrollListener(it)
-            }
+    get() = lazyDelegate(R.id.recyclerScroll, ::OnRecyclerScrollDelegate, ::addOnScrollListener)

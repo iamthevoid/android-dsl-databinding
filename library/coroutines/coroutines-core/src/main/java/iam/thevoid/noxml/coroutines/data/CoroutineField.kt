@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
 
-@Deprecated("Fields will be removed in major version, use realization with FlowableProcessor instead")
+@Deprecated("Fields will be removed in release version, use realization with FlowableProcessor instead")
 @OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
 open class CoroutineField<T>(item: T? = null, private val onChange: (T?) -> Unit = {}) {
 

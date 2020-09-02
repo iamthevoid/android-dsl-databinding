@@ -6,6 +6,7 @@ import iam.thevoid.noxml.core.local.R
 import iam.thevoid.noxml.core.local.binding.SettersCache
 import iam.thevoid.noxml.core.local.delegate.OnGestureDelegate
 import iam.thevoid.noxml.core.local.delegate.OnGlobalLayoutListenerDelegate
+import iam.thevoid.noxml.core.local.tools.lazyDelegate
 
 /**
  * Basics.
@@ -15,11 +16,7 @@ import iam.thevoid.noxml.core.local.delegate.OnGlobalLayoutListenerDelegate
  */
 
 val View.settersCache: SettersCache
-    get() = ((getTag(R.id.cache) as? SettersCache)
-        ?: SettersCache().also {
-            setTag(R.id.cache, it)
-            addOnAttachStateChangeListener(it)
-        })
+    get() = lazyDelegate(R.id.cache, ::SettersCache, ::addOnAttachStateChangeListener)
 
 fun View.bindDataImmediate() =
     settersCache.bindDataImmediate(this)
@@ -35,22 +32,19 @@ fun View.fakeDetachFromWindow() =
  */
 
 val View.onGlobalLayoutDelegate
-    get() = (getTag(R.id.onGlobalLayoutDelegate) as? OnGlobalLayoutListenerDelegate)
-        ?: OnGlobalLayoutListenerDelegate().also {
-            viewTreeObserver.addOnGlobalLayoutListener(it)
-            setTag(R.id.onGlobalLayoutDelegate, it)
-        }
+    get() = lazyDelegate(
+        R.id.onGlobalLayoutDelegate,
+        ::OnGlobalLayoutListenerDelegate,
+        viewTreeObserver::addOnGlobalLayoutListener
+    )
+
 
 /**
  * Gesture
  */
 
 val View.gestureDetector
-    get() = (getTag(R.id.gestureDetector) as? GestureDetector) ?: GestureDetector(
-        context,
-        gestureDetectorCallback
-    )
+    get() = lazyDelegate(R.id.gestureDetector, { GestureDetector(context, gestureDetectorCallback) })
 
 val View.gestureDetectorCallback: OnGestureDelegate
-    get() = (getTag(R.id.gestureDetectorCallback) as? OnGestureDelegate)
-        ?: OnGestureDelegate().also { setTag(R.id.gestureDetectorCallback, it) }
+    get() = lazyDelegate(R.id.gestureDetectorCallback, ::OnGestureDelegate)

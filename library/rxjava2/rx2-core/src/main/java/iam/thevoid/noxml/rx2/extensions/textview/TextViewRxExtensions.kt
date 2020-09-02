@@ -23,34 +23,34 @@ import io.reactivex.processors.FlowableProcessor
 fun <T : CharSequence> TextView.setText(text: Flowable<T>) =
     addSetter(text) { this.text = it }
 
-@Deprecated("Fields and Items will be removed in major version, use realization with Flowable instead")
+@Deprecated("Fields and Items will be removed in release version, use realization with Flowable instead")
 fun <T : CharSequence> TextView.setText(text: RxCharSequence<T>) =
     setText(text.observe())
 
-@Deprecated("Fields and Items will be removed in major version, use realization with Flowable instead")
+@Deprecated("Fields and Items will be removed in release version, use realization with Flowable instead")
 fun TextView.setText(text: RxString) =
     setText(text.observe())
 
-@Deprecated("Fields and Items will be removed in major version, use realization with Flowable instead")
+@Deprecated("Fields and Items will be removed in release version, use realization with Flowable instead")
 fun TextView.setText(text: RxInt) =
     setText(text.observe().map { "$it" })
 
-@Deprecated("Fields and Items will be removed in major version, use realization with Flowable instead")
+@Deprecated("Fields and Items will be removed in release version, use realization with Flowable instead")
 fun TextView.setText(text: RxLong) =
     addSetter(text.observe().map { "$it" })
 
-@Deprecated("Fields and Items will be removed in major version, use realization with Flowable instead")
+@Deprecated("Fields and Items will be removed in release version, use realization with Flowable instead")
 fun TextView.setText(text: RxFloat, precision: Int? = null) =
     addSetter(text.observe().map { it.format(precision) })
 
-@Deprecated("Fields and Items will be removed in major version, use realization with Flowable instead")
+@Deprecated("Fields and Items will be removed in release version, use realization with Flowable instead")
 fun TextView.setText(text: RxDouble, precision: Int? = null) =
     addSetter(text.observe().map { it.format(precision) })
 
 fun TextView.setTextResource(textResource: Flowable<Int>) =
     setText(textResource.map { string(it) })
 
-@Deprecated("Fields and Items will be removed in major version, use realization with Flowable instead")
+@Deprecated("Fields and Items will be removed in release version, use realization with Flowable instead")
 fun TextView.setTextResource(textResource: RxInt) =
     setTextResource(textResource.observe())
 
@@ -73,7 +73,7 @@ fun TextView.setTextStrikeThru(strikeThru: Flowable<Boolean>) =
  * GETTER
  */
 
-@Deprecated("Fields and Items will be removed in major version, use realization with FlowableProcessor instead")
+@Deprecated("Fields and Items will be removed in release version, use realization with FlowableProcessor instead")
 fun <T : Any> EditText.afterTextChanges(afterTextChanges: RxField<T>, mapper: (Editable?) -> T?) {
     textWatcherDelegate.addAfterTextChangedCallback(object : TextWatcherAdapter() {
         override fun afterTextChanged(s: Editable?) {
@@ -82,7 +82,7 @@ fun <T : Any> EditText.afterTextChanges(afterTextChanges: RxField<T>, mapper: (E
     })
 }
 
-@Deprecated("Fields and Items will be removed in major version, use realization with FlowableProcessor instead")
+@Deprecated("Fields and Items will be removed in release version, use realization with FlowableProcessor instead")
 fun <T : Any> EditText.afterTextChanges(afterTextChanges: RxItem<T>, mapper: (Editable) -> T) {
     textWatcherDelegate.addAfterTextChangedCallback(object : TextWatcherAdapter() {
         override fun afterTextChanged(s: Editable?) {
@@ -91,11 +91,11 @@ fun <T : Any> EditText.afterTextChanges(afterTextChanges: RxItem<T>, mapper: (Ed
     })
 }
 
-@Deprecated("Fields and Items will be removed in major version, use realization with FlowableProcessor instead")
+@Deprecated("Fields and Items will be removed in release version, use realization with FlowableProcessor instead")
 fun EditText.afterTextChanges(afterTextChanges: RxItem<String>) =
     afterTextChanges(afterTextChanges) { "${it.safe()}" }
 
-@Deprecated("Fields and Items will be removed in major version, use realization with FlowableProcessor instead")
+@Deprecated("Fields and Items will be removed in release version, use realization with FlowableProcessor instead")
 fun EditText.afterTextChanges(afterTextChanges: RxString) =
     afterTextChanges(afterTextChanges) { "${it.safe()}" }
 
@@ -124,7 +124,7 @@ fun EditText.afterTextChanges(
 }
 
 
-@Deprecated("Fields and Items will be removed in major version, use realization with FlowableProcessor instead")
+@Deprecated("Fields and Items will be removed in release version, use realization with FlowableProcessor instead")
 fun <T : Any> EditText.beforeTextChanges(
     beforeTextChanges: RxField<T>,
     mapper: (BeforeEditTextChanges) -> T
@@ -136,7 +136,7 @@ fun <T : Any> EditText.beforeTextChanges(
     })
 }
 
-@Deprecated("Fields and Items will be removed in major version, use realization with FlowableProcessor instead")
+@Deprecated("Fields and Items will be removed in release version, use realization with FlowableProcessor instead")
 fun EditText.beforeTextChanges(beforeTextChanges: RxField<BeforeEditTextChanges>) =
     beforeTextChanges(beforeTextChanges) { it }
 
@@ -159,7 +159,7 @@ fun EditText.beforeTextChanges(beforeTextChanges: FlowableProcessor<BeforeEditTe
     beforeTextChanges(beforeTextChanges, mapper = { it })
 
 
-@Deprecated("Fields and Items will be removed in major version, use realization with FlowableProcessor instead")
+@Deprecated("Fields and Items will be removed in release version, use realization with FlowableProcessor instead")
 fun <T : Any> EditText.onTextChanges(onTextChanges: RxField<T>, mapper: (OnEditTextChanges) -> T) {
     textWatcherDelegate.addOnTextChangedCallback(object : TextWatcherAdapter() {
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -168,7 +168,7 @@ fun <T : Any> EditText.onTextChanges(onTextChanges: RxField<T>, mapper: (OnEditT
     })
 }
 
-@Deprecated("Fields and Items will be removed in major version, use realization with FlowableProcessor instead")
+@Deprecated("Fields and Items will be removed in release version, use realization with FlowableProcessor instead")
 fun EditText.onTextChanges(onTextChanges: RxField<OnEditTextChanges>) =
     onTextChanges(onTextChanges) { it }
 

@@ -17,6 +17,7 @@ import io.reactivex.Flowable
 import io.reactivex.Single
 import io.reactivex.processors.FlowableProcessor
 
+@Deprecated("Will be removed in release version")
 private var RecyclerView.oldPaginationLoader
     private set(loader) = setTag(R.id.recyclerPaginatedLoader, loader)
     get() = (getTag(R.id.recyclerPaginatedLoader) as? OldPaginationLoader<*>)
@@ -60,7 +61,7 @@ fun <T : Any> RecyclerView.setPaginationLoader(
     ), itemBindings, diffCallbackFactory
 )
 
-@Deprecated("")
+@Deprecated("Will be removed in release version")
 fun <T : Any> RecyclerView.setPaginationLoader(
     pageLoader: OldPaginationLoader<T>,
     itemBindings: ItemBindings,
@@ -74,11 +75,11 @@ fun <T : Any> RecyclerView.setPaginationLoader(
     }
 }
 
-@Deprecated("")
+@Deprecated("Will be removed in release version")
 fun RecyclerView.reloadFirstPage(trigger: Flowable<Any>) =
     addSetter(trigger) { reloadFirstPage() }
 
-@Deprecated("")
+@Deprecated("Will be removed in release version")
 fun RecyclerView.reloadFirstPage() {
     oldPaginationLoader?.loadFirst()
 }
@@ -103,11 +104,11 @@ fun RecyclerView.setEndSpacing(spacing: Flowable<Int>) =
  * On RecyclerView scroll reverse binding
  */
 
-@Deprecated("Fields and Items will be removed in major version, use realization with FlowableProcessor instead")
+@Deprecated("Fields and Items will be removed in release version, use realization with FlowableProcessor instead")
 fun RecyclerView.onRecyclerScrolled(rxOnScroll: RxField<OnScrolled>) =
     onRecyclerScrolled(rxOnScroll) { it }
 
-@Deprecated("Fields and Items will be removed in major version, use realization with FlowableProcessor instead")
+@Deprecated("Fields and Items will be removed in release version, use realization with FlowableProcessor instead")
 fun <T : Any> RecyclerView.onRecyclerScrolled(onScroll: RxField<T>, mapper: (OnScrolled) -> T) =
     addSetter(Flowable.create<T>({
         val listener = object : RecyclerView.OnScrollListener() {
@@ -134,11 +135,11 @@ fun <T : Any> RecyclerView.onRecyclerScrolled(onScroll: FlowableProcessor<T>, ma
     }, BackpressureStrategy.LATEST).doOnNext(onScroll::onNext))
 
 
-@Deprecated("Fields and Items will be removed in major version, use realization with FlowableProcessor instead")
+@Deprecated("Fields and Items will be removed in release version, use realization with FlowableProcessor instead")
 fun RecyclerView.onScrollStateChanged(rxOnScroll: RxField<OnScrollStateChanged>) =
     onRecyclerScrollStateChanged(rxOnScroll) { it }
 
-@Deprecated("Fields and Items will be removed in major version, use realization with FlowableProcessor instead")
+@Deprecated("Fields and Items will be removed in release version, use realization with FlowableProcessor instead")
 fun <T : Any> RecyclerView.onRecyclerScrollStateChanged(
     onScroll: RxField<T>,
     mapper: (OnScrollStateChanged) -> T

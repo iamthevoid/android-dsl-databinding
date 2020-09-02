@@ -20,7 +20,7 @@ import io.reactivex.Flowable
 import io.reactivex.processors.FlowableProcessor
 import io.reactivex.rxkotlin.Flowables
 
-@Deprecated("Fields and Items will be removed in major version, use realization with Flowable instead")
+@Deprecated("Fields and Items will be removed in release version, use realization with Flowable instead")
 fun ViewPager.setCurrentPage(page: RxInt, smoothScroll: Boolean = true) =
     setCurrentPage(page.observe(), smoothScroll)
 
@@ -33,13 +33,13 @@ fun ViewPager.setCurrentPage(page: Flowable<Int>, smoothScroll: Boolean = true) 
     }
 
 // View Pager Adapter
-@Deprecated("Fields and Items will be removed in major version, use realization with Flowable instead")
+@Deprecated("Fields and Items will be removed in release version, use realization with Flowable instead")
 fun <T : Any> ViewPager.setItems(
     items: RxList<T>,
     itemBindings: ItemBindings
 ) = addSetter(items.observe()) { setItems(it, itemBindings) }
 
-@Deprecated("Fields and Items will be removed in major version, use realization with Flowable instead")
+@Deprecated("Fields and Items will be removed in release version, use realization with Flowable instead")
 fun <T : Any> ViewPager.setItems(
     items: RxList<T>,
     titles: RxList<String>,
@@ -70,14 +70,14 @@ fun <T : Any> ViewPager.setItems(
 }
 
 // Fragment pager adapter
-@Deprecated("Fields and Items will be removed in major version, use realization with Flowable instead")
+@Deprecated("Fields and Items will be removed in release version, use realization with Flowable instead")
 fun <T : Any> ViewPager.setItems(
     fm: FragmentManager,
     items: RxList<T>,
     itemBindings: ItemBindings
 ) = addSetter(items.observe()) { setItems(fm, it, itemBindings) }
 
-@Deprecated("Fields and Items will be removed in major version, use realization with Flowable instead")
+@Deprecated("Fields and Items will be removed in release version, use realization with Flowable instead")
 fun <T : Any> ViewPager.setItems(
     fm: FragmentManager,
     items: RxList<T>,
@@ -115,7 +115,7 @@ fun <T : Any> ViewPager.setItems(
  * Getter
  */
 
-@Deprecated("Fields and Items will be removed in major version, use realization with FlowableProcessor instead")
+@Deprecated("Fields and Items will be removed in release version, use realization with FlowableProcessor instead")
 fun <T : Any> ViewPager.onPageSelect(onPageSelect: RxField<T>, mapper: ((Int) -> T?)) {
     onPageChangeListener.addOnPageSelectedCallback(object : OnPageChangeListenerAdapter() {
         override fun onPageSelected(position: Int) {
@@ -124,7 +124,7 @@ fun <T : Any> ViewPager.onPageSelect(onPageSelect: RxField<T>, mapper: ((Int) ->
     })
 }
 
-@Deprecated("Fields and Items will be removed in major version, use realization with FlowableProcessor instead")
+@Deprecated("Fields and Items will be removed in release version, use realization with FlowableProcessor instead")
 fun <T : Any> ViewPager.onPageSelect(onPageSelect: RxItem<T>, mapper: ((Int) -> T)) {
     onPageChangeListener.addOnPageSelectedCallback(object : OnPageChangeListenerAdapter() {
         override fun onPageSelected(position: Int) {
@@ -133,7 +133,7 @@ fun <T : Any> ViewPager.onPageSelect(onPageSelect: RxItem<T>, mapper: ((Int) -> 
     })
 }
 
-@Deprecated("Fields and Items will be removed in major version, use realization with FlowableProcessor instead")
+@Deprecated("Fields and Items will be removed in release version, use realization with FlowableProcessor instead")
 fun ViewPager.onPageSelect(onPageSelect: RxInt) =
     onPageSelect(onPageSelect) { it }
 
@@ -154,7 +154,7 @@ fun ViewPager.onPageSelect(onPageSelect: FlowableProcessor<Int>) =
 
 
 
-@Deprecated("Fields and Items will be removed in major version, use realization with FlowableProcessor instead")
+@Deprecated("Fields and Items will be removed in release version, use realization with FlowableProcessor instead")
 fun <T : Any> ViewPager.onPageScrollStateChanged(onPageScrollStateChanged: RxField<T>, mapper: ((Int) -> T)) {
     onPageChangeListener.addOnPageScrollStateChanged(object : OnPageChangeListenerAdapter() {
         override fun onPageScrollStateChanged(state: Int) {
@@ -163,7 +163,7 @@ fun <T : Any> ViewPager.onPageScrollStateChanged(onPageScrollStateChanged: RxFie
     })
 }
 
-@Deprecated("Fields and Items will be removed in major version, use realization with FlowableProcessor instead")
+@Deprecated("Fields and Items will be removed in release version, use realization with FlowableProcessor instead")
 fun <T : Any> ViewPager.onPageScrollStateChanged(onPageScrollStateChanged: RxItem<T>, mapper: ((Int) -> T)) {
     onPageChangeListener.addOnPageScrollStateChanged(object : OnPageChangeListenerAdapter() {
         override fun onPageScrollStateChanged(state: Int) {
@@ -172,7 +172,7 @@ fun <T : Any> ViewPager.onPageScrollStateChanged(onPageScrollStateChanged: RxIte
     })
 }
 
-@Deprecated("Fields and Items will be removed in major version, use realization with FlowableProcessor instead")
+@Deprecated("Fields and Items will be removed in release version, use realization with FlowableProcessor instead")
 fun ViewPager.onPageScrollStateChanged(onPageScrollStateChanged: RxInt) =
     onPageScrollStateChanged(onPageScrollStateChanged) { it }
 
@@ -194,7 +194,7 @@ fun ViewPager.onPageScrollStateChanged(onPageScrollStateChanged: FlowableProcess
 
 
 
-@Deprecated("Fields and Items will be removed in major version, use realization with FlowableProcessor instead")
+@Deprecated("Fields and Items will be removed in release version, use realization with FlowableProcessor instead")
 fun <T : Any> ViewPager.onPageScrolled(onPageScrolled: RxField<T>, mapper: ((OnPageScrolled) -> T)) {
     onPageChangeListener.addOnPageScrolledCallback(object : OnPageChangeListenerAdapter() {
         override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
@@ -203,7 +203,7 @@ fun <T : Any> ViewPager.onPageScrolled(onPageScrolled: RxField<T>, mapper: ((OnP
     })
 }
 
-@Deprecated("Fields and Items will be removed in major version, use realization with FlowableProcessor instead")
+@Deprecated("Fields and Items will be removed in release version, use realization with FlowableProcessor instead")
 fun ViewPager.onPageScrolled(onPageScrolled: RxField<OnPageScrolled>) =
     onPageScrolled(onPageScrolled) { it }
 
