@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import iam.thevoid.ae.asAppCompatActivity
+import iam.thevoid.ae.asFragmentActivity
 import iam.thevoid.noxml.adapterview.ItemBindings
 import iam.thevoid.noxml.adapterview.StandalonePagerAdapter
 import iam.thevoid.noxml.adapterview.SimpleFragmentPagerAdapter
@@ -52,25 +53,25 @@ fun <T : Any> ViewPager.setItems(
 
 fun ViewPager.setUntitledFragments(
     fragments: List<Fragment>,
-    fm: FragmentManager = context.asAppCompatActivity().supportFragmentManager,
+    fm: FragmentManager = context.asFragmentActivity().supportFragmentManager,
     behavior: Int = FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT
 ) = setTitledFactories(SimpleFragmentPagerAdapter.fromUntitledFragments(fragments), fm, behavior)
 
 fun ViewPager.setTitledFragments(
     fragments: List<Pair<String, Fragment>>,
-    fm: FragmentManager = context.asAppCompatActivity().supportFragmentManager,
+    fm: FragmentManager = context.asFragmentActivity().supportFragmentManager,
     behavior: Int = FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT
 ) = setTitledFactories(SimpleFragmentPagerAdapter.fromTitledFragments(fragments), fm, behavior)
 
 fun ViewPager.setUntitledFactories(
     fragments: List<() -> Fragment>,
-    fm: FragmentManager = context.asAppCompatActivity().supportFragmentManager,
+    fm: FragmentManager = context.asFragmentActivity().supportFragmentManager,
     behavior: Int = FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT
 ) = setTitledFactories(SimpleFragmentPagerAdapter.fromUntitledFactories(fragments), fm, behavior)
 
 fun ViewPager.setTitledFactories(
     fragments: List<Pair<String, () -> Fragment>>,
-    fm: FragmentManager = context.asAppCompatActivity().supportFragmentManager,
+    fm: FragmentManager = context.asFragmentActivity().supportFragmentManager,
     behavior: Int = FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT
 ) {
     adapter = (adapter as? SimpleFragmentPagerAdapter)?.apply { setTitledFactories(fragments) }
