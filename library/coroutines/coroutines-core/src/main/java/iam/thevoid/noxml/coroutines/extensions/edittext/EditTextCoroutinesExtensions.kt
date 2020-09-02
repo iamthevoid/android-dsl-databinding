@@ -5,8 +5,8 @@ import iam.thevoid.ae.*
 import iam.thevoid.e.format
 import iam.thevoid.noxml.coroutines.data.*
 import iam.thevoid.noxml.coroutines.extensions.view.addSetter
-import iam.thevoid.noxml.core.local.extensions.edittext.setTextResourceSilent
-import iam.thevoid.noxml.core.local.extensions.edittext.setTextSilent
+import iam.thevoid.noxml.core.local.extensions.edittext.setTextResource
+import iam.thevoid.noxml.core.local.extensions.edittext.setText
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -17,7 +17,7 @@ import kotlinx.coroutines.flow.map
 fun <T : CharSequence> EditText.setText(
     text: Flow<T>,
     moveCursorToEnd: Boolean = true
-) = addSetter(text) { setTextSilent(it, moveCursorToEnd) }
+) = addSetter(text) { setText(it, moveCursorToEnd) }
 
 fun <T : CharSequence> EditText.setText(
     charSequence: CoroutineCharSequence<T>,
@@ -40,7 +40,7 @@ fun EditText.setText(text: CoroutineDouble, precision: Int? = null, moveCursorTo
     setText(text.observe().map { it.format(precision) }, moveCursorToEnd)
 
 fun EditText.setTextResource(textResource: Flow<Int>, moveCursorToEnd: Boolean) =
-    addSetter(textResource) { setTextResourceSilent(it, moveCursorToEnd) }
+    addSetter(textResource) { setTextResource(it, moveCursorToEnd) }
 
 fun EditText.setTextResource(textResource: CoroutineInt, moveCursorToEnd: Boolean = true) =
     setTextResource(textResource.observe(), moveCursorToEnd)

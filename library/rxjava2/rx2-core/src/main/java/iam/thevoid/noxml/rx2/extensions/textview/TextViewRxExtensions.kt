@@ -11,6 +11,8 @@ import iam.thevoid.e.safe
 import iam.thevoid.noxml.change.textwatcher.BeforeEditTextChanges
 import iam.thevoid.noxml.change.textwatcher.OnEditTextChanges
 import iam.thevoid.noxml.core.local.adapters.TextWatcherAdapter
+import iam.thevoid.noxml.core.local.extensions.textview.hasTextWatcherDelegate
+import iam.thevoid.noxml.core.local.extensions.textview.setTextSilent
 import iam.thevoid.noxml.core.local.extensions.textview.textWatcherDelegate
 import iam.thevoid.noxml.rx2.data.fields.*
 import iam.thevoid.noxml.rx2.data.onlyPresent
@@ -21,7 +23,13 @@ import io.reactivex.Flowable
 import io.reactivex.processors.FlowableProcessor
 
 fun <T : CharSequence> TextView.setText(text: Flowable<T>) =
-    addSetter(text) { this.text = it }
+    addSetter(text) {
+        if (hasTextWatcherDelegate()) {
+            setTextSilent(it)
+        } else {
+            this.text = it
+        }
+    }
 
 @Deprecated("Fields and Items will be removed in release version, use realization with Flowable instead")
 fun <T : CharSequence> TextView.setText(text: RxCharSequence<T>) =

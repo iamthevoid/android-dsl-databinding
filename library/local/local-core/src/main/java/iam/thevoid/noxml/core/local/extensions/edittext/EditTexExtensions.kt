@@ -4,16 +4,16 @@ import android.widget.EditText
 import androidx.annotation.StringRes
 import iam.thevoid.ae.moveCursorToEnd
 import iam.thevoid.ae.requestSoftInput
-import iam.thevoid.ae.string
-import iam.thevoid.noxml.core.local.extensions.textview.textWatcherDelegate
+import iam.thevoid.noxml.core.local.extensions.textview.hasTextWatcherDelegate
+import iam.thevoid.noxml.core.local.extensions.textview.setTextResource
+import iam.thevoid.noxml.core.local.extensions.textview.setTextSilent
 
-fun EditText.setTextSilent(text: CharSequence, moveCursorToEnd: Boolean = true) {
-    if (text.toString() == this.text.toString())
-        return
-    val watcher = textWatcherDelegate
-    removeTextChangedListener(watcher)
-    setText(text)
-    addTextChangedListener(watcher)
+fun EditText.setText(text: CharSequence, moveCursorToEnd: Boolean) {
+    if (hasTextWatcherDelegate()) {
+        setTextSilent(text)
+    } else {
+        setText(text)
+    }
     if (moveCursorToEnd) {
         post {
             moveCursorToEnd()
@@ -22,13 +22,12 @@ fun EditText.setTextSilent(text: CharSequence, moveCursorToEnd: Boolean = true) 
     }
 }
 
-fun EditText.setTextResourceSilent(@StringRes text: Int, moveCursorToEnd: Boolean = true) {
-    if (string(text) == "${this.text}")
-        return
-    val watcher = textWatcherDelegate
-    removeTextChangedListener(watcher)
-    setText(text)
-    addTextChangedListener(watcher)
+fun EditText.setTextResource(@StringRes text: Int, moveCursorToEnd: Boolean) {
+    if (hasTextWatcherDelegate()) {
+        setTextResource(text)
+    } else {
+        setText(text)
+    }
     if (moveCursorToEnd) {
         post {
             moveCursorToEnd()

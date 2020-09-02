@@ -6,8 +6,8 @@ import iam.thevoid.ae.requestSoftInput
 import iam.thevoid.ae.resetFocus
 import iam.thevoid.e.format
 import iam.thevoid.noxml.rx2.data.fields.*
-import iam.thevoid.noxml.core.local.extensions.edittext.setTextResourceSilent
-import iam.thevoid.noxml.core.local.extensions.edittext.setTextSilent
+import iam.thevoid.noxml.core.local.extensions.edittext.setTextResource
+import iam.thevoid.noxml.core.local.extensions.edittext.setText
 import iam.thevoid.noxml.rx2.extensions.view.addSetter
 import io.reactivex.Flowable
 
@@ -16,7 +16,9 @@ import io.reactivex.Flowable
  */
 
 fun <T : CharSequence> EditText.setText(text: Flowable<T>, moveCursorToEnd: Boolean = true) =
-    addSetter(text) { setTextSilent(it, moveCursorToEnd) }
+    addSetter(text) {
+        setText(it, moveCursorToEnd)
+    }
 
 @Deprecated("Fields and Items will be removed in release version, use realization with Flowable instead")
 fun <T : CharSequence> EditText.setText(text: RxCharSequence<T>, moveCursorToEnd: Boolean = true) =
@@ -39,7 +41,7 @@ fun EditText.setText(text: RxDouble, precision: Int? = null, moveCursorToEnd: Bo
     setText(text.observe().map { it.format(precision) }, moveCursorToEnd)
 
 fun EditText.setTextResource(textResource: Flowable<Int>, moveCursorToEnd: Boolean) =
-    addSetter(textResource) { setTextResourceSilent(it, moveCursorToEnd) }
+    addSetter(textResource) { setTextResource(it, moveCursorToEnd) }
 
 @Deprecated("Fields and Items will be removed in release version, use realization with Flowable instead")
 fun EditText.setTextResource(textResource: RxInt, moveCursorToEnd: Boolean = true) =

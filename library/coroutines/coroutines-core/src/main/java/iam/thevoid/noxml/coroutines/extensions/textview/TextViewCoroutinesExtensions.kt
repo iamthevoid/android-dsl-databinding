@@ -10,6 +10,8 @@ import iam.thevoid.e.safe
 import iam.thevoid.noxml.core.local.adapters.TextWatcherAdapter
 import iam.thevoid.noxml.change.textwatcher.BeforeEditTextChanges
 import iam.thevoid.noxml.change.textwatcher.OnEditTextChanges
+import iam.thevoid.noxml.core.local.extensions.textview.hasTextWatcherDelegate
+import iam.thevoid.noxml.core.local.extensions.textview.setTextSilent
 import iam.thevoid.noxml.core.local.extensions.textview.textWatcherDelegate
 import iam.thevoid.noxml.coroutines.data.*
 import iam.thevoid.noxml.coroutines.extensions.view.addSetter
@@ -17,7 +19,13 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 fun <T : CharSequence> TextView.setText(text: Flow<T>) =
-    addSetter(text) { this.text = it }
+    addSetter(text) {
+        if (hasTextWatcherDelegate()) {
+            setTextSilent(it)
+        } else {
+            this.text = it
+        }
+    }
 
 fun <T : CharSequence> TextView.setText(text: CoroutineCharSequence<T>) =
     setText(text.observe())
