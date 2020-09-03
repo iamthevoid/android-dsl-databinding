@@ -8,22 +8,22 @@ import iam.thevoid.noxml.demo.R
 import iam.thevoid.noxml.core.mvvm.viewModel
 import org.jetbrains.anko.recyclerview.v7.recyclerView
 import iam.thevoid.noxml.demo.ui.BaseFragment
-import iam.thevoid.noxml.demo.ui.mvvm.revolutBindings
+import iam.thevoid.noxml.demo.ui.mvvm.currencyBindings
 import iam.thevoid.noxml.coroutines.extensions.view.hideUntilLoaded
 import iam.thevoid.noxml.coroutines.extensions.view.hideWhenLoaded
 import iam.thevoid.noxml.coroutines.recycler.extensions.setItems
 import org.jetbrains.anko.*
 
-class RevolutFragment : BaseFragment() {
+class CurrenciesFragment : BaseFragment() {
 
-    private val vm by viewModel<RevolutViewModel>()
+    private val vm by viewModel<CurrencyViewModel>()
 
     override fun createView(ui: AnkoContext<BaseFragment>): View =
         ui.frameLayout {
             recyclerView {
                 (itemAnimator as? SimpleItemAnimator)?.supportsChangeAnimations = false
                 layoutManager = LinearLayoutManager(context)
-                setItems(vm.data, revolutBindings(vm))
+                setItems(vm.data, currencyBindings(vm))
                 hideUntilLoaded(vm.loading)
             }
             frameLayout {

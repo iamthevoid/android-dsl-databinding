@@ -11,7 +11,7 @@ import iam.thevoid.noxml.demo.data.api.model.CurrencyRate
 import kotlin.time.ExperimentalTime
 import kotlin.time.milliseconds
 
-class RevolutViewModel : ViewModel() {
+class CurrencyViewModel : ViewModel() {
 
     val current by lazy { CoroutineString(STARTER) }
 

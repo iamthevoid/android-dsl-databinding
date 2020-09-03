@@ -6,5 +6,5 @@ enum class Item(val title: String) {
     PAGER("Pager with single view model"),
     PAGINTION_LOADER("Pagination loader"),
     TWO_WAY_BINDING("Two Way Binding"),
-    REVOLUT_APP("Revolut App"),
+    CURRENCY_LIST("Currency List"),
 }

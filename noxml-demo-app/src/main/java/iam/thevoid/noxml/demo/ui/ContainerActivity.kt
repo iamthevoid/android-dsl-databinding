@@ -6,7 +6,7 @@ import iam.thevoid.noxml.demo.ui.mvvm.coroutines.CoroutinesFragment
 import iam.thevoid.noxml.demo.ui.mvvm.PagerFragment
 import iam.thevoid.noxml.demo.ui.mvvm.page.PageFragment
 import iam.thevoid.noxml.demo.ui.mvvm.pagination.PaginationLoaderFragment
-import iam.thevoid.noxml.demo.ui.mvvm.revolut.RevolutFragment
+import iam.thevoid.noxml.demo.ui.mvvm.revolut.CurrenciesFragment
 import iam.thevoid.noxml.demo.ui.mvvm.scroll.PagerCoordinatorFragment
 
 class ContainerActivity : AppCompatActivity() {
@@ -25,7 +25,7 @@ class ContainerActivity : AppCompatActivity() {
                     Item.COROUTINES_TEST -> CoroutinesFragment()
                     Item.PAGER -> PagerFragment()
                     Item.PAGER_COORDINATOR -> PagerCoordinatorFragment()
-                    Item.REVOLUT_APP -> RevolutFragment()
+                    Item.CURRENCY_LIST -> CurrenciesFragment()
                     Item.PAGINTION_LOADER -> PaginationLoaderFragment()
                     Item.TWO_WAY_BINDING -> PageFragment()
                     else -> throw IllegalArgumentException()

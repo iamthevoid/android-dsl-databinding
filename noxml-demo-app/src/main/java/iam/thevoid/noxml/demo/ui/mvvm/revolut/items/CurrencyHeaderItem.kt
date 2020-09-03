@@ -9,7 +9,7 @@ import iam.thevoid.noxml.coroutines.extensions.edittext.setText
 import iam.thevoid.noxml.coroutines.extensions.textview.afterTextChanges
 import iam.thevoid.noxml.coroutines.extensions.textview.setText
 import iam.thevoid.noxml.demo.R
-import iam.thevoid.noxml.demo.ui.mvvm.revolut.RevolutViewModel
+import iam.thevoid.noxml.demo.ui.mvvm.revolut.CurrencyViewModel
 import iam.thevoid.noxml.demo.util.codeToValue
 import iam.thevoid.noxml.demo.util.rateInputFilter
 import iam.thevoid.noxml.demo.util.setImageUrl
@@ -19,7 +19,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import org.jetbrains.anko.*
 
-class CurrencyHeaderItem(private val vm : RevolutViewModel, viewGroup: ViewGroup) : AnkoCoroutinesLayout<String>(viewGroup) {
+class CurrencyHeaderItem(private val vm : CurrencyViewModel, viewGroup: ViewGroup) : AnkoCoroutinesLayout<String>(viewGroup) {
 
     @OptIn(ExperimentalCoroutinesApi::class)
     override fun createView(ui: AnkoContext<AnkoCoroutinesLayout<String>>): View =

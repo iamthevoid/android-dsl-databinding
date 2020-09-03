@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import iam.thevoid.ae.setRippleClickAnimation
 import iam.thevoid.noxml.demo.R
 import iam.thevoid.noxml.demo.data.api.model.CurrencyRate
-import iam.thevoid.noxml.demo.ui.mvvm.revolut.RevolutViewModel
+import iam.thevoid.noxml.demo.ui.mvvm.revolut.CurrencyViewModel
 import iam.thevoid.noxml.demo.util.codeToValue
 import iam.thevoid.noxml.demo.util.setImageUrl
 import iam.thevoid.noxml.anko.coroutines.AnkoCoroutinesLayout
@@ -15,15 +15,13 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
 import org.jetbrains.anko.*
 
-class CurrencySimpleItem(private val vm : RevolutViewModel, viewGroup: ViewGroup) : AnkoCoroutinesLayout<CurrencyRate>(viewGroup) {
+class CurrencySimpleItem(private val vm : CurrencyViewModel, viewGroup: ViewGroup) : AnkoCoroutinesLayout<CurrencyRate>(viewGroup) {
 
     @OptIn(ExperimentalCoroutinesApi::class)
     override fun createView(ui: AnkoContext<AnkoCoroutinesLayout<CurrencyRate>>): View =
         ui.frameLayout {
 
-            setRippleClickAnimation()
-
-            setOnClickListener { item.get()?.also(vm::updateCurrent) }
+            setOnClickListener { getItem()?.also(vm::updateCurrent) }
 
             imageView {
                 setImageUrl(itemChanges.map { it.image })
@@ -64,6 +62,4 @@ class CurrencySimpleItem(private val vm : RevolutViewModel, viewGroup: ViewGroup
         }.apply {
             layoutParams = ViewGroup.LayoutParams(matchParent, wrapContent)
         }
-
-
 }
