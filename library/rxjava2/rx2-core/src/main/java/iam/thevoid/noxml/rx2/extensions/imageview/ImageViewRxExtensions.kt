@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package iam.thevoid.noxml.rx2.extensions.imageview
 
 import android.graphics.Bitmap

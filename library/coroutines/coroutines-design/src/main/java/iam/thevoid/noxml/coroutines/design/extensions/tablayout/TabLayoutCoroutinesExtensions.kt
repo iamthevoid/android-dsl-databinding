@@ -8,10 +8,6 @@ import iam.thevoid.noxml.design.adapter.OnTabSelectedListenerAdapter
 import iam.thevoid.noxml.design.local.extensions.tablayout.onTabSelectListener
 import kotlinx.coroutines.flow.Flow
 
-fun TabLayout.selectTab(tab: TabLayout.Tab?) {
-    post { tab?.select() }
-}
-
 fun TabLayout.selectTab(tab: Flow<Int>) =
     selectTab(tab) { it }
 

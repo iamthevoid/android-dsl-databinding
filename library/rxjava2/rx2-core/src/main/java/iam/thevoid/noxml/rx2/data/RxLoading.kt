@@ -2,28 +2,21 @@ package iam.thevoid.noxml.rx2.data
 
 import io.reactivex.*
 import iam.thevoid.noxml.rx2.data.fields.RxBoolean
+import io.reactivex.processors.BehaviorProcessor
 import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.atomic.AtomicInteger
 
 open class RxLoading {
 
-    private val loading by lazy { RxBoolean() }
+    fun observe() = processor.map { it > 0 }
 
-    fun observe() = loading.observe()
+    private val processor = BehaviorProcessor.createDefault(0)
 
     private val count = AtomicInteger(0)
 
-    fun inc() {
-        if (count.incrementAndGet() == 1) {
-            loading.set(true)
-        }
-    }
+    private fun inc() = processor.onNext(count.incrementAndGet())
 
-    fun dec() {
-        if (count.decrementAndGet() == 0) {
-            loading.set(false)
-        }
-    }
+    private fun dec() = processor.onNext(count.decrementAndGet())
 
     private fun loadingStarted(loading: AtomicBoolean) {
         if (!loading.get()) {
