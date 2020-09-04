@@ -11,6 +11,9 @@ import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
 import java.util.concurrent.atomic.AtomicBoolean
 
+@Deprecated("""
+    First try to load items with paging. Will be removed in release version.
+""")
 class OldPaginationLoader<T>(
     private val startPage: Int,
     val loader: (Int) -> Single<out Response<T>>

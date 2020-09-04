@@ -9,6 +9,9 @@ import io.reactivex.schedulers.Schedulers
 import iam.thevoid.noxml.rx2.data.fields.RxList
 import java.util.concurrent.atomic.AtomicBoolean
 
+@Deprecated("""
+    Second try to load items with paging. Will be removed in release version.
+""")
 class PaginationLoader<T>(
     private val pageNumberMapper: (Int) -> Int = { it },
     private val nextPage: (Int) -> Single<out Response<T>>

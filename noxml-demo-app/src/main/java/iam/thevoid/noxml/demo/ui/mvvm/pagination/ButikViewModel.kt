@@ -1,24 +1,22 @@
 package iam.thevoid.noxml.demo.ui.mvvm.pagination
 
 import androidx.lifecycle.ViewModel
-import iam.thevoid.noxml.rx2.recycler.pagination.PaginationLoader
 import iam.thevoid.noxml.demo.data.api.ButikApi
+import iam.thevoid.noxml.recycler.paging.PageLoader
 import iam.thevoid.noxml.rx2.data.RxLoading
+import iam.thevoid.noxml.rx2.recycler.pagination.RxPageLoader
 import iam.thevoid.noxml.rx2.utils.loading
 
 class ButikViewModel : ViewModel() {
 
-    val refreshing by lazy { RxLoading() }
+    val refreshing by lazy(::RxLoading)
 
     val loader by lazy {
-        PaginationLoader({ it + 1 }) { page: Int ->
-            ButikApi.catalog(page).loading(refreshing).map {
-                PaginationLoader.Response(
-                    it.currentPage,
-                    it.items,
-                    it.isLastPage
-                )
-            }
+        RxPageLoader.create(1, nextPage = { page -> page + 1 }) { page: Int, _ ->
+            ButikApi.catalog(page).loading(refreshing)
+                .map { it.run { PageLoader.Page(items, currentPage, isLastPage) } }
         }
     }
+
+    val items = loader.pages.map { list -> list.map { page -> page.items }.flatten() }
 }

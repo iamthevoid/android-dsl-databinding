@@ -7,6 +7,15 @@ import kotlinx.coroutines.flow.Flow
 
 abstract class CoroutinesPageLoader<PAGE_INDEX, T> : PageLoader {
 
+    companion object {
+        fun <PAGE_INDEX, T> create(
+            startPage: PAGE_INDEX,
+            nextPage: (PAGE_INDEX) -> PAGE_INDEX,
+            loader: suspend (PAGE_INDEX, refresh: Boolean) -> PageLoader.Page<PAGE_INDEX, T>
+        ): CoroutinesPageLoader<PAGE_INDEX, T> =
+            CoroutinesPageLoaderImpl(startPage, nextPage, loader)
+    }
+
     /**
      * Loading state
      */

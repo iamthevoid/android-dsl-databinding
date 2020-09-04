@@ -29,11 +29,10 @@ class PaginationLoaderFragment : BaseFragment() {
             setRefreshing(vm.refreshing)
             recyclerView {
                 layoutManager = LinearLayoutManager(context)
-                setItems(vm.loader.items, bindings)
-                setLoadMore(vm.loader::loadMore)
+                setItems(vm.items, bindings)
+                setLoadMore { vm.loader.loadMore() }
             }.also {
                 setOnRefreshListener { vm.loader.refresh() }
-                it.resetEndlessScrollState()
             }
         }
 
