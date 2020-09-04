@@ -3,10 +3,9 @@ package iam.thevoid.noxml.rx2.extensions.webview
 import android.webkit.WebView
 import iam.thevoid.noxml.core.local.delegate.WebChromeClientDelegate
 import iam.thevoid.noxml.core.local.extensions.webview.chromeClient
-import io.reactivex.Flowable
-import iam.thevoid.noxml.rx2.data.fields.RxBoolean
 import iam.thevoid.noxml.rx2.extensions.view.addSetter
 import io.reactivex.BackpressureStrategy
+import io.reactivex.Flowable
 import io.reactivex.processors.FlowableProcessor
 
 

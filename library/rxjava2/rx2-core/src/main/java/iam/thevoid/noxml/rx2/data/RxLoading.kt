@@ -1,7 +1,6 @@
 package iam.thevoid.noxml.rx2.data
 
 import io.reactivex.*
-import iam.thevoid.noxml.rx2.data.fields.RxBoolean
 import io.reactivex.processors.BehaviorProcessor
 import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.atomic.AtomicInteger

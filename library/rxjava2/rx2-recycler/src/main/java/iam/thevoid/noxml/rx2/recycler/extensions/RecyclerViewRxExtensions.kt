@@ -8,7 +8,6 @@ import iam.thevoid.noxml.recycler.*
 import iam.thevoid.noxml.recycler.change.OnScrollStateChanged
 import iam.thevoid.noxml.recycler.change.OnScrolled
 import iam.thevoid.noxml.recycler.local.onRecyclerScroll
-import iam.thevoid.noxml.rx2.data.fields.RxInt
 import iam.thevoid.noxml.rx2.extensions.view.addSetter
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable

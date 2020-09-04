@@ -5,14 +5,10 @@ package iam.thevoid.noxml.rx2.extensions.viewpager
 
 import androidx.fragment.app.FragmentManager
 import androidx.viewpager.widget.ViewPager
-import iam.thevoid.noxml.core.local.adapters.OnPageChangeListenerAdapter
 import iam.thevoid.noxml.adapterview.ItemBindings
 import iam.thevoid.noxml.change.pager.OnPageScrolled
+import iam.thevoid.noxml.core.local.adapters.OnPageChangeListenerAdapter
 import iam.thevoid.noxml.core.local.extensions.viewpager.onPageChangeListener
-import iam.thevoid.noxml.rx2.data.fields.RxField
-import iam.thevoid.noxml.rx2.data.fields.RxInt
-import iam.thevoid.noxml.rx2.data.fields.RxItem
-import iam.thevoid.noxml.rx2.data.fields.RxList
 import iam.thevoid.noxml.extensions.viewpager.setItems
 import iam.thevoid.noxml.rx2.extensions.view.addSetter
 import io.reactivex.BackpressureStrategy

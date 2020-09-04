@@ -4,9 +4,9 @@ import android.util.Log
 import io.reactivex.Flowable
 import io.reactivex.Single
 import io.reactivex.disposables.Disposable
+import io.reactivex.processors.BehaviorProcessor
 import io.reactivex.processors.PublishProcessor
 import io.reactivex.schedulers.Schedulers
-import iam.thevoid.noxml.rx2.data.fields.RxList
 import java.util.concurrent.atomic.AtomicBoolean
 
 @Deprecated("""
@@ -24,18 +24,17 @@ class PaginationLoader<T>(
 
     private val refresh by lazy { PublishProcessor.create<Any>().toSerialized() }
 
-    private val rxItems by lazy { RxList<T>() }
+    private val rxItems by lazy { BehaviorProcessor.create<List<T>>() }
 
     private val lastPage by lazy { AtomicBoolean() }
 
     fun refresh() = refresh.onNext(Any())
 
-    fun clear() = rxItems.set(emptyList())
+    fun clear() = rxItems.onNext(emptyList())
 
     val items: Flowable<List<T>> by lazy {
-        rxItems.observe()
-            .doOnSubscribe {
-                if (rxItems.isEmpty())
+        rxItems.doOnSubscribe {
+                if (rxItems.value.orEmpty().isEmpty())
                     startDisposable = nextPage(pageNumberMapper(startPage))
                         .subscribeOn(Schedulers.io())
                         .repeatWhen { it.flatMapMaybe { refresh.firstElement() } }
@@ -47,9 +46,12 @@ class PaginationLoader<T>(
 
     private fun onItemsReceived(response: Response<T>) {
         if (response.page == pageNumberMapper(startPage))
-            rxItems.set(response.items)
+            rxItems.onNext(response.items)
         else
-            rxItems.add(response.items)
+            rxItems.onNext(mutableListOf<T>().apply {
+                addAll(rxItems.value.orEmpty())
+                addAll(response.items)
+            })
 
         lastPage.set(response.isLastPage)
     }
