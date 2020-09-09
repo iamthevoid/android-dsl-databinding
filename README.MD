@@ -57,23 +57,33 @@ frameLayout {
 
 
 There is also support for Two-Way Data Binding
+
 View emits changes into FlowableProcessor (like Subject for Observable, but for Flowable).
+
 Field and Item abstractions are deprecated and will be removed in release 1.0.0
 
 ~~It is representing by Fields and Items.~~
 
 ~~*Field* is observable property, that emit Optional<T> element when element set to field. Allows 'null'.~~
+
 ~~*Item* is observable property, that emit T element when element set to field. Allows 'non-null' only.~~
 
 ~~for both, rx and coroutines provided base types~~
 
 ~~- Rx(Coroutine)Field~~
+
 ~~- Rx(Coroutine)Item~~
+
 ~~- Rx(Coroutine)CharSequence~~
+
 ~~- Rx(Coroutine)Boolean~~
+
 ~~- Rx(Coroutine)Long~~
+
 ~~- Rx(Coroutine)Int~~
+
 ~~- Rx(Coroutine)Double~~
+
 ~~- Rx(Coroutine)Float~~
 
 ### Recycler View
