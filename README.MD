@@ -55,23 +55,26 @@ frameLayout {
 
 ### Two Way Binding
 
+
 There is also support for Two-Way Data Binding
+View emits changes into FlowableProcessor (like Subject for Observable, but for Flowable).
+Field and Item abstractions are deprecated and will be removed in release 1.0.0
 
-It is representing by Fields and Items.
+~~It is representing by Fields and Items.~~
 
-*Field* is observable property, that emit Optional<T> element when element set to field. Allows 'null'.
-*Item* is observable property, that emit T element when element set to field. Allows 'non-null' only.
+~~*Field* is observable property, that emit Optional<T> element when element set to field. Allows 'null'.~~
+~~*Item* is observable property, that emit T element when element set to field. Allows 'non-null' only.~~
 
-for both, rx and coroutines provided base types
+~~for both, rx and coroutines provided base types~~
 
-- Rx(Coroutine)Field
-- Rx(Coroutine)Item
-- Rx(Coroutine)CharSequence
-- Rx(Coroutine)Boolean
-- Rx(Coroutine)Long
-- Rx(Coroutine)Int
-- Rx(Coroutine)Double
-- Rx(Coroutine)Float
+~~- Rx(Coroutine)Field~~
+~~- Rx(Coroutine)Item~~
+~~- Rx(Coroutine)CharSequence~~
+~~- Rx(Coroutine)Boolean~~
+~~- Rx(Coroutine)Long~~
+~~- Rx(Coroutine)Int~~
+~~- Rx(Coroutine)Double~~
+~~- Rx(Coroutine)Float~~
 
 ### Recycler View
 
@@ -105,7 +108,7 @@ But you can extend own `RxLayout` or `CoroutinesLayout` or even `Layout`.
 ```fun set(item: T)``` 
 
 And both provide:
-- (observable) property `item` with type Rx(Coroutine)Field described above
+- (observable) property `item` with type FlowableProcessor described above
 - property `itemChanges` that emits only non-null items 
 - `fun changeItem(itemChange: T?.() -> Unit)` lets you to change item with Recycler will be notified about item change automatically
 
