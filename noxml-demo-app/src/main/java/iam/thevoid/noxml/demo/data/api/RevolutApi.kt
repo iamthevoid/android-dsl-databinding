@@ -26,6 +26,7 @@ object RevolutApi : Api<RevolutService>() {
 
 //    fun latest(base : String) : Single<RatesResponse> = service.latest(base)
 
+    // Replaced to mock for stability
     fun latest(base: String): Single<RatesResponse> = Single.fromCallable { rates(base) }
         .subscribeOn(Schedulers.io())
         .doOnSuccess { println(it) }
@@ -45,7 +46,6 @@ object RevolutApi : Api<RevolutService>() {
     }
 
     val currencies: Map<String, Double> = mapOf(
-        "EUR" to 1.0,
         "AUD" to 1.6182,
         "BGN" to 1.9579,
         "BRL" to 4.797,
@@ -54,6 +54,7 @@ object RevolutApi : Api<RevolutService>() {
         "CNY" to 7.9537,
         "CZK" to 25.743,
         "DKK" to 7.4648,
+        "EUR" to 1.0,
         "GBP" to 0.89922,
         "HKD" to 9.1423,
         "HRK" to 7.4422,
