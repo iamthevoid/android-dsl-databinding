@@ -93,6 +93,9 @@ fun View.hideWhenLoaded(loading: RxLoading) =
 fun View.hideWhenLoaded(loading: RxLoading, vararg loadings: RxLoading) =
     hideWhenLoaded(Flowable.merge(loading.observe().mergeWith(loadings.map { it.observe() })))
 
+fun View.hideWhenLoaded(loading: Flowable<Boolean>, vararg loadings: Flowable<Boolean>) =
+    hideWhenLoaded(Flowable.merge(loading.mergeWith(loadings.toList())))
+
 fun View.goneUntilLoaded(loading: Flowable<Boolean>) =
     addSetter(loading) { gone(it) }
 

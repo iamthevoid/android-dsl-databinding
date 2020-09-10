@@ -8,41 +8,46 @@ import iam.thevoid.noxml.coroutines.data.CoroutineBoolean
 import iam.thevoid.noxml.coroutines.data.CoroutineString
 import iam.thevoid.noxml.demo.data.api.RevolutApi
 import iam.thevoid.noxml.demo.data.api.model.CurrencyRate
+import iam.thevoid.noxml.rx2.data.RxLoading
+import iam.thevoid.noxml.rx2.utils.loadingUntilNext
+import io.reactivex.Flowable
+import io.reactivex.processors.BehaviorProcessor
+import java.util.concurrent.TimeUnit
 import kotlin.time.ExperimentalTime
 import kotlin.time.milliseconds
 
 class CurrencyViewModel : ViewModel() {
 
-    val current by lazy { CoroutineString(STARTER) }
+    val loading = BehaviorProcessor.createDefault(false)
 
-    val currentValue = CoroutineString("1")
+    val current by lazy { BehaviorProcessor.createDefault(STARTER) }
 
-    val loading = CoroutineBoolean(true)
-    val blocking = CoroutineBoolean()
+    val currentValue = BehaviorProcessor.createDefault("1")
 
-    @UseExperimental(ExperimentalTime::class)
+    val blocking = BehaviorProcessor.createDefault(false)
+
     val data by lazy {
-        loading.set(true)
-        repeatFlow(delay = 1000.milliseconds) {
-            val items = RevolutApi.latest(current.get()).rates
-                .let {
-                    mutableListOf<Any>().apply {
-                        add(current.get())
-                        addAll(it)
-                    }
+        loading.onNext(true)
+        Flowable.interval(1, TimeUnit.SECONDS)
+            .flatMapSingle { RevolutApi.latest(current.value!!) }
+            .map {
+                mutableListOf<Any>().apply {
+                    add(current.value!!)
+                    addAll(it.rates)
                 }
-            emit(items)
-            loading.set(false)
-            blocking.set(false)
-        }
+            }
+            .doOnNext {
+                loading.onNext(false)
+                blocking.onNext(false)
+            }
     }
 
-    suspend fun resultValue(rate : Double, value : String) : String =
+    fun resultValue(rate : Double, value : String) : String =
         (rate * value.safeDouble()).format(4)
 
     fun updateCurrent(rate : CurrencyRate) {
-        blocking.set(true)
-        current.set(rate.code)
+        blocking.onNext(true)
+        current.onNext(rate.code)
     }
 
     companion object {

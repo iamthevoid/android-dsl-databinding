@@ -9,9 +9,9 @@ import iam.thevoid.noxml.core.mvvm.viewModel
 import org.jetbrains.anko.recyclerview.v7.recyclerView
 import iam.thevoid.noxml.demo.ui.BaseFragment
 import iam.thevoid.noxml.demo.ui.mvvm.currencyBindings
-import iam.thevoid.noxml.coroutines.extensions.view.hideUntilLoaded
-import iam.thevoid.noxml.coroutines.extensions.view.hideWhenLoaded
-import iam.thevoid.noxml.coroutines.recycler.extensions.setItems
+import iam.thevoid.noxml.rx2.extensions.view.hideUntilLoaded
+import iam.thevoid.noxml.rx2.extensions.view.hideWhenLoaded
+import iam.thevoid.noxml.rx2.recycler.extensions.setItems
 import org.jetbrains.anko.*
 
 class CurrenciesFragment : BaseFragment() {
@@ -25,7 +25,7 @@ class CurrenciesFragment : BaseFragment() {
                 layoutManager = LinearLayoutManager(context)
                 setItems(vm.data, currencyBindings(vm))
                 hideUntilLoaded(vm.loading)
-            }
+            }.lparams(matchParent, matchParent)
             frameLayout {
                 isClickable = true
                 isFocusable = true
@@ -33,7 +33,7 @@ class CurrenciesFragment : BaseFragment() {
                 hideWhenLoaded(vm.blocking)
             }
             progressBar {
-                hideWhenLoaded(vm.loading, vm.blocking)
+                hideWhenLoaded(vm.blocking, vm.loading)
             }.lparams(dip(48), dip(48), Gravity.CENTER)
         }
 

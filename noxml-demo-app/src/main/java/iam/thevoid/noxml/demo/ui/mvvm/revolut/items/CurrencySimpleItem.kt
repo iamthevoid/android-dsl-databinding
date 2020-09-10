@@ -10,15 +10,18 @@ import iam.thevoid.noxml.demo.ui.mvvm.revolut.CurrencyViewModel
 import iam.thevoid.noxml.demo.util.codeToValue
 import iam.thevoid.noxml.demo.util.setImageUrl
 import iam.thevoid.noxml.anko.coroutines.AnkoCoroutinesLayout
+import iam.thevoid.noxml.anko.rx.AnkoRxLayout
 import iam.thevoid.noxml.coroutines.extensions.textview.setText
+import iam.thevoid.noxml.rx2.extensions.textview.setText
+import io.reactivex.rxkotlin.Flowables
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
 import org.jetbrains.anko.*
 
-class CurrencySimpleItem(private val vm : CurrencyViewModel, viewGroup: ViewGroup) : AnkoCoroutinesLayout<CurrencyRate>(viewGroup) {
+class CurrencySimpleItem(private val vm : CurrencyViewModel, viewGroup: ViewGroup) : AnkoRxLayout<CurrencyRate>(viewGroup) {
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    override fun createView(ui: AnkoContext<AnkoCoroutinesLayout<CurrencyRate>>): View =
+    override fun createView(ui: AnkoContext<AnkoRxLayout<CurrencyRate>>): View =
         ui.frameLayout {
 
             setOnClickListener { getItem()?.also(vm::updateCurrent) }
@@ -41,7 +44,7 @@ class CurrencySimpleItem(private val vm : CurrencyViewModel, viewGroup: ViewGrou
                 padding = dip(8)
                 textSizeDimen = R.dimen.text_medium
                 textColorResource = android.R.color.black
-                setText(itemChanges.map { codeToValue(it.code) }.onStart { emit("---") })
+                setText(itemChanges.flatMapSingle { codeToValue(it.code) }.startWith("---"))
             }.lparams {
                 leftMargin = dip(96)
                 gravity = Gravity.CENTER_VERTICAL
@@ -51,9 +54,10 @@ class CurrencySimpleItem(private val vm : CurrencyViewModel, viewGroup: ViewGrou
                 padding = dip(8)
                 textColorResource = android.R.color.black
                 textSizeDimen = R.dimen.text_medium
-                setText(combine(
+                setText(
+                    Flowables.combineLatest(
                     itemChanges.map { it.rate },
-                    vm.currentValue.observe(),
+                    vm.currentValue,
                     vm::resultValue
                 ))
             }.lparams {

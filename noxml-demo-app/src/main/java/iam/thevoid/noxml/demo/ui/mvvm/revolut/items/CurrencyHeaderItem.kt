@@ -4,25 +4,23 @@ import android.text.InputType
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
-import iam.thevoid.noxml.anko.coroutines.AnkoCoroutinesLayout
-import iam.thevoid.noxml.coroutines.extensions.edittext.setText
-import iam.thevoid.noxml.coroutines.extensions.textview.afterTextChanges
-import iam.thevoid.noxml.coroutines.extensions.textview.setText
+import iam.thevoid.noxml.anko.rx.AnkoRxLayout
 import iam.thevoid.noxml.demo.R
 import iam.thevoid.noxml.demo.ui.mvvm.revolut.CurrencyViewModel
 import iam.thevoid.noxml.demo.util.codeToValue
 import iam.thevoid.noxml.demo.util.rateInputFilter
 import iam.thevoid.noxml.demo.util.setImageUrl
 import iam.thevoid.noxml.demo.util.toImageUrl
+import iam.thevoid.noxml.rx2.extensions.edittext.setText
+import iam.thevoid.noxml.rx2.extensions.textview.afterTextChanges
+import iam.thevoid.noxml.rx2.extensions.textview.setText
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onStart
 import org.jetbrains.anko.*
 
-class CurrencyHeaderItem(private val vm : CurrencyViewModel, viewGroup: ViewGroup) : AnkoCoroutinesLayout<String>(viewGroup) {
+class CurrencyHeaderItem(private val vm : CurrencyViewModel, viewGroup: ViewGroup) : AnkoRxLayout<String>(viewGroup) {
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    override fun createView(ui: AnkoContext<AnkoCoroutinesLayout<String>>): View =
+    override fun createView(ui: AnkoContext<AnkoRxLayout<String>>): View =
         ui.frameLayout {
             imageView {
                 setImageUrl(itemChanges.map { toImageUrl(it) })
@@ -42,7 +40,7 @@ class CurrencyHeaderItem(private val vm : CurrencyViewModel, viewGroup: ViewGrou
                 padding = dip(8)
                 textSizeDimen = R.dimen.text_medium
                 textColorResource = android.R.color.black
-                setText(itemChanges.map(::codeToValue).onStart { emit("---") })
+                setText(itemChanges.flatMapSingle(::codeToValue).startWith("---"))
             }.lparams {
                 leftMargin = dip(96)
                 gravity = Gravity.CENTER_VERTICAL
