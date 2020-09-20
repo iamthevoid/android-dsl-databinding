@@ -1,13 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-
-apply from: "../../../gradle/ext.gradle"
-
-ext {
-    libArtifactId = 'local-core'
-}
-
-apply from: "../../../gradle/publish-mavencentral.gradle"
+apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion compileApi
@@ -20,6 +13,8 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
+
+        buildConfigField "int", "MIN_SDK_VERSION", "$libMinSdk"
     }
 
     buildTypes {
@@ -41,16 +36,22 @@ android {
 }
 
 dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 
     implementation "androidx.appcompat:appcompat:$appcompat"
     implementation "androidx.core:core-ktx:$ktx"
 
-    implementation "io.github.iamthevoid.extensions:pure:$e"
-    implementation "io.github.iamthevoid.extensions:android:$e"
+
+    implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-xml:$jackson"
+
+    implementation "iam.thevoid.extensions:pure:$e"
 
     testImplementation "junit:junit:$junit"
     androidTestImplementation "androidx.test.ext:junit:$ajunit"
     androidTestImplementation "androidx.test:runner:$runner"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso"
+    implementation "org.jetbrains.kotlin:kotlin-script-runtime:1.4.0"
+
 }

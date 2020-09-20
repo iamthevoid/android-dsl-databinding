@@ -47,6 +47,7 @@ dependencies {
     implementation "androidx.core:core-ktx:$ktx"
 
     testImplementation "junit:junit:$junit"
+    androidTestImplementation "androidx.test.ext:junit:$ajunit"
     androidTestImplementation "androidx.test:runner:$runner"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso"
 }
