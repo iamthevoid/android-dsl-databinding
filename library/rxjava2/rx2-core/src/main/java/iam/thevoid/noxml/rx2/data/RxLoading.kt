@@ -7,7 +7,7 @@ import java.util.concurrent.atomic.AtomicInteger
 
 open class RxLoading {
 
-    fun observe() = processor.doOnNext { println("$it subscribers") }.map { it > 0 }.doOnNext { println(if (it) "loading" else "not loading") }
+    fun observe() = processor.map { it > 0 }
 
     private val processor = BehaviorProcessor.createDefault(0)
 
