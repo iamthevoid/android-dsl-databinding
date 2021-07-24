@@ -14,7 +14,7 @@ fun EditText.setText(text: CharSequence, moveCursorToEnd: Boolean) {
     } else {
         setText(text)
     }
-    if (moveCursorToEnd) {
+    if (getText().isNotEmpty() && moveCursorToEnd) {
         post {
             moveCursorToEnd()
             requestSoftInput()
@@ -28,7 +28,7 @@ fun EditText.setTextResource(@StringRes text: Int, moveCursorToEnd: Boolean) {
     } else {
         setText(text)
     }
-    if (moveCursorToEnd) {
+    if (getText().isNotEmpty() && moveCursorToEnd) {
         post {
             moveCursorToEnd()
             requestSoftInput()
