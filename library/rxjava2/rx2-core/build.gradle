@@ -58,7 +58,7 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxkotlin:$rxKotlin"
 
     implementation "io.github.iamthevoid.extensions:pure:$e"
-    implementation "io.github.iamthevoid.extensions:android:$e@aar"
+    implementation "io.github.iamthevoid.extensions:android:$e"
     implementation "io.github.iamthevoid.extensions:rx:$e"
     implementation "io.github.iamthevoid.extensions:util:$e"
 

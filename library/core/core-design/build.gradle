@@ -43,7 +43,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation "io.github.iamthevoid.extensions:pure:$e"
-    implementation "io.github.iamthevoid.extensions:android:$e@aar"
+    implementation "io.github.iamthevoid.extensions:android:$e"
 
     implementation "androidx.appcompat:appcompat:$appcompat"
     implementation "androidx.core:core-ktx:$ktx"

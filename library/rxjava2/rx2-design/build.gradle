@@ -52,6 +52,7 @@ dependencies {
     implementation "com.google.android.material:material:$material"
 
     implementation "io.github.iamthevoid.extensions:pure:$e"
+    implementation "io.github.iamthevoid.extensions:util:$e"
 
     implementation "io.reactivex.rxjava2:rxjava:$rxJava"
     implementation "io.reactivex.rxjava2:rxandroid:$rxAndroid"

@@ -53,9 +53,9 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines"
 
     implementation "io.github.iamthevoid.extensions:pure:$e"
-    implementation "io.github.iamthevoid.extensions:android:$e@aar"
+    implementation "io.github.iamthevoid.extensions:android:$e"
     implementation "io.github.iamthevoid.extensions:util:$e"
-    implementation "io.github.iamthevoid.extensions:coroutines:$e@jar"
+    implementation "io.github.iamthevoid.extensions:coroutines:$e"
 
     testImplementation "junit:junit:$junit"
     androidTestImplementation "androidx.test.ext:junit:$ajunit"

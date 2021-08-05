@@ -86,11 +86,11 @@ dependencies {
     implementation "org.jetbrains.anko:anko-recyclerview-v7:$anko"
     implementation "org.jetbrains.anko:anko-design:$anko"
 
-    implementation "io.github.iamthevoid.extensions:android:$e@aar"
+    implementation "io.github.iamthevoid.extensions:android:$e"
     implementation "io.github.iamthevoid.extensions:pure:$e"
     implementation "io.github.iamthevoid.extensions:rx:$e"
     implementation "io.github.iamthevoid.extensions:util:$e"
-    implementation "io.github.iamthevoid.extensions:coroutines:$e@jar"
+    implementation "io.github.iamthevoid.extensions:coroutines:$e"
 
     implementation 'androidx.multidex:multidex:2.0.1'
 

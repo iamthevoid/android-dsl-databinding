@@ -42,7 +42,7 @@ dependencies {
     implementation "androidx.core:core-ktx:$ktx"
 
     implementation "io.github.iamthevoid.extensions:pure:$e"
-    implementation "io.github.iamthevoid.extensions:android:$e@aar"
+    implementation "io.github.iamthevoid.extensions:android:$e"
 
     testImplementation "junit:junit:$junit"
     androidTestImplementation "androidx.test:runner:$runner"

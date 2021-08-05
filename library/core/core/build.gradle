@@ -50,7 +50,7 @@ dependencies {
     implementation "androidx.appcompat:appcompat:$appcompat"
 
     implementation "io.github.iamthevoid.extensions:pure:$e"
-    implementation "io.github.iamthevoid.extensions:android:$e@aar"
+    implementation "io.github.iamthevoid.extensions:android:$e"
 
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle"
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle"
