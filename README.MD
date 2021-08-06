@@ -1,5 +1,5 @@
 
-<a href="https://search.maven.org/search?q=g:io.github.iamthevoid.reactivebinding"><img src="https://github.com/iamthevoid/android-dsl-databinding/blob/master/lib.svg"></a>
+<a href="https://search.maven.org/search?q=io.github.iamthevoid.reactivebinding"><img src="https://github.com/iamthevoid/android-dsl-databinding/blob/master/lib.svg"></a>
 
 # Android DSL Data Binding
 
