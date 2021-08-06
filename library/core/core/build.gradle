@@ -1,7 +1,13 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
-apply from: "../../../ext.gradle"
+apply from: "../../../gradle/ext.gradle"
+
+ext {
+    libArtifactId = 'core'
+}
+
+apply from: "../../../gradle/publish-mavencentral.gradle"
 
 android {
     compileSdkVersion compileApi
@@ -34,16 +40,9 @@ android {
     }
 }
 
-//ext {
-//    libArtifactId = 'core'
-//    libDesc = 'Core part of library. Abstract setter and observable listener, adapter bindings, delegates, adapters, extensions'
-//}
-
 dependencies {
 
     implementation project(':local-core')
-
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 
@@ -53,12 +52,9 @@ dependencies {
     implementation "io.github.iamthevoid.extensions:android:$e"
 
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle"
-    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle"
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_ext"
 
     testImplementation "junit:junit:$junit"
     androidTestImplementation "androidx.test:runner:$runner"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso"
 }
-
-//apply from: "../../../install.gradle"
-//apply from: "../../../deploy.gradle"

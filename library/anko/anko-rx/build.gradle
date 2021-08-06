@@ -1,7 +1,13 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
-apply from: "../../../ext.gradle"
+apply from: "../../../gradle/ext.gradle"
+
+ext {
+    libArtifactId = 'anko-rx'
+}
+
+apply from: "../../../gradle/publish-mavencentral.gradle"
 
 android {
     compileSdkVersion compileApi
@@ -34,13 +40,7 @@ android {
     }
 }
 
-//ext {
-//    libArtifactId = 'anko-rx'
-//    libDesc = 'Anko rx port. Layout for adapter views'
-//}
-
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation project(':rx2-core')
     implementation project(':core')
@@ -51,6 +51,3 @@ dependencies {
     androidTestImplementation "androidx.test:runner:$runner"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso"
 }
-
-//apply from: "../../../install.gradle"
-//apply from: "../../../deploy.gradle"

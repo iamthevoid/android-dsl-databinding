@@ -1,5 +1,5 @@
 
-<a href="https://bintray.com/beta/#/iamthevoid/maven/android-dsl-databinding"><img src="https://github.com/iamthevoid/android-dsl-databinding/blob/master/lib.svg"></a>
+<a href="https://search.maven.org/search?q=g:io.github.iamthevoid.reactivebinding"><img src="https://github.com/iamthevoid/android-dsl-databinding/blob/master/lib.svg"></a>
 
 # Android DSL Data Binding
 
@@ -54,7 +54,6 @@ frameLayout {
 ``` 
 
 ### Two Way Binding
-
 
 There is also support for Two-Way Data Binding
 
@@ -118,7 +117,7 @@ But you can extend own `RxLayout` or `CoroutinesLayout` or even `Layout`.
 ```fun set(item: T)``` 
 
 And both provide:
-- (observable) property `item` with type FlowableProcessor described above
+- (observable) property `item` with type Rx(Coroutine)Field described above
 - property `itemChanges` that emits only non-null items 
 - `fun changeItem(itemChange: T?.() -> Unit)` lets you to change item with Recycler will be notified about item change automatically
 
@@ -222,47 +221,47 @@ inline fun <T : Any, reified A : StandaloneRecyclerAdapter<T>> RecyclerView.setI
 ### RxJava 2
 
 ```gradle
-implementation 'iam.thevoid.noxml:core:1.0.0-beta08'
-implementation 'iam.thevoid.noxml:rx2-core:1.0.0-beta08'
+implementation 'io.github.iamthevoid.reactivebinding:core:1.0.0-beta08'
+implementation 'io.github.iamthevoid.reactivebinding:rx2-core:1.0.0-beta08'
 ```
 
 Optional:
 - Recycler View
 ```gradle
-implementation 'iam.thevoid.noxml:core-recycler:1.0.0-beta08'
-implementation 'iam.thevoid.noxml:rx2-recycler:1.0.0-beta08'
+implementation 'io.github.iamthevoid.reactivebinding:core-recycler:1.0.0-beta08'
+implementation 'io.github.iamthevoid.reactivebinding:rx2-recycler:1.0.0-beta08'
 ```
 - Swipe Refresh Layout
 ```gradle
-implementation 'iam.thevoid.noxml:core-swiperefreshlayout:1.0.0-beta08'
-implementation 'iam.thevoid.noxml:rx2-swiperefreshlayout:1.0.0-beta08'
+implementation 'io.github.iamthevoid.reactivebinding:core-swiperefreshlayout:1.0.0-beta08'
+implementation 'io.github.iamthevoid.reactivebinding:rx2-swiperefreshlayout:1.0.0-beta08'
 ```
 - Material
 ```gradle
-implementation 'iam.thevoid.noxml:core-design:1.0.0-beta08'
-implementation 'iam.thevoid.noxml:rx2-design:1.0.0-beta08'
+implementation 'io.github.iamthevoid.reactivebinding:core-design:1.0.0-beta08'
+implementation 'io.github.iamthevoid.reactivebinding:rx2-design:1.0.0-beta08'
 ```
 
 ### Kotlin Coroutines
 
 ```gradle
-implementation 'iam.thevoid.noxml:core:1.0.0-beta08'
-implementation 'iam.thevoid.noxml:coroutines-core:1.0.0-beta08'
+implementation 'io.github.iamthevoid.reactivebinding:core:1.0.0-beta08'
+implementation 'io.github.iamthevoid.reactivebinding:coroutines-core:1.0.0-beta08'
 ```
 
 Optional:
 - Recycler View
 ```gradle
-implementation 'iam.thevoid.noxml:core-recycler:1.0.0-beta08'
-implementation 'iam.thevoid.noxml:coroutines-recycler:1.0.0-beta08'
+implementation 'io.github.iamthevoid.reactivebinding:core-recycler:1.0.0-beta08'
+implementation 'io.github.iamthevoid.reactivebinding:coroutines-recycler:1.0.0-beta08'
 ```
 - Swipe Refresh Layout
 ```gradle
-implementation 'iam.thevoid.noxml:core-swiperefreshlayout:1.0.0-beta08'
-implementation 'iam.thevoid.noxml:coroutines-swiperefreshlayout:1.0.0-beta08'
+implementation 'io.github.iamthevoid.reactivebinding:core-swiperefreshlayout:1.0.0-beta08'
+implementation 'io.github.iamthevoid.reactivebinding:coroutines-swiperefreshlayout:1.0.0-beta08'
 ```
 - Material
 ```gradle
-implementation 'iam.thevoid.noxml:core-design:1.0.0-beta08'
-implementation 'iam.thevoid.noxml:coroutines-design:1.0.0-beta08'
+implementation 'io.github.iamthevoid.reactivebinding:core-design:1.0.0-beta08'
+implementation 'io.github.iamthevoid.reactivebinding:coroutines-design:1.0.0-beta08'
 ```

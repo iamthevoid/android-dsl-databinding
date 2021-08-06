@@ -1,7 +1,14 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
-apply from: "../../../ext.gradle"
+apply from: "../../../gradle/ext.gradle"
+
+ext {
+    libArtifactId = 'coroutines-swiperefreshlayout'
+}
+
+apply from: "../../../gradle/publish-mavencentral.gradle"
+
 
 android {
     compileSdkVersion compileApi
@@ -30,22 +37,15 @@ android {
     }
     tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
         kotlinOptions {
-//            jvmTarget = "$kotlinJvmTarget"
+            jvmTarget = "$kotlinJvmTarget"
             freeCompilerArgs = ['-Xopt-in=kotlin.RequiresOptIn']
         }
     }
 }
 
-//ext {
-//    libArtifactId = 'coroutines-swiperefreshlayout'
-//    libDesc = 'Coroutines SwipeRefreshLayout. Setters, bindings, etc'
-//}
-
 dependencies {
 
     implementation project(':coroutines-core')
-
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation "androidx.appcompat:appcompat:$appcompat"
     implementation "androidx.core:core-ktx:$ktx"
@@ -58,7 +58,3 @@ dependencies {
     androidTestImplementation "androidx.test:runner:$runner"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso"
 }
-
-
-//apply from: "../../../install.gradle"
-//apply from: "../../../deploy.gradle"

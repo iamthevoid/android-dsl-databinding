@@ -1,7 +1,13 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
-apply from: "../../../ext.gradle"
+apply from: "../../../gradle/ext.gradle"
+
+ext {
+    libArtifactId = 'core-design'
+}
+
+apply from: "../../../gradle/publish-mavencentral.gradle"
 
 android {
     compileSdkVersion compileApi
@@ -30,17 +36,10 @@ android {
     }
 }
 
-//ext {
-//    libArtifactId = 'core-design'
-//    libDesc = 'Anko core. Extensions and Custom Views.'
-//}
-
 dependencies {
 
     implementation project (':core')
     implementation project (':core-mvvm')
-
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation "io.github.iamthevoid.extensions:pure:$e"
     implementation "io.github.iamthevoid.extensions:android:$e"
@@ -49,11 +48,9 @@ dependencies {
     implementation "androidx.core:core-ktx:$ktx"
     implementation "com.google.android.material:material:$material"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle"
-    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle"
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_ext"
 
     testImplementation "junit:junit:$junit"
     androidTestImplementation "androidx.test:runner:$runner"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso"
 }
-//apply from: "../../../install.gradle"
-//apply from: "../../../deploy.gradle"

@@ -1,7 +1,13 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
-apply from: "../../../ext.gradle"
+apply from: "../../../gradle/ext.gradle"
+
+ext {
+    libArtifactId = 'anko-core'
+}
+
+apply from: "../../../gradle/publish-mavencentral.gradle"
 
 android {
     compileSdkVersion compileApi
@@ -34,17 +40,10 @@ android {
     }
 }
 
-//ext {
-//    libArtifactId = 'anko-core'
-//    libDesc = 'Anko core. Extensions and Custom Views.'
-//}
-
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation project(':core')
     implementation project(':core-design')
-
 
     implementation "androidx.appcompat:appcompat:$appcompat"
     implementation "com.google.android.material:material:$material"
@@ -57,6 +56,3 @@ dependencies {
     androidTestImplementation "androidx.test:runner:$runner"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso"
 }
-
-//apply from: "../../../install.gradle"
-//apply from: "../../../deploy.gradle"

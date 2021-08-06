@@ -1,7 +1,13 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
-apply from: "../../../ext.gradle"
+apply from: "../../../gradle/ext.gradle"
+
+ext {
+    libArtifactId = 'coroutines-recycler'
+}
+
+apply from: "../../../gradle/publish-mavencentral.gradle"
 
 android {
     compileSdkVersion compileApi
@@ -30,18 +36,11 @@ android {
     }
 }
 
-//ext {
-//    libArtifactId = 'coroutines-recycler'
-//    libDesc = 'Coroutines recycler view bindings'
-//}
-
 dependencies {
 
     implementation project (':core')
     implementation project (':core-recycler')
     implementation project (':coroutines-core')
-
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation "androidx.appcompat:appcompat:$appcompat"
     implementation "androidx.recyclerview:recyclerview:$recycler"
@@ -54,6 +53,3 @@ dependencies {
     androidTestImplementation "androidx.test:runner:$runner"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso"
 }
-
-//apply from: "../../../install.gradle"
-//apply from: "../../../deploy.gradle"

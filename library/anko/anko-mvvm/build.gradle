@@ -1,7 +1,13 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
-apply from: "../../../ext.gradle"
+apply from: "../../../gradle/ext.gradle"
+
+ext {
+    libArtifactId = 'anko-mvvm'
+}
+
+apply from: "../../../gradle/publish-mavencentral.gradle"
 
 android {
     compileSdkVersion compileApi
@@ -30,17 +36,11 @@ android {
     }
 }
 
-//ext {
-//    libArtifactId = 'anko-mvvm'
-//    libDesc = 'Anko mvvm port. Activity and fragment adapters'
-//}
 
 dependencies {
 
     implementation project(':core-mvvm')
     implementation project(':core-design')
-
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation "org.jetbrains.anko:anko-sdk25:$anko" // sdk15, sdk19, sdk21, sdk23 are also available
     implementation "org.jetbrains.anko:anko-appcompat-v7:$anko"
@@ -55,6 +55,3 @@ dependencies {
     androidTestImplementation "androidx.test:runner:$runner"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso"
 }
-
-//apply from: "../../../install.gradle"
-//apply from: "../../../deploy.gradle"

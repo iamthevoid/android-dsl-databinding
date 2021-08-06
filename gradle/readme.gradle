@@ -1,7 +1,7 @@
 task generateReadme() {
     doLast {
         new File("$projectDir/README.MD").text = """
-<a href="https://bintray.com/beta/#/iamthevoid/maven/android-dsl-databinding"><img src="https://github.com/iamthevoid/android-dsl-databinding/blob/master/lib.svg"></a>
+<a href="https://search.maven.org/search?q=g:io.github.iamthevoid.reactivebinding"><img src="https://github.com/iamthevoid/android-dsl-databinding/blob/master/lib.svg"></a>
 
 # Android DSL Data Binding
 
@@ -223,49 +223,49 @@ inline fun <T : Any, reified A : StandaloneRecyclerAdapter<T>> RecyclerView.setI
 ### RxJava 2
 
 ```gradle
-implementation 'iam.thevoid.noxml:core:$libVersion'
-implementation 'iam.thevoid.noxml:rx2-core:$libVersion'
+implementation 'io.github.iamthevoid.reactivebinding:core:$libVersion'
+implementation 'io.github.iamthevoid.reactivebinding:rx2-core:$libVersion'
 ```
 
 Optional:
 - Recycler View
 ```gradle
-implementation 'iam.thevoid.noxml:core-recycler:$libVersion'
-implementation 'iam.thevoid.noxml:rx2-recycler:$libVersion'
+implementation 'io.github.iamthevoid.reactivebinding:core-recycler:$libVersion'
+implementation 'io.github.iamthevoid.reactivebinding:rx2-recycler:$libVersion'
 ```
 - Swipe Refresh Layout
 ```gradle
-implementation 'iam.thevoid.noxml:core-swiperefreshlayout:$libVersion'
-implementation 'iam.thevoid.noxml:rx2-swiperefreshlayout:$libVersion'
+implementation 'io.github.iamthevoid.reactivebinding:core-swiperefreshlayout:$libVersion'
+implementation 'io.github.iamthevoid.reactivebinding:rx2-swiperefreshlayout:$libVersion'
 ```
 - Material
 ```gradle
-implementation 'iam.thevoid.noxml:core-design:$libVersion'
-implementation 'iam.thevoid.noxml:rx2-design:$libVersion'
+implementation 'io.github.iamthevoid.reactivebinding:core-design:$libVersion'
+implementation 'io.github.iamthevoid.reactivebinding:rx2-design:$libVersion'
 ```
 
 ### Kotlin Coroutines
 
 ```gradle
-implementation 'iam.thevoid.noxml:core:$libVersion'
-implementation 'iam.thevoid.noxml:coroutines-core:$libVersion'
+implementation 'io.github.iamthevoid.reactivebinding:core:$libVersion'
+implementation 'io.github.iamthevoid.reactivebinding:coroutines-core:$libVersion'
 ```
 
 Optional:
 - Recycler View
 ```gradle
-implementation 'iam.thevoid.noxml:core-recycler:$libVersion'
-implementation 'iam.thevoid.noxml:coroutines-recycler:$libVersion'
+implementation 'io.github.iamthevoid.reactivebinding:core-recycler:$libVersion'
+implementation 'io.github.iamthevoid.reactivebinding:coroutines-recycler:$libVersion'
 ```
 - Swipe Refresh Layout
 ```gradle
-implementation 'iam.thevoid.noxml:core-swiperefreshlayout:$libVersion'
-implementation 'iam.thevoid.noxml:coroutines-swiperefreshlayout:$libVersion'
+implementation 'io.github.iamthevoid.reactivebinding:core-swiperefreshlayout:$libVersion'
+implementation 'io.github.iamthevoid.reactivebinding:coroutines-swiperefreshlayout:$libVersion'
 ```
 - Material
 ```gradle
-implementation 'iam.thevoid.noxml:core-design:$libVersion'
-implementation 'iam.thevoid.noxml:coroutines-design:$libVersion'
+implementation 'io.github.iamthevoid.reactivebinding:core-design:$libVersion'
+implementation 'io.github.iamthevoid.reactivebinding:coroutines-design:$libVersion'
 ```
 """
     }

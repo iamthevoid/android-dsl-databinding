@@ -1,7 +1,13 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
-apply from: "../../../ext.gradle"
+apply from: "../../../gradle/ext.gradle"
+
+ext {
+    libArtifactId = 'rx2-design'
+}
+
+apply from: "../../../gradle/publish-mavencentral.gradle"
 
 android {
     compileSdkVersion compileApi
@@ -31,18 +37,11 @@ android {
     }
 }
 
-//ext {
-//    libArtifactId = 'rx2-design'
-//    libDesc = 'RxJava2 design port. Setters, adapters'
-//}
-
 dependencies {
 
     implementation project (':rx2-core')
     implementation project (':core-design')
     implementation project (':local-design')
-
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation "com.android.support:multidex:$multidex"
 
@@ -61,6 +60,3 @@ dependencies {
     androidTestImplementation "androidx.test:runner:$runner"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso"
 }
-
-//apply from: "../../../install.gradle"
-//apply from: "../../../deploy.gradle"

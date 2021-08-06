@@ -1,7 +1,7 @@
 package iam.thevoid.noxml.demo.util
 
 import android.widget.ImageView
-import coil.api.load
+import coil.load
 import iam.thevoid.noxml.coroutines.extensions.view.addSetter
 import io.reactivex.Flowable
 import iam.thevoid.noxml.rx2.extensions.view.addSetter
