@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import iam.thevoid.noxml.core.mvvm.vm.LifecycleTrackingViewModel
 
+@Deprecated("Class will be removed without replacement. Use fun Fragment.attachViewModel to attach view model to fragment lifecycle")
 abstract class MvvmFragment<VM : ViewModel> : Fragment(), MvvmView<VM> {
 
     @Suppress("UNCHECKED_CAST")

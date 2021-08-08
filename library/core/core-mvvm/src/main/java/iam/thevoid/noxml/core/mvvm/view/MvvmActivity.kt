@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import iam.thevoid.noxml.core.mvvm.vm.LifecycleTrackingViewModel
 
-
+@Deprecated("Class will be removed without replacement. Use fun ComponentActivity.attachViewModel to attach view model to activity lifecycle")
 abstract class MvvmActivity<VM : ViewModel> : AppCompatActivity(), MvvmView<VM> {
 
     lateinit var viewModels: Map<Class<out ViewModel>, ViewModel>

@@ -8,12 +8,7 @@ def property(String key) {
 }
 
 ext {
-
-    // publish
-    libBintrayUser = property("bintrayUser")
-    libBintrayApiKey = property("bintrayApiKey")
-
-    libVersion = '1.0.0-beta08'
+    libVersion = '1.0.0-beta09'
     libUploadName = 'android-reactive-databinding'
     libDescription = 'Library that helps bind data with reactive streams, like rx java Flowable or coroutines flow or whatever, what you want to implement'
     libGroupId = 'io.github.iamthevoid.reactivebinding'
@@ -27,9 +22,7 @@ ext {
     libDeveloperName = 'Alexander Tarabrin'
     libDeveloperEmail = 'alesetar@gmail.com'
 
-    libLicenseName = 'The Apache Software License, Version 2.0'
     libLicenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-    libLicences = ['Apache-2.0']
 
     libMinSdk = 16
     compileApi = 29
@@ -48,7 +41,6 @@ ext {
     splitties = "3.0.0-alpha06"
     coil = "1.2.2"
     glide = "4.9.0"
-
 
     coroutines = "1.5.0"
 

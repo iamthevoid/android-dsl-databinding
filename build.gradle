@@ -25,7 +25,7 @@ allprojects {
         google()
         mavenCentral()
         jcenter()
-        maven { url "https://s01.oss.sonatype.org/service/local/repositories/iogithubiamthevoid-1013/content/" }
+//        maven { url "https://s01.oss.sonatype.org/service/local/repositories/iogithubiamthevoid-1013/content/" }
     }
 }
 

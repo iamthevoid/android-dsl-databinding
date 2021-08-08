@@ -49,39 +49,39 @@ android {
 
 dependencies {
 
-//    api project(':anko-core')
-//    api project(':anko-coroutines')
-//    api project(':anko-rx')
-//    api project(':anko-mvvm')
+    api project(':anko-core')
+    api project(':anko-coroutines')
+    api project(':anko-rx')
+    api project(':anko-mvvm')
+
+    api project(':core')
+    api project(':core-recycler')
+    api project(':core-mvvm')
+
+    api project(':coroutines-core')
+    api project(':coroutines-recycler')
+
+    api project(':rx2-recycler')
+    api project(':rx2-core')
+    api project(':rx2-swiperefreshlayout')
+    api project(':rx2-mvvm')
+
+//    api "io.github.iamthevoid.reactivebinding:anko-core:$libVersion"
+//    api "io.github.iamthevoid.reactivebinding:anko-coroutines:$libVersion"
+//    api "io.github.iamthevoid.reactivebinding:anko-rx:$libVersion"
+//    api "io.github.iamthevoid.reactivebinding:anko-mvvm:$libVersion"
 //
-//    api project(':core')
-//    api project(':core-recycler')
-//    api project(':core-mvvm')
+//    api "io.github.iamthevoid.reactivebinding:core:$libVersion"
+//    api "io.github.iamthevoid.reactivebinding:core-recycler:$libVersion"
+//    api "io.github.iamthevoid.reactivebinding:core-mvvm:$libVersion"
 //
-//    api project(':coroutines-core')
-//    api project(':coroutines-recycler')
+//    api "io.github.iamthevoid.reactivebinding:coroutines-core:$libVersion"
+//    api "io.github.iamthevoid.reactivebinding:coroutines-recycler:$libVersion"
 //
-//    api project(':rx2-recycler')
-//    api project(':rx2-core')
-//    api project(':rx2-swiperefreshlayout')
-//    api project(':rx2-mvvm')
-
-    api "io.github.iamthevoid.reactivebinding:anko-core:$libVersion"
-    api "io.github.iamthevoid.reactivebinding:anko-coroutines:$libVersion"
-    api "io.github.iamthevoid.reactivebinding:anko-rx:$libVersion"
-    api "io.github.iamthevoid.reactivebinding:anko-mvvm:$libVersion"
-
-    api "io.github.iamthevoid.reactivebinding:core:$libVersion"
-    api "io.github.iamthevoid.reactivebinding:core-recycler:$libVersion"
-    api "io.github.iamthevoid.reactivebinding:core-mvvm:$libVersion"
-
-    api "io.github.iamthevoid.reactivebinding:coroutines-core:$libVersion"
-    api "io.github.iamthevoid.reactivebinding:coroutines-recycler:$libVersion"
-
-    api "io.github.iamthevoid.reactivebinding:rx2-recycler:$libVersion"
-    api "io.github.iamthevoid.reactivebinding:rx2-core:$libVersion"
-    api "io.github.iamthevoid.reactivebinding:rx2-swiperefreshlayout:$libVersion"
-    api "io.github.iamthevoid.reactivebinding:rx2-mvvm:$libVersion"
+//    api "io.github.iamthevoid.reactivebinding:rx2-recycler:$libVersion"
+//    api "io.github.iamthevoid.reactivebinding:rx2-core:$libVersion"
+//    api "io.github.iamthevoid.reactivebinding:rx2-swiperefreshlayout:$libVersion"
+//    api "io.github.iamthevoid.reactivebinding:rx2-mvvm:$libVersion"
 
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 

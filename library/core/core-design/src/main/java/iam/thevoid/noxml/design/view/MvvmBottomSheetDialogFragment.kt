@@ -10,6 +10,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import iam.thevoid.noxml.core.mvvm.view.MvvmView
 import iam.thevoid.noxml.core.mvvm.vm.LifecycleTrackingViewModel
 
+@Deprecated("Class will be removed without replacement. Use fun Fragment.attachViewModel to attach view model to fragment lifecycle")
 abstract class MvvmBottomSheetDialogFragment<VM : ViewModel> : BottomSheetDialogFragment(),
     MvvmView<VM> {
 

@@ -221,47 +221,47 @@ inline fun <T : Any, reified A : StandaloneRecyclerAdapter<T>> RecyclerView.setI
 ### RxJava 2
 
 ```gradle
-implementation 'io.github.iamthevoid.reactivebinding:core:1.0.0-beta08'
-implementation 'io.github.iamthevoid.reactivebinding:rx2-core:1.0.0-beta08'
+implementation 'io.github.iamthevoid.reactivebinding:core:1.0.0-beta09'
+implementation 'io.github.iamthevoid.reactivebinding:rx2-core:1.0.0-beta09'
 ```
 
 Optional:
 - Recycler View
 ```gradle
-implementation 'io.github.iamthevoid.reactivebinding:core-recycler:1.0.0-beta08'
-implementation 'io.github.iamthevoid.reactivebinding:rx2-recycler:1.0.0-beta08'
+implementation 'io.github.iamthevoid.reactivebinding:core-recycler:1.0.0-beta09'
+implementation 'io.github.iamthevoid.reactivebinding:rx2-recycler:1.0.0-beta09'
 ```
 - Swipe Refresh Layout
 ```gradle
-implementation 'io.github.iamthevoid.reactivebinding:core-swiperefreshlayout:1.0.0-beta08'
-implementation 'io.github.iamthevoid.reactivebinding:rx2-swiperefreshlayout:1.0.0-beta08'
+implementation 'io.github.iamthevoid.reactivebinding:core-swiperefreshlayout:1.0.0-beta09'
+implementation 'io.github.iamthevoid.reactivebinding:rx2-swiperefreshlayout:1.0.0-beta09'
 ```
 - Material
 ```gradle
-implementation 'io.github.iamthevoid.reactivebinding:core-design:1.0.0-beta08'
-implementation 'io.github.iamthevoid.reactivebinding:rx2-design:1.0.0-beta08'
+implementation 'io.github.iamthevoid.reactivebinding:core-design:1.0.0-beta09'
+implementation 'io.github.iamthevoid.reactivebinding:rx2-design:1.0.0-beta09'
 ```
 
 ### Kotlin Coroutines
 
 ```gradle
-implementation 'io.github.iamthevoid.reactivebinding:core:1.0.0-beta08'
-implementation 'io.github.iamthevoid.reactivebinding:coroutines-core:1.0.0-beta08'
+implementation 'io.github.iamthevoid.reactivebinding:core:1.0.0-beta09'
+implementation 'io.github.iamthevoid.reactivebinding:coroutines-core:1.0.0-beta09'
 ```
 
 Optional:
 - Recycler View
 ```gradle
-implementation 'io.github.iamthevoid.reactivebinding:core-recycler:1.0.0-beta08'
-implementation 'io.github.iamthevoid.reactivebinding:coroutines-recycler:1.0.0-beta08'
+implementation 'io.github.iamthevoid.reactivebinding:core-recycler:1.0.0-beta09'
+implementation 'io.github.iamthevoid.reactivebinding:coroutines-recycler:1.0.0-beta09'
 ```
 - Swipe Refresh Layout
 ```gradle
-implementation 'io.github.iamthevoid.reactivebinding:core-swiperefreshlayout:1.0.0-beta08'
-implementation 'io.github.iamthevoid.reactivebinding:coroutines-swiperefreshlayout:1.0.0-beta08'
+implementation 'io.github.iamthevoid.reactivebinding:core-swiperefreshlayout:1.0.0-beta09'
+implementation 'io.github.iamthevoid.reactivebinding:coroutines-swiperefreshlayout:1.0.0-beta09'
 ```
 - Material
 ```gradle
-implementation 'io.github.iamthevoid.reactivebinding:core-design:1.0.0-beta08'
-implementation 'io.github.iamthevoid.reactivebinding:coroutines-design:1.0.0-beta08'
+implementation 'io.github.iamthevoid.reactivebinding:core-design:1.0.0-beta09'
+implementation 'io.github.iamthevoid.reactivebinding:coroutines-design:1.0.0-beta09'
 ```

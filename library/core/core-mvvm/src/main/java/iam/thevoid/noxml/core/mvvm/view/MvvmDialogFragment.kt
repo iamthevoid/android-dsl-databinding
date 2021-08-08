@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import iam.thevoid.noxml.core.mvvm.vm.LifecycleTrackingViewModel
 
+@Deprecated("Class will be removed without replacement. Use fun Fragment.attachViewModel to attach view model to dialog fragment lifecycle")
 abstract class MvvmDialogFragment<VM : ViewModel> : DialogFragment(), MvvmView<VM> {
 
     @Suppress("UNCHECKED_CAST")
