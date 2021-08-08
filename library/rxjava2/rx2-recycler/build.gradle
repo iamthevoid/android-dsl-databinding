@@ -46,8 +46,6 @@ dependencies {
 
     implementation project(':rx2-core')
 
-    implementation "com.android.support:multidex:$multidex"
-
     implementation "io.github.iamthevoid.extensions:pure:$e"
 
     implementation "androidx.appcompat:appcompat:$appcompat"

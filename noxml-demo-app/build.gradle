@@ -108,7 +108,7 @@ dependencies {
     implementation "io.github.iamthevoid.extensions:util:$e"
     implementation "io.github.iamthevoid.extensions:coroutines:$e"
 
-    implementation 'androidx.multidex:multidex:2.0.1'
+    implementation "androidx.multidex:multidex:$multidex"
 
     implementation "androidx.room:room-runtime:$room"
     implementation "androidx.room:room-ktx:$room"

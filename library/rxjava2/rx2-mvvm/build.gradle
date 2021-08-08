@@ -41,8 +41,6 @@ dependencies {
 
     implementation project(':core-mvvm')
 
-    implementation "com.android.support:multidex:$multidex"
-
     implementation "androidx.appcompat:appcompat:$appcompat"
     implementation "androidx.core:core-ktx:$ktx"
 

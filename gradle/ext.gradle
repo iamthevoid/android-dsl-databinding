@@ -8,7 +8,7 @@ def property(String key) {
 }
 
 ext {
-    libVersion = '1.0.0-beta09'
+    libVersion = '1.0.0-beta10'
     libUploadName = 'android-reactive-databinding'
     libDescription = 'Library that helps bind data with reactive streams, like rx java Flowable or coroutines flow or whatever, what you want to implement'
     libGroupId = 'io.github.iamthevoid.reactivebinding'
@@ -45,10 +45,10 @@ ext {
     coroutines = "1.5.0"
 
     room = "2.3.0"
-    jsoup = "1.12.1"
-    gson = "2.8.5"
-    okhttp = "3.14.2"
-    retrofit = "2.6.0"
+    jsoup = "1.13.1"
+    gson = "2.8.7"
+    okhttp = "4.2.1"
+    retrofit = "2.8.0"
 
     // rx
     rxJava = "2.2.21"
@@ -63,7 +63,7 @@ ext {
     recycler = "1.2.1"
     ktx = "1.6.0"
     swipe = "1.1.0"
-    multidex = "1.0.2"
+    multidex = "2.0.1"
 
     // test
     espresso = "3.4.0"

@@ -43,8 +43,6 @@ dependencies {
     implementation project (':core-design')
     implementation project (':local-design')
 
-    implementation "com.android.support:multidex:$multidex"
-
     implementation "androidx.appcompat:appcompat:$appcompat"
     implementation "androidx.core:core-ktx:$ktx"
 

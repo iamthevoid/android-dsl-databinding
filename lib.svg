@@ -25,10 +25,10 @@
             android-reactive-databinding
         </text>
         <text fill="#010101" x="186" fill-opacity=".3" y="15" class="tMove">
-            1.0.0-beta09
+            1.0.0-beta10
         </text>
         <text x="186" id="vText" y="14" class="tMove">
-            1.0.0-beta09
+            1.0.0-beta10
         </text>
     </g>
 </svg>

@@ -46,8 +46,6 @@ dependencies {
     implementation project(':local-core')
     api project(':core')
 
-    implementation "com.android.support:multidex:$multidex"
-
     implementation "androidx.appcompat:appcompat:$appcompat"
     implementation "androidx.core:core-ktx:$ktx"
 
