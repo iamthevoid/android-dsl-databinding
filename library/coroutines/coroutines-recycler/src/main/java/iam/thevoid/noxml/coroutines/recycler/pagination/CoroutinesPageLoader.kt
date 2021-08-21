@@ -17,15 +17,15 @@ abstract class CoroutinesPageLoader<PAGE_INDEX, T> : PageLoader {
     }
 
     /**
-     * Loading state
-     */
-    protected abstract val loading: CoroutineBoolean
-
-    /**
      * Last loaded page
      */
 
     protected abstract val currentPage: CoroutineItem<PAGE_INDEX>
+
+    /**
+     * Loading state
+     */
+    abstract val loading: CoroutineBoolean
 
     /**
      * Received items

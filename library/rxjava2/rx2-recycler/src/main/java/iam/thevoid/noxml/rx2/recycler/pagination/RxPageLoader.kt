@@ -17,15 +17,15 @@ abstract class RxPageLoader<PAGE_INDEX, T> : PageLoader {
     }
 
     /**
-     * Loading state
-     */
-    protected abstract val loading: RxLoading
-
-    /**
      * Last loaded page
      */
 
     protected abstract val currentPage: BehaviorProcessor<PAGE_INDEX>
+
+    /**
+     * Loading state
+     */
+    abstract val loading: RxLoading
 
     /**
      * Received items
