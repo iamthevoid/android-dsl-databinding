@@ -19,3 +19,6 @@ fun SwipeRefreshLayout.setRefreshing(refreshing: CoroutineBoolean) =
 
 fun SwipeRefreshLayout.setRefreshing(refreshing1: CoroutineBoolean, refreshing2: CoroutineBoolean) =
     setRefreshing(Coroutines.combine(refreshing1.observe(), refreshing2.observe()).map { (f,s) -> f || s })
+
+fun SwipeRefreshLayout.setOnRefreshListener(onRefreshListener: Flow<SwipeRefreshLayout.OnRefreshListener>) =
+    addSetter(onRefreshListener, SwipeRefreshLayout::setOnRefreshListener)

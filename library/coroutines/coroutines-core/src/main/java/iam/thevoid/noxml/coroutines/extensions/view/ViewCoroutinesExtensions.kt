@@ -177,7 +177,7 @@ fun View.setAlpha(alpha: Flow<Float>) =
  * On click listener
  */
 
-fun View.setOnclickListener(onClick: Flow<View.OnClickListener>) =
+fun View.setOnClickListener(onClick: Flow<View.OnClickListener>) =
     addSetter(onClick) {
         setOnClickListener(null)
         setOnClickListener(it)
