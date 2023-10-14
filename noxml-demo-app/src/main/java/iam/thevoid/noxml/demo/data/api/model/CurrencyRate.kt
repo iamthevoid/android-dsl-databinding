@@ -11,7 +11,7 @@ data class CurrencyRate(
         another is CurrencyRate && another.code == code
 
     override fun areContentsTheSame(another: Any?): Boolean =
-        another is CurrencyRate && another.rate == rate
+        another is CurrencyRate && another.code == code && another.rate == rate
                 && another.image == image
 
     val image by lazy { toImageUrl(code) }

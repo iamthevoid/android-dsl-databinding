@@ -20,18 +20,23 @@ class CurrenciesFragment : BaseFragment() {
 
     override fun createView(ui: AnkoContext<BaseFragment>): View =
         ui.frameLayout {
+
             recyclerView {
-                (itemAnimator as? SimpleItemAnimator)?.supportsChangeAnimations = false
-                layoutManager = LinearLayoutManager(context)
                 setItems(vm.data, currencyBindings(vm))
                 hideUntilLoaded(vm.loading)
+
+                (itemAnimator as? SimpleItemAnimator)?.supportsChangeAnimations = false
+                layoutManager = LinearLayoutManager(context)
             }.lparams(matchParent, matchParent)
+
             frameLayout {
+                hideWhenLoaded(vm.blocking)
+
                 isClickable = true
                 isFocusable = true
                 backgroundColorResource = R.color.semi_transparent
-                hideWhenLoaded(vm.blocking)
             }
+
             progressBar {
                 hideWhenLoaded(vm.blocking, vm.loading)
             }.lparams(dip(48), dip(48), Gravity.CENTER)

@@ -4,9 +4,9 @@ import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Path
 
-interface XeService {
+interface CoinbaseService {
 
-    @GET("/currency/{code}")
-    fun currencyInfo(@Path("code") code : String) : Single<String>
+    @GET("/v2/currencies")
+    fun currencyInfo() : Single<CoinbaseResponse>
 
 }

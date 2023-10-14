@@ -1,5 +1,6 @@
 package iam.thevoid.noxml.demo.ui.mvvm.revolut.items
 
+import android.graphics.Typeface
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
@@ -20,7 +21,6 @@ import org.jetbrains.anko.*
 
 class CurrencySimpleItem(private val vm : CurrencyViewModel, viewGroup: ViewGroup) : AnkoRxLayout<CurrencyRate>(viewGroup) {
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     override fun createView(ui: AnkoContext<AnkoRxLayout<CurrencyRate>>): View =
         ui.frameLayout {
 
@@ -31,35 +31,42 @@ class CurrencySimpleItem(private val vm : CurrencyViewModel, viewGroup: ViewGrou
             }.lparams(dip(36), dip(36)) { margin = dip(8) }
 
             textView {
+                setText(itemChanges.map { it.code })
+
+                // params
                 padding = dip(8)
                 textSizeDimen = R.dimen.text_medium
                 textColorResource = android.R.color.black
-                setText(itemChanges.map { it.code })
             }.lparams {
                 leftMargin = dip(52)
                 gravity = Gravity.CENTER_VERTICAL
             }
 
             textView {
+                setText(itemChanges.flatMapSingle { codeToValue(it.code) }.startWith("---"))
+
+                // params
                 padding = dip(8)
                 textSizeDimen = R.dimen.text_medium
                 textColorResource = android.R.color.black
-                setText(itemChanges.flatMapSingle { codeToValue(it.code) }.startWith("---"))
             }.lparams {
                 leftMargin = dip(96)
                 gravity = Gravity.CENTER_VERTICAL
             }
 
             textView {
+                setText(
+                    Flowables.combineLatest(
+                        itemChanges.map { it.rate },
+                        vm.currentValue,
+                        vm::resultValue
+                    )
+                )
+
+                // params
                 padding = dip(8)
                 textColorResource = android.R.color.black
                 textSizeDimen = R.dimen.text_medium
-                setText(
-                    Flowables.combineLatest(
-                    itemChanges.map { it.rate },
-                    vm.currentValue,
-                    vm::resultValue
-                ))
             }.lparams {
                 gravity = Gravity.END or Gravity.CENTER_VERTICAL
             }
